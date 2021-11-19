@@ -8,6 +8,7 @@ dataSources:
     source:
       address: "0xfd1d39A5bD0203b6d455e4431751B7472B079F61"
       abi: OpenQ
+      startBlock: 21676267
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.5
