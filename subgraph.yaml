@@ -6,7 +6,7 @@ dataSources:
     name: OpenQ
     network: mumbai
     source:
-      address: "0x654264De08313fCdB2F963E491E92D1C8c66e8fd"
+      address: "0xfd1d39A5bD0203b6d455e4431751B7472B079F61"
       abi: OpenQ
     mapping:
       kind: ethereum/events
