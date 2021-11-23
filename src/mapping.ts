@@ -10,6 +10,12 @@ export function handleIssueCreated(event: IssueCreated): void {
 
 	// Entities only exist after they have been saved to the store;
 	// `null` checks allow to create entities on demand
+	if (!entity) {
+		entity = new Issue(event.transaction.from.toHex())
+	}
+
+	// Entities only exist after they have been saved to the store;
+	// `null` checks allow to create entities on demand
 	entity = new Issue(event.transaction.from.toHex())
 
 	// Entity fields can be set based on event parameters
@@ -48,7 +54,15 @@ export function handleIssueCreated(event: IssueCreated): void {
 }
 
 export function handleIssueClosed(event: IssueClosed): void {
+	// Entities can be loaded from the store using a string ID; this ID
+	// needs to be unique across all entities of the same type
 	let entity = Issue.load(event.params.issueId)
+
+	// Entities only exist after they have been saved to the store;
+	// `null` checks allow to create entities on demand
+	if (!entity) {
+		entity = new Issue(event.transaction.from.toHex())
+	}
 
 	entity.claimed = true
 	entity.issueClosedTime = event.params.issueClosedTime
@@ -57,11 +71,27 @@ export function handleIssueClosed(event: IssueClosed): void {
 }
 
 export function handleFundsReceived(event: FundsReceived): void {
+	// Entities can be loaded from the store using a string ID; this ID
+	// needs to be unique across all entities of the same type
 	let entity = Issue.load(event.params.issueId)
+
+	// Entities only exist after they have been saved to the store;
+	// `null` checks allow to create entities on demand
+	if (!entity) {
+		entity = new Issue(event.transaction.from.toHex())
+	}
 	entity.save()
 }
 
 export function handleDepositsRefunded(event: DepositsRefunded): void {
+	// Entities can be loaded from the store using a string ID; this ID
+	// needs to be unique across all entities of the same type
 	let entity = Issue.load(event.params.issueId)
+
+	// Entities only exist after they have been saved to the store;
+	// `null` checks allow to create entities on demand
+	if (!entity) {
+		entity = new Issue(event.transaction.from.toHex())
+	}
 	entity.save()
 }
