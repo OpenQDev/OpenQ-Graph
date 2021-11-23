@@ -1,5 +1,8 @@
 type Issue @entity {
 	id: ID!
 	count: BigInt!
+	issuer: Bytes!
+	issueTime: BigInt!
 	issueAddress: Bytes!
+	status: BigInt
 }

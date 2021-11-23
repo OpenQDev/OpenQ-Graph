@@ -1,11 +1,12 @@
 import { BigInt } from "@graphprotocol/graph-ts"
 import { OpenQ, IssueClosed, IssueCreated } from "../generated/OpenQ/OpenQ"
 import { Issue } from "../generated/schema"
+import { Address } from '@graphprotocol/graph-ts'
 
 export function handleIssueCreated(event: IssueCreated): void {
 	// Entities can be loaded from the store using a string ID; this ID
 	// needs to be unique across all entities of the same type
-	let entity = Issue.load(event.transaction.from.toHex())
+	let entity = Issue.load(event.params.issueId)
 
 	// Entities only exist after they have been saved to the store;
 	// `null` checks allow to create entities on demand
@@ -22,6 +23,8 @@ export function handleIssueCreated(event: IssueCreated): void {
 	// Entity fields can be set based on event parameters
 	entity.id = event.params.issueId
 	entity.issueAddress = event.params.issueAddress
+	entity.issuer = event.params.issuer
+	entity.issueTime = event.params.issueTime
 
 	// Entities can be written to the store with `.save()`
 	entity.save()
@@ -51,4 +54,6 @@ export function handleIssueCreated(event: IssueCreated): void {
 	// - contract.tokenAddresses(...)
 }
 
-export function handleIssueClosed(event: IssueClosed): void { }
+export function handleIssueClosed(event: IssueClosed): void {
+
+}

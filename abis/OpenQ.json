@@ -28,12 +28,6 @@
 		"anonymous": false,
 		"inputs": [
 			{
-				"indexed": true,
-				"internalType": "address",
-				"name": "from",
-				"type": "address"
-			},
-			{
 				"indexed": false,
 				"internalType": "string",
 				"name": "issueId",
@@ -42,8 +36,26 @@
 			{
 				"indexed": true,
 				"internalType": "address",
+				"name": "issuer",
+				"type": "address"
+			},
+			{
+				"indexed": true,
+				"internalType": "address",
 				"name": "issueAddress",
 				"type": "address"
+			},
+			{
+				"indexed": false,
+				"internalType": "address[]",
+				"name": "tokenAddresses",
+				"type": "address[]"
+			},
+			{
+				"indexed": false,
+				"internalType": "uint256",
+				"name": "issueTime",
+				"type": "uint256"
 			}
 		],
 		"name": "IssueCreated",

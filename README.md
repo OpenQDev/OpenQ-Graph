@@ -4,5 +4,12 @@
 
 `yarn deploy`: Create a `build` directory with your WASM compiled Graph node indexer and GraphQL API
 
-Queries (HTTP):     https://api.thegraph.com/subgraphs/name/openqdev/openq
+## Local Development
+
+[The Graph Academy Guide to Local Subgraph Development](https://thegraph.academy/developers/local-development/)
+
+`deploy-local`: 
+
+Queries (HTTP): https://api.thegraph.com/subgraphs/name/openqdev/openq
+
 Subscriptions (WS): wss://api.thegraph.com/subgraphs/name/openqdev/openq

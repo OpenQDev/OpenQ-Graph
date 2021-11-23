@@ -4,7 +4,7 @@ schema:
 dataSources:
   - kind: ethereum/contract
     name: OpenQ
-    network: mumbai
+    network: hardhat
     source:
       address: "0xfd1d39A5bD0203b6d455e4431751B7472B079F61"
       abi: OpenQ
@@ -20,8 +20,8 @@ dataSources:
         - name: OpenQ
           file: ./abis/OpenQ.json
       eventHandlers:
+        - event: IssueCreated(string,indexed address,indexed address,address[],uint256)
+          handler: handleIssueCreated
         - event: IssueClosed(string,indexed address,indexed address)
           handler: handleIssueClosed
-        - event: IssueCreated(indexed address,string,indexed address)
-          handler: handleIssueCreated
       file: ./src/mapping.ts
