@@ -10,21 +10,14 @@ export function handleIssueCreated(event: IssueCreated): void {
 
 	// Entities only exist after they have been saved to the store;
 	// `null` checks allow to create entities on demand
-	if (!entity) {
-		entity = new Issue(event.transaction.from.toHex())
-
-		// Entity fields can be set using simple assignments
-		entity.count = BigInt.fromI32(0)
-	}
-
-	// BigInt and BigDecimal math are supported
-	entity.count = entity.count + BigInt.fromI32(1)
+	entity = new Issue(event.transaction.from.toHex())
 
 	// Entity fields can be set based on event parameters
 	entity.id = event.params.issueId
 	entity.issueAddress = event.params.issueAddress
 	entity.issuer = event.params.issuer
-	entity.issueTime = event.params.issueTime
+	entity.issueMintTime = event.params.issueMintTime
+	entity.claimed = false
 
 	// Entities can be written to the store with `.save()`
 	entity.save()
@@ -55,5 +48,10 @@ export function handleIssueCreated(event: IssueCreated): void {
 }
 
 export function handleIssueClosed(event: IssueClosed): void {
+	let entity = Issue.load(event.params.issueId)
 
+	entity.claimed = true
+	entity.issueClosedTime = event.params.issueClosedTime
+
+	entity.save()
 }

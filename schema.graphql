@@ -1,8 +1,20 @@
+type Token @entity {
+  id: ID!
+  tokenBalances: [TokenBalance!]! @derivedFrom(field: "token")
+}
+
+type TokenBalance @entity {
+  id: ID!
+  amount: Int!
+  token: Token!
+}
+
 type Issue @entity {
 	id: ID!
-	count: BigInt!
 	issuer: Bytes!
-	issueTime: BigInt!
+	issueMintTime: BigInt!
+	issueClosedTime: BigInt!
 	issueAddress: Bytes!
-	status: BigInt
+	deposits: [TokenBalance!]
+	claimed: Boolean!
 }
