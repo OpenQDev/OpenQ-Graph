@@ -6,7 +6,7 @@ dataSources:
     name: OpenQ
     network: mainnet
     source:
-      address: "0xfd1d39A5bD0203b6d455e4431751B7472B079F61"
+      address: "0x9fE46736679d2D9a65F0992F2272dE9f3c7fa6e0"
       abi: OpenQ
     mapping:
       kind: ethereum/events

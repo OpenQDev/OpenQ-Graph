@@ -11,6 +11,6 @@ CMD curl --connect-timeout 5 \
 	--retry 5 \
 	--retry-delay 0 \
 	--retry-max-time 40 \
-	'http://ethnode:8545' \
+	'http://graph_node:8020' \
 	&& yarn create-docker \
 	&& yarn deploy-docker
