@@ -1,5 +1,5 @@
 import { BigInt } from "@graphprotocol/graph-ts"
-import { OpenQ, IssueClosed, IssueCreated } from "../generated/OpenQ/OpenQ"
+import { OpenQ, IssueClosed, IssueCreated, FundsReceived, DepositsRefunded } from "../generated/OpenQ/OpenQ"
 import { Issue } from "../generated/schema"
 import { Address } from '@graphprotocol/graph-ts'
 
@@ -53,5 +53,15 @@ export function handleIssueClosed(event: IssueClosed): void {
 	entity.claimed = true
 	entity.issueClosedTime = event.params.issueClosedTime
 
+	entity.save()
+}
+
+export function handleFundsReceived(event: FundsReceived): void {
+	let entity = Issue.load(event.params.issueId)
+	entity.save()
+}
+
+export function handleDepositsRefunded(event: DepositsRefunded): void {
+	let entity = Issue.load(event.params.issueId)
 	entity.save()
 }
