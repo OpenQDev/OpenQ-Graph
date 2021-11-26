@@ -1,9 +1,41 @@
 # Deposit
 type Deposit @entity {
-	id: ID! # {bounty address}-{user address}-{token-address}
+	id: ID! # {bounty address}-{user address}-{token-address}-{receiveTime}
+	tokenAddress: Bytes!
 	value: BigInt!
 	sender: User!
 	bounty: Bounty!
+	tokenBalance: TokenBalance!
+	receiveTime: BigInt
+}
+
+type Refund @entity {
+	id: ID! # {bounty address}-{user address}-{token-address}-{refundTime}
+	tokenAddress: Bytes!
+	value: BigInt!
+	sender: User!
+	bounty: Bounty!
+	tokenBalance: TokenBalance!
+	refundTime: BigInt
+}
+
+type Payout @entity {
+	id: ID! # {bounty address}-{user address}-{token-address}-{payoutTime}
+	tokenAddress: Bytes!
+	value: BigInt!
+	payoutAddress: User!
+	bounty: Bounty!
+	tokenBalance: TokenBalance!
+	payoutTime: BigInt
+}
+
+# all deposits, refunds and total values per token
+type TokenBalance @entity {
+	id: ID!
+	totalValue: BigInt!
+	deposits: [Deposit!]! @derivedFrom(field: "tokenBalance")
+	refunds: [Refund!]! @derivedFrom(field: "tokenBalance")
+	payouts: [Payout!]! @derivedFrom(field: "tokenBalance")
 }
 
 # Bounty
@@ -12,19 +44,25 @@ type Bounty @entity {
 	bountyId: String!
 	issuer: User!
 	bountyMintTime: BigInt!
+	bountyClosedTime: BigInt
 	status: BountyStatus!
-	closer: User
+	payoutAddress: User
 	deposits: [Deposit!]! @derivedFrom(field: "bounty")
-}
-
-enum BountyStatus {
-  OPEN
-	CLOSED
+	refunds: [Refund!]! @derivedFrom(field: "bounty")
+	payouts: [Payout!]! @derivedFrom(field: "bounty")
 }
 
 # User (Funder, Closer, Issuer)
 type User @entity {
 	id: ID! # The user address to hex string
 	bountiesCreated: [Bounty!]! @derivedFrom(field: "issuer")
+	bountiesClosed: [Bounty!]! @derivedFrom(field: "payoutAddress")
 	deposits: [Deposit!]! @derivedFrom(field: "sender")
+	refunds: [Refund!]! @derivedFrom(field: "sender")
+	payouts: [Payout!]! @derivedFrom(field: "payoutAddress")
+}
+
+enum BountyStatus {
+  OPEN
+	CLOSED
 }

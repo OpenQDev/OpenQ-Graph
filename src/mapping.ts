@@ -1,6 +1,6 @@
 import { BigInt, Value } from "@graphprotocol/graph-ts"
-import { BountyClosed, BountyCreated, DepositReceived, DepositRefunded } from "../generated/OpenQ/OpenQ"
-import { Bounty, User, Deposit, } from "../generated/schema"
+import { BountyClosed, BountyCreated, DepositReceived, DepositRefunded, BountyPaidout } from "../generated/OpenQ/OpenQ"
+import { Bounty, User, Deposit, Refund, TokenBalance, Payout } from "../generated/schema"
 
 export function handleBountyCreated(event: BountyCreated): void {
 	let bounty = Bounty.load(event.params.bountyAddress.toHexString())
@@ -26,7 +26,7 @@ export function handleBountyCreated(event: BountyCreated): void {
 }
 
 export function handleDepositReceived(event: DepositReceived): void {
-	let depositId = `${event.params.bountyAddress.toHexString()}-${event.params.sender.toHexString()}-${event.params.tokenAddress.toHexString()}`
+	let depositId = `${event.params.bountyAddress.toHexString()}-${event.params.sender.toHexString()}-${event.params.tokenAddress.toHexString()}-${event.params.receiveTime}`
 	let deposit = Deposit.load(depositId)
 
 	if (!deposit) {
@@ -34,37 +34,93 @@ export function handleDepositReceived(event: DepositReceived): void {
 		deposit.value = new BigInt(0)
 	}
 
+	deposit.tokenAddress = event.params.tokenAddress
 	deposit.sender = event.params.sender.toHexString()
 	deposit.bounty = event.params.bountyAddress.toHexString()
 
-	deposit.value = deposit.value.plus(event.params.value)
+	deposit.value = event.params.value
+	deposit.receiveTime = event.params.receiveTime
 
+	let tokenBalance = TokenBalance.load(event.params.tokenAddress.toHexString())
+
+	if (!tokenBalance) {
+		tokenBalance = new TokenBalance(event.params.tokenAddress.toHexString())
+		deposit.tokenBalance = tokenBalance.id
+	}
+
+	tokenBalance.totalValue = tokenBalance.totalValue.plus(event.params.value)
+
+	tokenBalance.save()
 	deposit.save()
 }
 
 export function handleBountyClosed(event: BountyClosed): void {
-	// Entities can be loaded from the store using a string ID; this ID
-	// needs to be unique across all entities of the same type
-	let bounty = Bounty.load(event.params.bountyId)
+	let bounty = Bounty.load(event.params.bountyAddress.toHexString())
 
-	// Entities only exist after they have been saved to the store;
-	// `null` checks allow to create entities on demand
 	if (!bounty) {
-		bounty = new Bounty(event.transaction.from.toHex())
+		throw Error("Closing a bounty that does not exit? Should have reverted in OpenQ.sol")
 	}
+
+	bounty.payoutAddress = event.params.payoutAddress.toHexString()
+	bounty.bountyClosedTime = event.params.bountyClosedTime
+
+
 
 	bounty.save()
 }
 
 export function handleDepositRefunded(event: DepositRefunded): void {
-	// Entities can be loaded from the store using a string ID; this ID
-	// needs to be unique across all entities of the same type
-	let entity = Bounty.load(event.params.bountyId)
+	let refundId = `${event.params.bountyAddress.toHexString()}-${event.params.sender.toHexString()}-${event.params.tokenAddress.toHexString()}-${event.params.refundTime}`
+	let refund = Refund.load(refundId)
 
-	// Entities only exist after they have been saved to the store;
-	// `null` checks allow to create entities on demand
-	if (!entity) {
-		entity = new Bounty(event.transaction.from.toHex())
+	if (!refund) {
+		refund = new Refund(refundId)
+		refund.value = new BigInt(0)
 	}
-	entity.save()
+
+	refund.tokenAddress = event.params.tokenAddress
+	refund.sender = event.params.sender.toHexString()
+	refund.bounty = event.params.bountyAddress.toHexString()
+	refund.value = event.params.value
+	refund.refundTime = event.params.refundTime
+
+	let tokenBalance = TokenBalance.load(event.params.tokenAddress.toHexString())
+
+	if (!tokenBalance) {
+		tokenBalance = new TokenBalance(event.params.tokenAddress.toHexString())
+		refund.tokenBalance = tokenBalance.id
+	}
+
+	tokenBalance.totalValue = tokenBalance.totalValue.minus(event.params.value)
+
+	tokenBalance.save()
+	refund.save()
+}
+
+export function handleBountyPaidout(event: BountyPaidout): void {
+	let bountyPayoutId = `${event.params.bountyAddress.toHexString()}-${event.params.payoutAddress.toHexString()}-${event.params.tokenAddress.toHexString()}-${event.params.payoutTime}`
+	let bountyPayout = Payout.load(bountyPayoutId)
+
+	if (!bountyPayout) {
+		bountyPayout = new Payout(bountyPayoutId)
+		bountyPayout.value = new BigInt(0)
+	}
+
+	bountyPayout.tokenAddress = event.params.tokenAddress
+	bountyPayout.payoutAddress = event.params.payoutAddress.toHexString()
+	bountyPayout.bounty = event.params.bountyAddress.toHexString()
+	bountyPayout.value = event.params.value
+	bountyPayout.payoutTime = event.params.payoutTime
+
+	let tokenBalance = TokenBalance.load(event.params.tokenAddress.toHexString())
+
+	if (!tokenBalance) {
+		tokenBalance = new TokenBalance(event.params.tokenAddress.toHexString())
+		bountyPayout.tokenBalance = tokenBalance.id
+	}
+
+	tokenBalance.totalValue = tokenBalance.totalValue.minus(event.params.value)
+
+	tokenBalance.save()
+	bountyPayout.save()
 }

@@ -85,6 +85,49 @@
 			{
 				"indexed": false,
 				"internalType": "address",
+				"name": "payoutAddress",
+				"type": "address"
+			},
+			{
+				"indexed": false,
+				"internalType": "uint256",
+				"name": "value",
+				"type": "uint256"
+			},
+			{
+				"indexed": false,
+				"internalType": "uint256",
+				"name": "payoutTime",
+				"type": "uint256"
+			}
+		],
+		"name": "BountyPaidout",
+		"type": "event"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": false,
+				"internalType": "string",
+				"name": "bountyId",
+				"type": "string"
+			},
+			{
+				"indexed": false,
+				"internalType": "address",
+				"name": "bountyAddress",
+				"type": "address"
+			},
+			{
+				"indexed": false,
+				"internalType": "address",
+				"name": "tokenAddress",
+				"type": "address"
+			},
+			{
+				"indexed": false,
+				"internalType": "address",
 				"name": "sender",
 				"type": "address"
 			},
@@ -128,7 +171,7 @@
 			{
 				"indexed": false,
 				"internalType": "address",
-				"name": "funder",
+				"name": "sender",
 				"type": "address"
 			},
 			{
