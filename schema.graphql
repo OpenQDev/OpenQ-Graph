@@ -1,19 +1,10 @@
 # Deposit
-# type Deposit @entity {
-# 	id: ID!
-# 	tokenBalances: [TokenBalance!]
-# }
-
-# type TokenBalance {
-#   id: ID!
-#   amount: BigInt!
-#   token: Token!
-# }
-
-# type Token {
-#   id: ID!
-#   tokenBalances: [TokenBalance!]! @derivedFrom(field: "token")
-# }
+type Deposit @entity {
+	id: ID! # {bounty address}-{user address}-{token-address}
+	value: BigInt!
+	sender: User!
+	bounty: Bounty!
+}
 
 # Bounty
 type Bounty @entity {
@@ -23,6 +14,7 @@ type Bounty @entity {
 	bountyMintTime: BigInt!
 	status: BountyStatus!
 	closer: User
+	deposits: [Deposit!]! @derivedFrom(field: "bounty")
 }
 
 enum BountyStatus {
@@ -34,4 +26,5 @@ enum BountyStatus {
 type User @entity {
 	id: ID! # The user address to hex string
 	bountiesCreated: [Bounty!]! @derivedFrom(field: "issuer")
+	deposits: [Deposit!]! @derivedFrom(field: "sender")
 }
