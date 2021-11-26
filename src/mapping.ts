@@ -1,32 +1,41 @@
-import { BigInt } from "@graphprotocol/graph-ts"
-import { OpenQ, IssueClosed, IssueCreated, FundsReceived, DepositsRefunded } from "../generated/OpenQ/OpenQ"
-import { Issue } from "../generated/schema"
+import { BigInt, Value } from "@graphprotocol/graph-ts"
+import { OpenQ, BountyClosed, BountyCreated, DepositReceived, DepositRefunded } from "../generated/OpenQ/OpenQ"
+import { Bounty, User } from "../generated/schema"
 import { Address } from '@graphprotocol/graph-ts'
 
-export function handleIssueCreated(event: IssueCreated): void {
+export function handleBountyCreated(event: BountyCreated): void {
 	// Entities can be loaded from the store using a string ID; this ID
 	// needs to be unique across all entities of the same type
-	let entity = Issue.load(event.params.issueId)
+	let bounty = Bounty.load(event.params.bountyAddress.toHexString())
 
 	// Entities only exist after they have been saved to the store;
 	// `null` checks allow to create entities on demand
-	if (!entity) {
-		entity = new Issue(event.transaction.from.toHex())
+	if (!bounty) {
+		bounty = new Bounty(event.params.bountyAddress.toHexString())
 	}
 
+	if (!bounty) {
+		bounty = new Bounty(event.transaction.from.toHexString())
+	}
+
+	// Set bounty parameters
+	bounty.bountyId = event.params.bountyId
+	bounty.bountyMintTime = event.params.bountyMintTime
+	bounty.status = "OPEN"
+
+	let user = User.load(event.transaction.from.toHexString())
+
 	// Entities only exist after they have been saved to the store;
 	// `null` checks allow to create entities on demand
-	entity = new Issue(event.transaction.from.toHex())
+	if (!user) {
+		user = new User(event.transaction.from.toHexString())
+		user.save()
+	}
 
-	// Entity fields can be set based on event parameters
-	entity.id = event.params.issueId
-	entity.issueAddress = event.params.issueAddress
-	entity.issuer = event.params.issuer
-	entity.issueMintTime = event.params.issueMintTime
-	entity.claimed = false
+	bounty.issuer = user.id;
 
 	// Entities can be written to the store with `.save()`
-	entity.save()
+	bounty.save()
 
 	// Note: If a handler doesn't require existing field values, it is faster
 	// _not_ to load the entity from the store. Instead, create it fresh with
@@ -53,45 +62,65 @@ export function handleIssueCreated(event: IssueCreated): void {
 	// - contract.tokenAddresses(...)
 }
 
-export function handleIssueClosed(event: IssueClosed): void {
+// event BountyClosed(
+// 	string bountyId,
+// 	address indexed bountyAddress,
+// 	address indexed payoutAddress,
+// 	uint256 bountyClosedTime
+// );
+export function handleBountyClosed(event: BountyClosed): void {
 	// Entities can be loaded from the store using a string ID; this ID
 	// needs to be unique across all entities of the same type
-	let entity = Issue.load(event.params.issueId)
+	let entity = Bounty.load(event.params.bountyId)
 
 	// Entities only exist after they have been saved to the store;
 	// `null` checks allow to create entities on demand
 	if (!entity) {
-		entity = new Issue(event.transaction.from.toHex())
+		entity = new Bounty(event.transaction.from.toHex())
 	}
-
-	entity.claimed = true
-	entity.issueClosedTime = event.params.issueClosedTime
 
 	entity.save()
 }
 
-export function handleFundsReceived(event: FundsReceived): void {
+// event DepositReceived(
+// 	string bountyId,
+// 	address bountyAddress,
+// 	address tokenAddress,
+// 	address sender,
+// 	uint256 value,
+// 	uint256 receiveTime
+// );
+export function handleDepositReceived(event: DepositReceived): void {
 	// Entities can be loaded from the store using a string ID; this ID
 	// needs to be unique across all entities of the same type
-	let entity = Issue.load(event.params.issueId)
+	let entity = Bounty.load(event.params.bountyId)
 
 	// Entities only exist after they have been saved to the store;
 	// `null` checks allow to create entities on demand
 	if (!entity) {
-		entity = new Issue(event.transaction.from.toHex())
+		entity = new Bounty(event.transaction.from.toHex())
 	}
+
 	entity.save()
 }
 
-export function handleDepositsRefunded(event: DepositsRefunded): void {
+// event DepositRefunded(
+// 	string bountyId,
+// 	address bountyAddress,
+// 	address tokenAddress,
+// 	address funder,
+// 	uint256 value,
+// 	uint256 refundTime
+// );
+export function handleDepositRefunded(event: DepositRefunded): void {
 	// Entities can be loaded from the store using a string ID; this ID
 	// needs to be unique across all entities of the same type
-	let entity = Issue.load(event.params.issueId)
+	let entity = Bounty.load(event.params.bountyId)
 
 	// Entities only exist after they have been saved to the store;
 	// `null` checks allow to create entities on demand
 	if (!entity) {
-		entity = new Issue(event.transaction.from.toHex())
+		entity = new Bounty(event.transaction.from.toHex())
 	}
 	entity.save()
 }

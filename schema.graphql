@@ -1,20 +1,37 @@
-type Token @entity {
-  id: ID!
-  tokenBalances: [TokenBalance!]! @derivedFrom(field: "token")
+# Deposit
+# type Deposit @entity {
+# 	id: ID!
+# 	tokenBalances: [TokenBalance!]
+# }
+
+# type TokenBalance {
+#   id: ID!
+#   amount: BigInt!
+#   token: Token!
+# }
+
+# type Token {
+#   id: ID!
+#   tokenBalances: [TokenBalance!]! @derivedFrom(field: "token")
+# }
+
+# Bounty
+type Bounty @entity {
+	id: ID! # The bounty address to hex string
+	bountyId: String!
+	issuer: User!
+	bountyMintTime: BigInt!
+	status: BountyStatus!
+	closer: User
 }
 
-type TokenBalance @entity {
-  id: ID!
-  amount: Int!
-  token: Token!
+enum BountyStatus {
+  OPEN
+	CLOSED
 }
 
-type Issue @entity {
-	id: ID!
-	issuer: Bytes!
-	issueMintTime: BigInt!
-	issueClosedTime: BigInt!
-	issueAddress: Bytes!
-	deposits: [TokenBalance!]
-	claimed: Boolean!
+# User (Funder, Closer, Issuer)
+type User @entity {
+	id: ID! # The user address to hex string
+	bountiesCreated: [Bounty!]! @derivedFrom(field: "issuer")
 }

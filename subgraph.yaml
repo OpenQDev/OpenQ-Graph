@@ -6,25 +6,25 @@ dataSources:
     name: OpenQ
     network: mainnet
     source:
-      address: "0x9fE46736679d2D9a65F0992F2272dE9f3c7fa6e0"
+      address: "0x9fe46736679d2d9a65f0992f2272de9f3c7fa6e0"
       abi: OpenQ
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.5
       language: wasm/assemblyscript
       entities:
-        - IssueClosed
-        - IssueCreated
+        - Bounty
+        - User
       abis:
         - name: OpenQ
           file: ./abis/OpenQ.json
       eventHandlers:
-        - event: IssueCreated(string,indexed address,indexed address,uint256)
-          handler: handleIssueCreated
-        - event: IssueClosed(string,indexed address,indexed address,uint256)
-          handler: handleIssueClosed
-        - event: FundsReceived(string,address,address,address,uint256,uint256)
-          handler: handleFundsReceived
-        - event: DepositsRefunded(string,address,address,address,uint256,uint256)
-          handler: handleDepositsRefunded
+        - event: BountyCreated(string,address,address,uint256)
+          handler: handleBountyCreated
+        - event: BountyClosed(string,address,address,uint256)
+          handler: handleBountyClosed
+        - event: DepositReceived(string,address,address,address,uint256,uint256)
+          handler: handleDepositReceived
+        - event: DepositRefunded(string,address,address,address,uint256,uint256)
+          handler: handleDepositRefunded
       file: ./src/mapping.ts
