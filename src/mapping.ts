@@ -1,6 +1,6 @@
 import { BigInt, Value } from "@graphprotocol/graph-ts"
 import { BountyClosed, BountyCreated, DepositReceived, DepositRefunded, BountyPaidout } from "../generated/OpenQ/OpenQ"
-import { Bounty, User, Deposit, Refund, TokenBalance, Payout } from "../generated/schema"
+import { Bounty, User, Deposit, Refund, TokenBalance, Payout, UserEarnedTokenBalance, UserFundedTokenBalance } from "../generated/schema"
 
 export function handleBountyCreated(event: BountyCreated): void {
 	let bounty = Bounty.load(event.params.bountyAddress.toHexString())
@@ -50,23 +50,19 @@ export function handleDepositReceived(event: DepositReceived): void {
 
 	tokenBalance.totalValue = tokenBalance.totalValue.plus(event.params.value)
 
-	tokenBalance.save()
-	deposit.save()
-}
+	let userFundedTokenBalance = UserFundedTokenBalance.load(event.params.tokenAddress.toHexString())
 
-export function handleBountyClosed(event: BountyClosed): void {
-	let bounty = Bounty.load(event.params.bountyAddress.toHexString())
-
-	if (!bounty) {
-		throw Error("Closing a bounty that does not exit? Should have reverted in OpenQ.sol")
+	if (!userFundedTokenBalance) {
+		userFundedTokenBalance = new UserFundedTokenBalance(event.params.tokenAddress.toHexString())
+		userFundedTokenBalance.user = event.params.sender.toHexString()
 	}
 
-	bounty.payoutAddress = event.params.payoutAddress.toHexString()
-	bounty.bountyClosedTime = event.params.bountyClosedTime
+	userFundedTokenBalance.totalValue.plus(event.params.value)
 
+	userFundedTokenBalance.save()
+	tokenBalance.save()
+	deposit.save()
 
-
-	bounty.save()
 }
 
 export function handleDepositRefunded(event: DepositRefunded): void {
@@ -93,6 +89,16 @@ export function handleDepositRefunded(event: DepositRefunded): void {
 
 	tokenBalance.totalValue = tokenBalance.totalValue.minus(event.params.value)
 
+	let userFundedTokenBalance = UserFundedTokenBalance.load(event.params.tokenAddress.toHexString())
+
+	if (!userFundedTokenBalance) {
+		userFundedTokenBalance = new UserFundedTokenBalance(event.params.tokenAddress.toHexString())
+		userFundedTokenBalance.user = event.params.sender.toHexString()
+	}
+
+	userFundedTokenBalance.totalValue.minus(event.params.value)
+
+	userFundedTokenBalance.save()
 	tokenBalance.save()
 	refund.save()
 }
@@ -121,6 +127,30 @@ export function handleBountyPaidout(event: BountyPaidout): void {
 
 	tokenBalance.totalValue = tokenBalance.totalValue.minus(event.params.value)
 
+	let userEarnedTokenBalance = UserEarnedTokenBalance.load(event.params.tokenAddress.toHexString())
+
+	if (!userEarnedTokenBalance) {
+		userEarnedTokenBalance = new UserEarnedTokenBalance(event.params.tokenAddress.toHexString())
+		userEarnedTokenBalance.user = event.params.payoutAddress.toHexString()
+	}
+
+	userEarnedTokenBalance.totalValue.plus(event.params.value)
+
 	tokenBalance.save()
 	bountyPayout.save()
+	userEarnedTokenBalance.save()
+}
+
+export function handleBountyClosed(event: BountyClosed): void {
+	let bounty = Bounty.load(event.params.bountyAddress.toHexString())
+
+	if (!bounty) {
+		throw Error("Closing a bounty that does not exit? Should have reverted in OpenQ.sol")
+	}
+
+	bounty.payoutAddress = event.params.payoutAddress.toHexString()
+	bounty.bountyClosedTime = event.params.bountyClosedTime
+	bounty.status = "CLOSED"
+
+	bounty.save()
 }
