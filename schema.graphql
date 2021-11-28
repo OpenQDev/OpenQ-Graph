@@ -54,6 +54,7 @@ type UserFundedTokenBalance @entity {
 type Bounty @entity {
 	id: ID! # Bounty address hex string
 	bountyId: String!
+	bountyAddress: String!
 	issuer: User!
 	bountyMintTime: BigInt!
 	bountyClosedTime: BigInt

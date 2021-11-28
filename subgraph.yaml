@@ -6,7 +6,7 @@ dataSources:
     name: OpenQ
     network: mainnet
     source:
-      address: "0x99bbA657f2BbC93c02D617f8bA121cB8Fc104Acf"
+      address: "0x9fE46736679d2D9a65F0992F2272dE9f3c7fa6e0"
       abi: OpenQ
     mapping:
       kind: ethereum/events
@@ -15,6 +15,12 @@ dataSources:
       entities:
         - Bounty
         - User
+        - Deposit
+        - Refund
+        - Payout
+        - TokenBalance
+        - UserEarnedTokenBalance
+        - UserFundedTokenBalance
       abis:
         - name: OpenQ
           file: ./abis/OpenQ.json

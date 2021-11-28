@@ -9,6 +9,7 @@ export function handleBountyCreated(event: BountyCreated): void {
 		bounty = new Bounty(event.params.bountyAddress.toHexString())
 	}
 
+	bounty.bountyAddress = event.params.bountyAddress.toHexString()
 	bounty.bountyId = event.params.bountyId
 	bounty.bountyMintTime = event.params.bountyMintTime
 	bounty.status = "OPEN"
