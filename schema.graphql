@@ -6,6 +6,7 @@ type Deposit @entity {
 	bounty: Bounty!
 	tokenBalance: TokenBalance!
 	receiveTime: BigInt
+	organization: Organization!
 }
 
 type Refund @entity {
@@ -16,6 +17,7 @@ type Refund @entity {
 	bounty: Bounty!
 	tokenBalance: TokenBalance!
 	refundTime: BigInt
+	organization: Organization!
 }
 
 type Payout @entity {
@@ -26,6 +28,7 @@ type Payout @entity {
 	payoutAddress: User!
 	bounty: Bounty!
 	tokenBalance: TokenBalance!
+	organization: Organization!
 }
 
 # All deposits, refunds and total values per token
@@ -60,9 +63,18 @@ type Bounty @entity {
 	bountyClosedTime: BigInt
 	status: BountyStatus!
 	payoutAddress: User
+	organization: Organization!
 	deposits: [Deposit!]! @derivedFrom(field: "bounty")
 	refunds: [Refund!]! @derivedFrom(field: "bounty")
 	payouts: [Payout!]! @derivedFrom(field: "bounty")
+}
+
+type Organization @entity {
+	id: ID!
+	bountiesCreated: [Bounty!]! @derivedFrom(field: "organization")
+	deposits: [Deposit!]! @derivedFrom(field: "organization")
+	refunds: [Refund!]! @derivedFrom(field: "organization")
+	payouts: [Payout!]! @derivedFrom(field: "organization")
 }
 
 # User (Funder, Closer, Issuer)

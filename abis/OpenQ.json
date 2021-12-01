@@ -10,6 +10,12 @@
 			},
 			{
 				"indexed": false,
+				"internalType": "string",
+				"name": "organization",
+				"type": "string"
+			},
+			{
+				"indexed": false,
 				"internalType": "address",
 				"name": "bountyAddress",
 				"type": "address"
@@ -41,6 +47,12 @@
 			},
 			{
 				"indexed": false,
+				"internalType": "string",
+				"name": "organization",
+				"type": "string"
+			},
+			{
+				"indexed": false,
 				"internalType": "address",
 				"name": "issuerAddress",
 				"type": "address"
@@ -68,6 +80,12 @@
 				"indexed": false,
 				"internalType": "string",
 				"name": "bountyId",
+				"type": "string"
+			},
+			{
+				"indexed": false,
+				"internalType": "string",
+				"name": "organization",
 				"type": "string"
 			},
 			{
@@ -115,6 +133,12 @@
 			},
 			{
 				"indexed": false,
+				"internalType": "string",
+				"name": "organization",
+				"type": "string"
+			},
+			{
+				"indexed": false,
 				"internalType": "address",
 				"name": "bountyAddress",
 				"type": "address"
@@ -154,6 +178,12 @@
 				"indexed": false,
 				"internalType": "string",
 				"name": "bountyId",
+				"type": "string"
+			},
+			{
+				"indexed": false,
+				"internalType": "string",
+				"name": "organization",
 				"type": "string"
 			},
 			{
@@ -337,6 +367,11 @@
 			{
 				"internalType": "string",
 				"name": "_id",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "_organization",
 				"type": "string"
 			}
 		],

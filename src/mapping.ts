@@ -1,6 +1,6 @@
 import { BigInt, Value } from "@graphprotocol/graph-ts"
 import { BountyClosed, BountyCreated, DepositReceived, DepositRefunded, BountyPaidout } from "../generated/OpenQ/OpenQ"
-import { Bounty, User, Deposit, Refund, TokenBalance, Payout, UserEarnedTokenBalance, UserFundedTokenBalance } from "../generated/schema"
+import { Bounty, User, Deposit, Refund, TokenBalance, Payout, Organization, UserEarnedTokenBalance, UserFundedTokenBalance } from "../generated/schema"
 
 export function handleBountyCreated(event: BountyCreated): void {
 	let bounty = Bounty.load(event.params.bountyAddress.toHexString())
@@ -23,6 +23,15 @@ export function handleBountyCreated(event: BountyCreated): void {
 
 	bounty.issuer = user.id;
 
+	let organization = Organization.load(event.params.organization)
+
+	if (!organization) {
+		organization = new Organization(event.params.organization)
+		organization.save()
+	}
+
+	bounty.organization = organization.id
+
 	bounty.save()
 }
 
@@ -38,6 +47,7 @@ export function handleDepositReceived(event: DepositReceived): void {
 	deposit.tokenAddress = event.params.tokenAddress
 	deposit.sender = event.params.sender.toHexString()
 	deposit.bounty = event.params.bountyAddress.toHexString()
+	deposit.organization = event.params.organization
 
 	deposit.value = event.params.value
 	deposit.receiveTime = event.params.receiveTime
@@ -80,6 +90,7 @@ export function handleDepositRefunded(event: DepositRefunded): void {
 	refund.bounty = event.params.bountyAddress.toHexString()
 	refund.value = event.params.value
 	refund.refundTime = event.params.refundTime
+	refund.organization = event.params.organization
 
 	let tokenBalance = TokenBalance.load(event.params.tokenAddress.toHexString())
 
@@ -118,6 +129,7 @@ export function handleBountyPaidout(event: BountyPaidout): void {
 	bountyPayout.bounty = event.params.bountyAddress.toHexString()
 	bountyPayout.value = event.params.value
 	bountyPayout.payoutTime = event.params.payoutTime
+	bountyPayout.organization = event.params.organization
 
 	let tokenBalance = TokenBalance.load(event.params.tokenAddress.toHexString())
 
