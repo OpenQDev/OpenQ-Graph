@@ -1,6 +1,8 @@
 type Deposit @entity {
 	id: ID! # {bounty address}-{user address}-{token-address}-{receiveTime}
 	tokenAddress: Bytes!
+	symbol: Bytes!
+	name: Bytes!
 	value: BigInt!
 	sender: User!
 	bounty: Bounty!
@@ -31,29 +33,6 @@ type Payout @entity {
 	organization: Organization!
 }
 
-# All deposits, refunds and total values per token
-type TokenBalance @entity {
-	id: ID!
-	totalValue: BigInt!
-	deposits: [Deposit!]! @derivedFrom(field: "tokenBalance")
-	refunds: [Refund!]! @derivedFrom(field: "tokenBalance")
-	payouts: [Payout!]! @derivedFrom(field: "tokenBalance")
-}
-
-# Total payouts per user per token
-type UserEarnedTokenBalance @entity {
-	id: ID!
-	user: User!
-	totalValue: BigInt!
-}
-
-# Total funding per user per token (equal to Deposits - Refunds)
-type UserFundedTokenBalance @entity {
-	id: ID!
-	user: User!
-	totalValue: BigInt!
-}
-
 type Bounty @entity {
 	id: ID! # Bounty address hex string
 	bountyId: String!
@@ -64,6 +43,7 @@ type Bounty @entity {
 	status: BountyStatus!
 	payoutAddress: User
 	organization: Organization!
+	bountyTokenBalances: [BountyTokenBalance!]! @derivedFrom(field: "bounty")
 	deposits: [Deposit!]! @derivedFrom(field: "bounty")
 	refunds: [Refund!]! @derivedFrom(field: "bounty")
 	payouts: [Payout!]! @derivedFrom(field: "bounty")
@@ -72,6 +52,7 @@ type Bounty @entity {
 type Organization @entity {
 	id: ID!
 	bountiesCreated: [Bounty!]! @derivedFrom(field: "organization")
+	fundedTokenBalances: [OrganizationFundedTokenBalance!]! @derivedFrom(field: "organization")
 	deposits: [Deposit!]! @derivedFrom(field: "organization")
 	refunds: [Refund!]! @derivedFrom(field: "organization")
 	payouts: [Payout!]! @derivedFrom(field: "organization")
@@ -85,11 +66,74 @@ type User @entity {
 	deposits: [Deposit!]! @derivedFrom(field: "sender")
 	refunds: [Refund!]! @derivedFrom(field: "sender")
 	payouts: [Payout!]! @derivedFrom(field: "payoutAddress")
-	totalEarnedTokenBalance: [UserEarnedTokenBalance!]! @derivedFrom(field: "user")
-	totalFundedTokenBalance: [UserFundedTokenBalance!]! @derivedFrom(field: "user")
+	earnedTokenBalances: [UserEarnedTokenBalance!]! @derivedFrom(field: "user")
+	fundedTokenBalances: [UserFundedTokenBalance!]! @derivedFrom(field: "user")
 }
 
 enum BountyStatus {
   OPEN
 	CLOSED
+}
+
+# TOKEN BALANCES
+
+# All deposits, refunds and total values per token
+type TokenBalance @entity {
+	id: ID!
+	volume: BigInt!
+	deposits: [Deposit!]! @derivedFrom(field: "tokenBalance")
+	refunds: [Refund!]! @derivedFrom(field: "tokenBalance")
+	payouts: [Payout!]! @derivedFrom(field: "tokenBalance")
+}
+
+# Incremented for each deposit in Token denomination
+# Decremented for each refund in Token denomination
+type FundedTokenBalance @entity {
+	id: ID! #tokenAddress
+	tokenAddress: Bytes!
+	volume: BigInt!
+}
+
+# Incremented for each payout in Token denomination
+type PayoutTokenBalance @entity {
+	id: ID! #tokenAddress
+	tokenAddress: Bytes!
+	volume: BigInt!
+}
+
+# Incremented for each Deposit for Bounty
+# Decremented for each Refund or Payout for Bounty
+type BountyTokenBalance @entity {
+	id: ID! # bountyAddres-tokenAddress
+	bounty: Bounty!
+	tokenAddress: Bytes!
+	volume: BigInt!
+}
+
+# Incremented for each Deposit for Bounty with their Organization Name
+# Decremented for each Refund for Bounty (not Payout however, as this was successfully funded)
+type OrganizationFundedTokenBalance @entity {
+	id: ID! # organizationId-tokenAddress
+	organization: Organization!
+	tokenAddress: Bytes!
+	volume: BigInt!
+}
+
+# Total payouts per user per token
+# Incremented for each Payout for which this user is payoutAddress
+type UserEarnedTokenBalance @entity {
+	id: ID! # userAddress-tokenAddress
+	user: User!
+	tokenAddress: Bytes!
+	volume: BigInt!
+}
+
+# Total funding per user per token
+# Incremented for each Deposit
+# Decremented for each Refund
+type UserFundedTokenBalance @entity {
+	id: ID! # userAddress-bountyAddress
+	user: User!
+	tokenAddress: Bytes!
+	volume: BigInt!
 }
