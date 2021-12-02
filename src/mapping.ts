@@ -5,13 +5,16 @@ import {
 	User,
 	Deposit,
 	Refund,
-	TokenBalance,
 	Payout,
 	Organization,
-	UserEarnedTokenBalance,
 	UserFundedTokenBalance,
-	BountyTokenBalance,
-	OrganizationFundedTokenBalance
+	UserPayoutTokenBalance,
+	BountyFundedTokenBalance,
+	OrganizationFundedTokenBalance,
+	OrganizationPayoutTokenBalance,
+	TokenEvents,
+	FundedTokenBalance,
+	PayoutTokenBalance
 } from "../generated/schema"
 
 export function handleBountyCreated(event: BountyCreated): void {
@@ -65,15 +68,22 @@ export function handleDepositReceived(event: DepositReceived): void {
 	deposit.value = event.params.value
 	deposit.receiveTime = event.params.receiveTime
 
-	// UPSERT TOTAL TOKEN BALANCE
-	let tokenBalance = TokenBalance.load(event.params.tokenAddress.toHexString())
+	// UPSERT TOKEN EVENT
+	let tokenEvents = TokenEvents.load(event.params.tokenAddress.toHexString())
 
-	if (!tokenBalance) {
-		tokenBalance = new TokenBalance(event.params.tokenAddress.toHexString())
-		deposit.tokenBalance = tokenBalance.id
+	if (!tokenEvents) {
+		tokenEvents = new TokenEvents(event.params.tokenAddress.toHexString())
+		deposit.tokenEvents = tokenEvents.id
 	}
 
-	tokenBalance.volume = tokenBalance.volume.plus(event.params.value)
+	// UPSERT TOTAL FUNDED TOKEN BALANCE
+	let fundedTokenBalance = FundedTokenBalance.load(event.params.tokenAddress.toHexString())
+
+	if (!fundedTokenBalance) {
+		fundedTokenBalance = new FundedTokenBalance(event.params.tokenAddress.toHexString())
+	}
+
+	fundedTokenBalance.volume = fundedTokenBalance.volume.plus(event.params.value)
 
 	// UPSERT USER FUNDED TOKEN BALANCE
 	const userFundedTokenBalanceId = `${event.params.sender.toHexString()}-${event.params.tokenAddress.toHexString()}`
@@ -90,10 +100,10 @@ export function handleDepositReceived(event: DepositReceived): void {
 
 	// UPSERT BOUNTY TOKEN BALANCE
 	const bountyTokenBalanceId = `${event.params.bountyAddress.toHexString()}-${event.params.tokenAddress.toHexString()}`
-	let bountyTokenBalance = BountyTokenBalance.load(bountyTokenBalanceId)
+	let bountyTokenBalance = BountyFundedTokenBalance.load(bountyTokenBalanceId)
 
 	if (!bountyTokenBalance) {
-		bountyTokenBalance = new BountyTokenBalance(bountyTokenBalanceId)
+		bountyTokenBalance = new BountyFundedTokenBalance(bountyTokenBalanceId)
 		bountyTokenBalance.bounty = event.params.bountyAddress.toHexString()
 		bountyTokenBalance.tokenAddress = event.params.tokenAddress
 		bountyTokenBalance.save()
@@ -101,11 +111,23 @@ export function handleDepositReceived(event: DepositReceived): void {
 
 	bountyTokenBalance.volume = bountyTokenBalance.volume.plus(event.params.value)
 
+	// UPSERT ORGANIZATION FUNDED TOKEN BALANCE
+	const organizationFundedTokenBalanceID = `${event.params.sender.toHexString()}-${event.params.tokenAddress.toHexString()}`
+	let organizationFundedTokenBalance = OrganizationFundedTokenBalance.load(organizationFundedTokenBalanceID)
+
+	if (!organizationFundedTokenBalance) {
+		organizationFundedTokenBalance = new OrganizationFundedTokenBalance(organizationFundedTokenBalanceID)
+	}
+
+	organizationFundedTokenBalance.volume = organizationFundedTokenBalance.volume.plus(event.params.value)
+
 	// SAVE ALL ENTITIES
+	deposit.save()
+	tokenEvents.save()
+	fundedTokenBalance.save()
 	bountyTokenBalance.save()
 	userFundedTokenBalance.save()
-	tokenBalance.save()
-	deposit.save()
+	organizationFundedTokenBalance.save()
 }
 
 export function handleDepositRefunded(event: DepositRefunded): void {
@@ -124,70 +146,127 @@ export function handleDepositRefunded(event: DepositRefunded): void {
 	refund.refundTime = event.params.refundTime
 	refund.organization = event.params.organization
 
-	let tokenBalance = TokenBalance.load(event.params.tokenAddress.toHexString())
+	// UPSERT TOKEN EVENTS
+	let tokenEvents = TokenEvents.load(event.params.tokenAddress.toHexString())
 
-	if (!tokenBalance) {
-		tokenBalance = new TokenBalance(event.params.tokenAddress.toHexString())
-		refund.tokenBalance = tokenBalance.id
+	if (!tokenEvents) {
+		tokenEvents = new TokenEvents(event.params.tokenAddress.toHexString())
+		refund.tokenEvents = tokenEvents.id
 	}
 
-	tokenBalance.volume = tokenBalance.volume.minus(event.params.value)
+	// UPSERT FUNDED TOKEN BALANCES
+	let fundedTokenBalance = FundedTokenBalance.load(event.params.tokenAddress.toHexString())
 
-	let userFundedTokenBalance = UserFundedTokenBalance.load(event.params.tokenAddress.toHexString())
+	if (!fundedTokenBalance) {
+		fundedTokenBalance = new FundedTokenBalance(event.params.tokenAddress.toHexString())
+	}
+
+	fundedTokenBalance.volume = fundedTokenBalance.volume.minus(event.params.value)
+
+	// UPSERT USER FUNDED TOKEN BALANCES
+	const userFundedTokenBalanceId = `${event.params.sender.toHexString()}-${event.params.tokenAddress.toHexString()}`
+	let userFundedTokenBalance = UserFundedTokenBalance.load(userFundedTokenBalanceId)
 
 	if (!userFundedTokenBalance) {
-		userFundedTokenBalance = new UserFundedTokenBalance(event.params.tokenAddress.toHexString())
+		userFundedTokenBalance = new UserFundedTokenBalance(userFundedTokenBalanceId)
 		userFundedTokenBalance.user = event.params.sender.toHexString()
 	}
 
-	userFundedTokenBalance.volume.minus(event.params.value)
+	userFundedTokenBalance.volume = userFundedTokenBalance.volume.minus(event.params.value)
+
+	// UPSERT USER FUNDED TOKEN BALANCES
+	const organizationFundedTokenBalanceId = `${event.params.organization}-${event.params.tokenAddress.toHexString()}`
+	let organizationFundedTokenBalance = OrganizationFundedTokenBalance.load(organizationFundedTokenBalanceId)
+
+	if (!organizationFundedTokenBalance) {
+		organizationFundedTokenBalance = new OrganizationFundedTokenBalance(organizationFundedTokenBalanceId)
+		organizationFundedTokenBalance.organization = event.params.organization
+	}
+
+	organizationFundedTokenBalance.volume = organizationFundedTokenBalance.volume.minus(event.params.value)
+
+	// UPSERT BOUNTY TOKEN BALANCE
+	const bountyTokenBalanceId = `${event.params.bountyAddress.toHexString()}-${event.params.tokenAddress.toHexString()}`
+	let bountyTokenBalance = BountyFundedTokenBalance.load(bountyTokenBalanceId)
+
+	if (!bountyTokenBalance) {
+		bountyTokenBalance = new BountyFundedTokenBalance(bountyTokenBalanceId)
+		bountyTokenBalance.bounty = event.params.bountyAddress.toHexString()
+		bountyTokenBalance.tokenAddress = event.params.tokenAddress
+		bountyTokenBalance.save()
+	}
+
+	bountyTokenBalance.volume = bountyTokenBalance.volume.minus(event.params.value)
 
 	// SAVE ALL ENTITIES
-	userFundedTokenBalance.save()
-	tokenBalance.save()
 	refund.save()
+	tokenEvents.save()
+	fundedTokenBalance.save()
+	bountyTokenBalance.save()
+	userFundedTokenBalance.save()
+	organizationFundedTokenBalance.save()
 }
 
 export function handleBountyPaidout(event: BountyPaidout): void {
 	let bountyPayoutId = `${event.params.bountyAddress.toHexString()}-${event.params.payoutAddress.toHexString()}-${event.params.tokenAddress.toHexString()}-${event.params.payoutTime}`
-	let bountyPayout = Payout.load(bountyPayoutId)
+	let payout = Payout.load(bountyPayoutId)
 
-	if (!bountyPayout) {
-		bountyPayout = new Payout(bountyPayoutId)
-		bountyPayout.value = new BigInt(0)
+	if (!payout) {
+		payout = new Payout(bountyPayoutId)
+		payout.value = new BigInt(0)
 	}
 
-	bountyPayout.tokenAddress = event.params.tokenAddress
-	bountyPayout.payoutAddress = event.params.payoutAddress.toHexString()
-	bountyPayout.bounty = event.params.bountyAddress.toHexString()
-	bountyPayout.value = event.params.value
-	bountyPayout.payoutTime = event.params.payoutTime
-	bountyPayout.organization = event.params.organization
+	payout.tokenAddress = event.params.tokenAddress
+	payout.payoutAddress = event.params.payoutAddress.toHexString()
+	payout.bounty = event.params.bountyAddress.toHexString()
+	payout.value = event.params.value
+	payout.payoutTime = event.params.payoutTime
+	payout.organization = event.params.organization
 
-	// DECREMENT TOTAL TOKEN BALANCE
-	let tokenBalance = TokenBalance.load(event.params.tokenAddress.toHexString())
+	// UPSERT TOKEN EVENTS
+	let tokenEvents = TokenEvents.load(event.params.tokenAddress.toHexString())
 
-	if (!tokenBalance) {
-		tokenBalance = new TokenBalance(event.params.tokenAddress.toHexString())
-		bountyPayout.tokenBalance = tokenBalance.id
+	if (!tokenEvents) {
+		tokenEvents = new TokenEvents(event.params.tokenAddress.toHexString())
+		payout.tokenEvents = tokenEvents.id
 	}
 
-	tokenBalance.volume = tokenBalance.volume.minus(event.params.value)
+	// UPSERT USER PAYOUT TOKEN BALANCE
+	const userPayoutTokenBalanceId = `${event.params.payoutAddress.toHexString()}-${event.params.tokenAddress.toHexString()}`
+	let userPayoutTokenBalance = UserPayoutTokenBalance.load(userPayoutTokenBalanceId)
 
-	// UPSERT USER EARNED TOKEN BALANCE
-	let userEarnedTokenBalance = UserEarnedTokenBalance.load(event.params.tokenAddress.toHexString())
-
-	if (!userEarnedTokenBalance) {
-		userEarnedTokenBalance = new UserEarnedTokenBalance(event.params.tokenAddress.toHexString())
-		userEarnedTokenBalance.user = event.params.payoutAddress.toHexString()
+	if (!userPayoutTokenBalance) {
+		userPayoutTokenBalance = new UserPayoutTokenBalance(userPayoutTokenBalanceId)
+		userPayoutTokenBalance.user = event.params.payoutAddress.toHexString()
 	}
 
-	userEarnedTokenBalance.volume.plus(event.params.value)
+	userPayoutTokenBalance.volume = userPayoutTokenBalance.volume.plus(event.params.value)
+
+	// UPSERT ORGANIZATION PAYOUT TOKEN BALANCE
+	const organizationPayoutTokenBalanceId = `${event.params.organization}-${event.params.tokenAddress.toHexString()}`
+	let organizationPayoutTokenBalance = OrganizationPayoutTokenBalance.load(organizationPayoutTokenBalanceId)
+
+	if (!organizationPayoutTokenBalance) {
+		organizationPayoutTokenBalance = new OrganizationPayoutTokenBalance(organizationPayoutTokenBalanceId)
+		organizationPayoutTokenBalance.organization = event.params.organization
+	}
+
+	organizationPayoutTokenBalance.volume = organizationPayoutTokenBalance.volume.plus(event.params.value)
+
+	// UPSERT TOTAL FUNDED TOKEN BALANCE
+	let payoutTokenBalance = PayoutTokenBalance.load(event.params.tokenAddress.toHexString())
+
+	if (!payoutTokenBalance) {
+		payoutTokenBalance = new PayoutTokenBalance(event.params.tokenAddress.toHexString())
+	}
+
+	payoutTokenBalance.volume = payoutTokenBalance.volume.plus(event.params.value)
 
 	// SAVE ALL ENTITIES
-	tokenBalance.save()
-	bountyPayout.save()
-	userEarnedTokenBalance.save()
+	payout.save()
+	tokenEvents.save()
+	userPayoutTokenBalance.save()
+	payoutTokenBalance.save()
 }
 
 export function handleBountyClosed(event: BountyClosed): void {

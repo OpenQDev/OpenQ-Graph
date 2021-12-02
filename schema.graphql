@@ -10,7 +10,7 @@ type Deposit @entity {
 	bounty: Bounty!
 	receiveTime: BigInt
 	organization: Organization!
-	tokenBalance: TokenBalance!
+	tokenEvents: TokenEvents!
 }
 
 type Refund @entity {
@@ -21,7 +21,7 @@ type Refund @entity {
 	bounty: Bounty!
 	refundTime: BigInt
 	organization: Organization!
-	tokenBalance: TokenBalance!
+	tokenEvents: TokenEvents!
 }
 
 type Payout @entity {
@@ -32,32 +32,30 @@ type Payout @entity {
 	payoutAddress: User!
 	bounty: Bounty!
 	organization: Organization!
-	tokenBalance: TokenBalance!
+	tokenEvents: TokenEvents!
 }
 
 # ----------------- TOKEN BALANCE -----------------
 # Total token balances for Token overall
 
 # All deposits, refunds, and payouts that have ever happened for a token
-type TokenBalance @entity {
+type TokenEvents @entity {
 	id: ID! # tokenAddress
-	deposits: [Deposit!]! @derivedFrom(field: "tokenBalance")
-	refunds: [Refund!]! @derivedFrom(field: "tokenBalance")
-	payouts: [Payout!]! @derivedFrom(field: "tokenBalance")
+	deposits: [Deposit!]! @derivedFrom(field: "tokenEvents")
+	refunds: [Refund!]! @derivedFrom(field: "tokenEvents")
+	payouts: [Payout!]! @derivedFrom(field: "tokenEvents")
 }
 
 # Incremented for each Deposit
 # Decremented for each Refund
 type FundedTokenBalance @entity {
 	id: ID! #tokenAddress
-	tokenAddress: Bytes!
 	volume: BigInt!
 }
 
 # Incremented for each Payout
 type PayoutTokenBalance @entity {
 	id: ID! #tokenAddress
-	tokenAddress: Bytes!
 	volume: BigInt!
 }
 
