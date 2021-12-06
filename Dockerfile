@@ -5,6 +5,7 @@ RUN apk update && apk upgrade && \
 COPY package.json .
 RUN yarn
 COPY . .
+RUN yarn prepare-local
 RUN yarn codegen
 CMD curl --connect-timeout 5 \
 	--retry-connrefused \

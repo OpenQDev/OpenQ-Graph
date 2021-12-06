@@ -205,10 +205,6 @@ export function handleDepositRefunded(event: DepositRefunded): void {
 
 	bountyTokenBalance.volume = bountyTokenBalance.volume.minus(event.params.value)
 
-	if (bountyTokenBalance.volume.equals(new BigInt(0))) {
-		bountyTokenBalance.id = null
-	}
-
 	// SAVE ALL ENTITIES
 	refund.save()
 	tokenEvents.save()
