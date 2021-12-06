@@ -73,8 +73,10 @@ export function handleDepositReceived(event: DepositReceived): void {
 
 	if (!tokenEvents) {
 		tokenEvents = new TokenEvents(event.params.tokenAddress.toHexString())
-		deposit.tokenEvents = tokenEvents.id
+		tokenEvents.save()
 	}
+
+	deposit.tokenEvents = tokenEvents.id
 
 	// UPSERT TOTAL FUNDED TOKEN BALANCE
 	let fundedTokenBalance = FundedTokenBalance.load(event.params.tokenAddress.toHexString())
@@ -117,6 +119,8 @@ export function handleDepositReceived(event: DepositReceived): void {
 
 	if (!organizationFundedTokenBalance) {
 		organizationFundedTokenBalance = new OrganizationFundedTokenBalance(organizationFundedTokenBalanceID)
+		organizationFundedTokenBalance.organization = event.params.organization
+		organizationFundedTokenBalance.tokenAddress = event.params.tokenAddress
 	}
 
 	organizationFundedTokenBalance.volume = organizationFundedTokenBalance.volume.plus(event.params.value)
@@ -151,8 +155,9 @@ export function handleDepositRefunded(event: DepositRefunded): void {
 
 	if (!tokenEvents) {
 		tokenEvents = new TokenEvents(event.params.tokenAddress.toHexString())
-		refund.tokenEvents = tokenEvents.id
 	}
+
+	refund.tokenEvents = tokenEvents.id
 
 	// UPSERT FUNDED TOKEN BALANCES
 	let fundedTokenBalance = FundedTokenBalance.load(event.params.tokenAddress.toHexString())
@@ -170,6 +175,7 @@ export function handleDepositRefunded(event: DepositRefunded): void {
 	if (!userFundedTokenBalance) {
 		userFundedTokenBalance = new UserFundedTokenBalance(userFundedTokenBalanceId)
 		userFundedTokenBalance.user = event.params.sender.toHexString()
+		userFundedTokenBalance.tokenAddress = event.params.tokenAddress
 	}
 
 	userFundedTokenBalance.volume = userFundedTokenBalance.volume.minus(event.params.value)
@@ -181,6 +187,7 @@ export function handleDepositRefunded(event: DepositRefunded): void {
 	if (!organizationFundedTokenBalance) {
 		organizationFundedTokenBalance = new OrganizationFundedTokenBalance(organizationFundedTokenBalanceId)
 		organizationFundedTokenBalance.organization = event.params.organization
+		organizationFundedTokenBalance.tokenAddress = event.params.tokenAddress
 	}
 
 	organizationFundedTokenBalance.volume = organizationFundedTokenBalance.volume.minus(event.params.value)
@@ -197,6 +204,10 @@ export function handleDepositRefunded(event: DepositRefunded): void {
 	}
 
 	bountyTokenBalance.volume = bountyTokenBalance.volume.minus(event.params.value)
+
+	if (bountyTokenBalance.volume.equals(new BigInt(0))) {
+		bountyTokenBalance.id = null
+	}
 
 	// SAVE ALL ENTITIES
 	refund.save()
@@ -238,6 +249,7 @@ export function handleBountyPaidout(event: BountyPaidout): void {
 	if (!userPayoutTokenBalance) {
 		userPayoutTokenBalance = new UserPayoutTokenBalance(userPayoutTokenBalanceId)
 		userPayoutTokenBalance.user = event.params.payoutAddress.toHexString()
+		userPayoutTokenBalance.tokenAddress = event.params.tokenAddress
 	}
 
 	userPayoutTokenBalance.volume = userPayoutTokenBalance.volume.plus(event.params.value)
@@ -249,6 +261,7 @@ export function handleBountyPaidout(event: BountyPaidout): void {
 	if (!organizationPayoutTokenBalance) {
 		organizationPayoutTokenBalance = new OrganizationPayoutTokenBalance(organizationPayoutTokenBalanceId)
 		organizationPayoutTokenBalance.organization = event.params.organization
+		organizationPayoutTokenBalance.tokenAddress = event.params.tokenAddress
 	}
 
 	organizationPayoutTokenBalance.volume = organizationPayoutTokenBalance.volume.plus(event.params.value)
