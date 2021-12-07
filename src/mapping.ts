@@ -1,4 +1,4 @@
-import { BigInt, Value } from "@graphprotocol/graph-ts"
+import { BigInt, Value, store } from "@graphprotocol/graph-ts"
 import { BountyClosed, BountyCreated, DepositReceived, DepositRefunded, BountyPaidout } from "../generated/OpenQ/OpenQ"
 import {
 	Bounty,
@@ -16,6 +16,8 @@ import {
 	FundedTokenBalance,
 	PayoutTokenBalance
 } from "../generated/schema"
+
+// store.remove('Deposit', id)
 
 export function handleBountyCreated(event: BountyCreated): void {
 	let bounty = Bounty.load(event.params.bountyAddress.toHexString())
