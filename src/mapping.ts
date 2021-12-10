@@ -1,4 +1,4 @@
-import { BigInt, Value, store } from "@graphprotocol/graph-ts"
+import { BigInt, store } from "@graphprotocol/graph-ts"
 import { BountyClosed, BountyCreated, DepositReceived, DepositRefunded, BountyPaidout } from "../generated/OpenQ/OpenQ"
 import {
 	Bounty,
@@ -16,8 +16,6 @@ import {
 	FundedTokenBalance,
 	PayoutTokenBalance
 } from "../generated/schema"
-
-// store.remove('Deposit', id)
 
 export function handleBountyCreated(event: BountyCreated): void {
 	let bounty = Bounty.load(event.params.bountyAddress.toHexString())
@@ -214,6 +212,22 @@ export function handleDepositRefunded(event: DepositRefunded): void {
 	bountyTokenBalance.save()
 	userFundedTokenBalance.save()
 	organizationFundedTokenBalance.save()
+
+	if (bountyTokenBalance.volume.equals(new BigInt(0))) {
+		store.remove('BountyFundedTokenBalance', bountyTokenBalanceId)
+	}
+
+	if (organizationFundedTokenBalance.volume.equals(new BigInt(0))) {
+		store.remove('OrganizationFundedTokenBalance', organizationFundedTokenBalance.id)
+	}
+
+	if (userFundedTokenBalance.volume.equals(new BigInt(0))) {
+		store.remove('UserFundedTokenBalance', userFundedTokenBalance.id)
+	}
+
+	if (fundedTokenBalance.volume.equals(new BigInt(0))) {
+		store.remove('FundedTokenBalance', fundedTokenBalance.id)
+	}
 }
 
 export function handleBountyPaidout(event: BountyPaidout): void {
