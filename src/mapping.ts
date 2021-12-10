@@ -61,12 +61,21 @@ export function handleDepositReceived(event: DepositReceived): void {
 	}
 
 	deposit.tokenAddress = event.params.tokenAddress
-	deposit.sender = event.params.sender.toHexString()
 	deposit.bounty = event.params.bountyAddress.toHexString()
 	deposit.organization = event.params.organization
 
 	deposit.value = event.params.value
 	deposit.receiveTime = event.params.receiveTime
+
+	// UPSERT USER
+	let user = User.load(event.transaction.from.toHexString())
+
+	if (!user) {
+		user = new User(event.transaction.from.toHexString())
+		user.save()
+	}
+
+	deposit.sender = user.id
 
 	// UPSERT TOKEN EVENT
 	let tokenEvents = TokenEvents.load(event.params.tokenAddress.toHexString())
@@ -240,11 +249,20 @@ export function handleBountyPaidout(event: BountyPaidout): void {
 	}
 
 	payout.tokenAddress = event.params.tokenAddress
-	payout.payoutAddress = event.params.payoutAddress.toHexString()
 	payout.bounty = event.params.bountyAddress.toHexString()
 	payout.value = event.params.value
 	payout.payoutTime = event.params.payoutTime
 	payout.organization = event.params.organization
+
+	// UPSERT USER
+	let user = User.load(event.params.payoutAddress.toHexString())
+
+	if (!user) {
+		user = new User(event.params.payoutAddress.toHexString())
+		user.save()
+	}
+
+	payout.payoutAddress = user.id
 
 	// UPSERT TOKEN EVENTS
 	let tokenEvents = TokenEvents.load(event.params.tokenAddress.toHexString())
