@@ -109,7 +109,7 @@
 			{
 				"indexed": false,
 				"internalType": "uint256",
-				"name": "value",
+				"name": "volume",
 				"type": "uint256"
 			},
 			{
@@ -158,7 +158,7 @@
 			{
 				"indexed": false,
 				"internalType": "uint256",
-				"name": "value",
+				"name": "volume",
 				"type": "uint256"
 			},
 			{
@@ -207,7 +207,7 @@
 			{
 				"indexed": false,
 				"internalType": "uint256",
-				"name": "value",
+				"name": "volume",
 				"type": "uint256"
 			},
 			{
@@ -328,7 +328,7 @@
 			},
 			{
 				"internalType": "uint256",
-				"name": "_value",
+				"name": "_volume",
 				"type": "uint256"
 			}
 		],

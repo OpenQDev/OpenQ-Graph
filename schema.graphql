@@ -3,9 +3,7 @@
 type Deposit @entity {
 	id: ID! # {bounty address}-{user address}-{token-address}-{receiveTime}
 	tokenAddress: Bytes!
-	symbol: Bytes!
-	name: Bytes!
-	value: BigInt!
+	volume: BigInt!
 	sender: User!
 	bounty: Bounty!
 	receiveTime: BigInt
@@ -16,7 +14,7 @@ type Deposit @entity {
 type Refund @entity {
 	id: ID! # {bounty address}-{user address}-{token-address}-{refundTime}
 	tokenAddress: Bytes!
-	value: BigInt!
+	volume: BigInt!
 	sender: User!
 	bounty: Bounty!
 	refundTime: BigInt
@@ -27,7 +25,7 @@ type Refund @entity {
 type Payout @entity {
 	id: ID! # {bounty address}-{user address}-{token-address}-{payoutTime}
 	tokenAddress: Bytes!
-	value: BigInt!
+	volume: BigInt!
 	payoutTime: BigInt
 	payoutAddress: User!
 	bounty: Bounty!
