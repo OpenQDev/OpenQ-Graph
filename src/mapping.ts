@@ -305,11 +305,29 @@ export function handleBountyPaidout(event: BountyPaidout): void {
 
 	payoutTokenBalance.volume = payoutTokenBalance.volume.plus(event.params.volume)
 
+	// UPSERT BOUNTY TOKEN BALANCE
+	const bountyTokenBalanceId = `${event.params.bountyAddress.toHexString()}-${event.params.tokenAddress.toHexString()}`
+	let bountyTokenBalance = BountyFundedTokenBalance.load(bountyTokenBalanceId)
+
+	if (!bountyTokenBalance) {
+		bountyTokenBalance = new BountyFundedTokenBalance(bountyTokenBalanceId)
+		bountyTokenBalance.bounty = event.params.bountyAddress.toHexString()
+		bountyTokenBalance.tokenAddress = event.params.tokenAddress
+		bountyTokenBalance.save()
+	}
+
+	bountyTokenBalance.volume = bountyTokenBalance.volume.minus(event.params.volume)
+
 	// SAVE ALL ENTITIES
 	payout.save()
 	tokenEvents.save()
+	bountyTokenBalance.save()
 	userPayoutTokenBalance.save()
 	payoutTokenBalance.save()
+
+	if (bountyTokenBalance.volume.equals(new BigInt(0))) {
+		store.remove('BountyFundedTokenBalance', bountyTokenBalanceId)
+	}
 }
 
 export function handleBountyClosed(event: BountyClosed): void {
