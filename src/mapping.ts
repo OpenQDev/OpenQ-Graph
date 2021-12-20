@@ -123,13 +123,14 @@ export function handleDepositReceived(event: DepositReceived): void {
 	bountyTokenBalance.volume = bountyTokenBalance.volume.plus(event.params.volume)
 
 	// UPSERT ORGANIZATION FUNDED TOKEN BALANCE
-	const organizationFundedTokenBalanceID = `${event.params.sender.toHexString()}-${event.params.tokenAddress.toHexString()}`
+	const organizationFundedTokenBalanceID = `${event.params.organization}-${event.params.tokenAddress.toHexString()}`
 	let organizationFundedTokenBalance = OrganizationFundedTokenBalance.load(organizationFundedTokenBalanceID)
 
 	if (!organizationFundedTokenBalance) {
 		organizationFundedTokenBalance = new OrganizationFundedTokenBalance(organizationFundedTokenBalanceID)
 		organizationFundedTokenBalance.organization = event.params.organization
 		organizationFundedTokenBalance.tokenAddress = event.params.tokenAddress
+		organizationFundedTokenBalance.save()
 	}
 
 	organizationFundedTokenBalance.volume = organizationFundedTokenBalance.volume.plus(event.params.volume)
@@ -190,11 +191,11 @@ export function handleDepositRefunded(event: DepositRefunded): void {
 	userFundedTokenBalance.volume = userFundedTokenBalance.volume.minus(event.params.volume)
 
 	// UPSERT USER FUNDED TOKEN BALANCES
-	const organizationFundedTokenBalanceId = `${event.params.organization}-${event.params.tokenAddress.toHexString()}`
-	let organizationFundedTokenBalance = OrganizationFundedTokenBalance.load(organizationFundedTokenBalanceId)
+	const organizationFundedTokenBalanceID = `${event.params.organization}-${event.params.tokenAddress.toHexString()}`
+	let organizationFundedTokenBalance = OrganizationFundedTokenBalance.load(organizationFundedTokenBalanceID)
 
 	if (!organizationFundedTokenBalance) {
-		organizationFundedTokenBalance = new OrganizationFundedTokenBalance(organizationFundedTokenBalanceId)
+		organizationFundedTokenBalance = new OrganizationFundedTokenBalance(organizationFundedTokenBalanceID)
 		organizationFundedTokenBalance.organization = event.params.organization
 		organizationFundedTokenBalance.tokenAddress = event.params.tokenAddress
 	}
