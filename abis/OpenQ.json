@@ -243,7 +243,7 @@
 		"inputs": [
 			{
 				"internalType": "address",
-				"name": "",
+				"name": "_bountyAddress",
 				"type": "address"
 			}
 		],
@@ -251,7 +251,7 @@
 		"outputs": [
 			{
 				"internalType": "string",
-				"name": "",
+				"name": "bountyId",
 				"type": "string"
 			}
 		],
@@ -262,7 +262,7 @@
 		"inputs": [
 			{
 				"internalType": "string",
-				"name": "",
+				"name": "_bountyId",
 				"type": "string"
 			}
 		],
@@ -270,7 +270,7 @@
 		"outputs": [
 			{
 				"internalType": "address",
-				"name": "",
+				"name": "bountyAddress",
 				"type": "address"
 			}
 		],
@@ -346,20 +346,20 @@
 	{
 		"inputs": [
 			{
-				"internalType": "string",
-				"name": "_id",
-				"type": "string"
+				"internalType": "bytes",
+				"name": "encoded",
+				"type": "bytes"
 			}
 		],
-		"name": "getBountyAddress",
+		"name": "hash",
 		"outputs": [
 			{
-				"internalType": "address",
+				"internalType": "bytes32",
 				"name": "",
-				"type": "address"
+				"type": "bytes32"
 			}
 		],
-		"stateMutability": "view",
+		"stateMutability": "pure",
 		"type": "function"
 	},
 	{
@@ -384,6 +384,19 @@
 			}
 		],
 		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "openQStorage",
+		"outputs": [
+			{
+				"internalType": "contract OpenQStorage",
+				"name": "",
+				"type": "address"
+			}
+		],
+		"stateMutability": "view",
 		"type": "function"
 	},
 	{
@@ -421,6 +434,55 @@
 	{
 		"inputs": [],
 		"name": "renounceOwnership",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "_bountyAddress",
+				"type": "address"
+			},
+			{
+				"internalType": "string",
+				"name": "_bountyId",
+				"type": "string"
+			}
+		],
+		"name": "setBountyAddressToBountyId",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "string",
+				"name": "_bountyId",
+				"type": "string"
+			},
+			{
+				"internalType": "address",
+				"name": "_bountyAddress",
+				"type": "address"
+			}
+		],
+		"name": "setBountyIdToAddress",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "_openQStorage",
+				"type": "address"
+			}
+		],
+		"name": "setOpenQStorage",
 		"outputs": [],
 		"stateMutability": "nonpayable",
 		"type": "function"
