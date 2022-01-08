@@ -3,3 +3,4 @@ build/
 generated/
 data/
 **/subgraph.yaml
+.DS_Store
