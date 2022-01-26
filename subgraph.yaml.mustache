@@ -29,14 +29,14 @@ dataSources:
         - name: OpenQ
           file: ./abis/OpenQ.json
       eventHandlers:
-        - event: BountyCreated(string,string,address,address,uint256)
+        - event: BountyCreated(string,string,address,indexed address,uint256)
           handler: handleBountyCreated
-        - event: BountyClosed(string,string,address,address,uint256)
+        - event: BountyClosed(string,string,indexed address,address,uint256)
           handler: handleBountyClosed
-        - event: DepositReceived(string,string,address,address,address,uint256,uint256)
+        - event: DepositReceived(string,string,indexed address,address,address,uint256,uint256)
           handler: handleDepositReceived
-        - event: DepositRefunded(string,string,address,address,address,uint256,uint256)
+        - event: DepositRefunded(string,string,indexed address,address,address,uint256,uint256)
           handler: handleDepositRefunded
-        - event: BountyPaidout(string,string,address,address,address,uint256,uint256)
+        - event: BountyPaidout(string,string,indexed address,address,address,uint256,uint256)
           handler: handleBountyPaidout
       file: ./src/mapping.ts

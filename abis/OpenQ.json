@@ -47,7 +47,7 @@
           "type": "string"
         },
         {
-          "indexed": false,
+          "indexed": true,
           "internalType": "address",
           "name": "bountyAddress",
           "type": "address"
@@ -90,7 +90,7 @@
           "type": "address"
         },
         {
-          "indexed": false,
+          "indexed": true,
           "internalType": "address",
           "name": "bountyAddress",
           "type": "address"
@@ -121,7 +121,7 @@
           "type": "string"
         },
         {
-          "indexed": false,
+          "indexed": true,
           "internalType": "address",
           "name": "bountyAddress",
           "type": "address"
@@ -170,7 +170,7 @@
           "type": "string"
         },
         {
-          "indexed": false,
+          "indexed": true,
           "internalType": "address",
           "name": "bountyAddress",
           "type": "address"
@@ -219,7 +219,7 @@
           "type": "string"
         },
         {
-          "indexed": false,
+          "indexed": true,
           "internalType": "address",
           "name": "bountyAddress",
           "type": "address"
