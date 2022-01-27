@@ -160,6 +160,25 @@ export function handleDepositRefunded(event: DepositRefunded): void {
 	refund.refundTime = event.params.refundTime
 	refund.organization = event.params.organization
 
+	// Remove all deposits from this User
+	let bounty = Bounty.load(event.params.bountyAddress.toHexString())
+
+	if (!bounty) {
+		bounty = new Bounty("not");
+	}
+
+	for (let i = 0; i < bounty.deposits.length; i++) {
+		let deposit = Deposit.load(bounty.deposits[i])
+
+		if (!deposit) {
+			deposit = new Deposit("not");
+		}
+
+		if (deposit.sender == event.params.sender.toString()) {
+			store.remove('Deposit', bounty.deposits[i]);
+		}
+	}
+
 	// UPSERT TOKEN EVENTS
 	let tokenEvents = TokenEvents.load(event.params.tokenAddress.toHexString())
 
