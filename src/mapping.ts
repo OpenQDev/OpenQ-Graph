@@ -1,4 +1,4 @@
-import { BigInt, store } from "@graphprotocol/graph-ts"
+import { BigInt, store, log } from "@graphprotocol/graph-ts"
 import { BountyClosed, BountyCreated, DepositReceived, DepositRefunded, BountyPaidout } from "../generated/OpenQ/OpenQ"
 import {
 	Bounty,
@@ -14,7 +14,8 @@ import {
 	OrganizationPayoutTokenBalance,
 	TokenEvents,
 	FundedTokenBalance,
-	PayoutTokenBalance
+	PayoutTokenBalance,
+	UserBountyTokenDepositCount
 } from "../generated/schema"
 
 export function handleBountyCreated(event: BountyCreated): void {
@@ -51,14 +52,22 @@ export function handleBountyCreated(event: BountyCreated): void {
 }
 
 export function handleDepositReceived(event: DepositReceived): void {
-	// CREATE NEW DEPOSIT ENTITY
-	let depositId = `${event.params.bountyAddress.toHexString()}-${event.params.sender.toHexString()}-${event.params.tokenAddress.toHexString()}-${event.params.receiveTime}`
-	let deposit = Deposit.load(depositId)
+	// Increment UserBountyTokenDepositCount
+	let userBountyTokenDepositCountId = `${event.params.sender.toHexString()}-${event.params.bountyAddress.toHexString()}-${event.params.tokenAddress.toHexString()}`
+	let userBountyTokenDepositCount = UserBountyTokenDepositCount.load(userBountyTokenDepositCountId)
 
-	if (!deposit) {
-		deposit = new Deposit(depositId)
-		deposit.volume = new BigInt(0)
+	if (!userBountyTokenDepositCount) {
+		userBountyTokenDepositCount = new UserBountyTokenDepositCount(userBountyTokenDepositCountId)
+		userBountyTokenDepositCount.count = BigInt.fromI32(0)
+		userBountyTokenDepositCount.save()
 	}
+
+	// CREATE NEW DEPOSIT ENTITY
+	let depositId = `${event.params.sender.toHexString()}-${event.params.bountyAddress.toHexString()}-${event.params.tokenAddress.toHexString()}-${userBountyTokenDepositCount.count}`
+	let deposit = new Deposit(depositId)
+
+	// important to increment count after assiging deposit id so the deposit IDs begin at 0
+	userBountyTokenDepositCount.count = userBountyTokenDepositCount.count.plus(BigInt.fromI32(1))
 
 	deposit.tokenAddress = event.params.tokenAddress
 	deposit.bounty = event.params.bountyAddress.toHexString()
@@ -142,16 +151,12 @@ export function handleDepositReceived(event: DepositReceived): void {
 	bountyTokenBalance.save()
 	userFundedTokenBalance.save()
 	organizationFundedTokenBalance.save()
+	userBountyTokenDepositCount.save()
 }
 
 export function handleDepositRefunded(event: DepositRefunded): void {
-	let refundId = `${event.params.bountyAddress.toHexString()}-${event.params.sender.toHexString()}-${event.params.tokenAddress.toHexString()}-${event.params.refundTime}`
-	let refund = Refund.load(refundId)
-
-	if (!refund) {
-		refund = new Refund(refundId)
-		refund.volume = new BigInt(0)
-	}
+	let refundId = `${event.params.sender.toHexString()}-${event.params.bountyAddress.toHexString()}-${event.params.tokenAddress.toHexString()}-${event.params.refundTime}`
+	let refund = new Refund(refundId)
 
 	refund.tokenAddress = event.params.tokenAddress
 	refund.sender = event.params.sender.toHexString()
@@ -160,23 +165,21 @@ export function handleDepositRefunded(event: DepositRefunded): void {
 	refund.refundTime = event.params.refundTime
 	refund.organization = event.params.organization
 
-	// Remove all deposits from this User
-	let bounty = Bounty.load(event.params.bountyAddress.toHexString())
+	// Mark all deposits with matching sender as refunded
+	let userBountyTokenDepositCountId = `${event.params.sender.toHexString()}-${event.params.bountyAddress.toHexString()}-${event.params.tokenAddress.toHexString()}`
+	let userBountyTokenDepositCount = UserBountyTokenDepositCount.load(userBountyTokenDepositCountId)
 
-	if (!bounty) {
-		bounty = new Bounty("not");
+	if (!userBountyTokenDepositCount) {
+		userBountyTokenDepositCount = new UserBountyTokenDepositCount(userBountyTokenDepositCountId)
+		userBountyTokenDepositCount.save()
 	}
 
-	for (let i = 0; i < bounty.deposits.length; i++) {
-		let deposit = Deposit.load(bounty.deposits[i])
-
-		if (!deposit) {
-			deposit = new Deposit("not");
-		}
-
-		if (deposit.sender == event.params.sender.toString()) {
-			store.remove('Deposit', bounty.deposits[i]);
-		}
+	for (let i = 0; BigInt.fromI32(i).lt(userBountyTokenDepositCount.count); i++) {
+		let depositId = `${event.params.sender.toHexString()}-${event.params.bountyAddress.toHexString()}-${event.params.tokenAddress.toHexString()}-${i}`
+		let deposit = Deposit.load(depositId)
+		if (!deposit) { throw "Error" }
+		deposit.refunded = true
+		deposit.save()
 	}
 
 	// UPSERT TOKEN EVENTS
@@ -260,13 +263,8 @@ export function handleDepositRefunded(event: DepositRefunded): void {
 }
 
 export function handleBountyPaidout(event: BountyPaidout): void {
-	let bountyPayoutId = `${event.params.bountyAddress.toHexString()}-${event.params.payoutAddress.toHexString()}-${event.params.tokenAddress.toHexString()}-${event.params.payoutTime}`
-	let payout = Payout.load(bountyPayoutId)
-
-	if (!payout) {
-		payout = new Payout(bountyPayoutId)
-		payout.volume = new BigInt(0)
-	}
+	let bountyPayoutId = `${event.params.payoutAddress.toHexString()}-${event.params.bountyAddress.toHexString()}-${event.params.tokenAddress.toHexString()}-${event.params.payoutTime}`
+	let payout = new Payout(bountyPayoutId)
 
 	payout.tokenAddress = event.params.tokenAddress
 	payout.bounty = event.params.bountyAddress.toHexString()

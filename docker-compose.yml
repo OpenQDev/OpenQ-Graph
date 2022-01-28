@@ -58,3 +58,14 @@ services:
       POSTGRES_DB: graph-node
     volumes:
       - ./data/postgres:/var/lib/postgresql/data
+  openq_subgraph_deployer:
+    container_name: openq_subgraph_deployer
+    depends_on:
+      - openq-json-rpc-node
+      - openq-contracts
+      - graph-node
+    build:
+      dockerfile: Dockerfile
+      context: .
+    volumes:
+      - /app/node_modules
