@@ -15,7 +15,6 @@ type Deposit @entity {
 	organization: Organization!
 	tokenEvents: TokenEvents!
 	refunded: Boolean!
-	claimed: Boolean!
 }
 
 type Refund @entity {
