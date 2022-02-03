@@ -1,12 +1,6 @@
 # ----------------- TOKEN TRANSFER EVENTS (Deposit, Refund, and Payout) -----------------
-
-type UserBountyTokenDepositCount @entity {
-	id: ID! # {user address}-{bounty address}-{token-address}
-	count: BigInt!
-}
-
 type Deposit @entity {
-	id: ID! # {user address}-{bounty address}-{token-address}-{depositCount}
+	id: ID! # {depositId}
 	tokenAddress: Bytes!
 	volume: BigInt!
 	sender: User!
@@ -19,6 +13,7 @@ type Deposit @entity {
 
 type Refund @entity {
 	id: ID! # {user address}-{bounty address}-{token-address}-{refundTime}
+	depositId: Bytes!
 	tokenAddress: Bytes!
 	volume: BigInt!
 	sender: User!

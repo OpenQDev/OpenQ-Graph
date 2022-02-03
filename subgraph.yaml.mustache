@@ -33,9 +33,9 @@ dataSources:
           handler: handleBountyCreated
         - event: BountyClosed(string,string,indexed address,address,uint256)
           handler: handleBountyClosed
-        - event: DepositReceived(string,string,indexed address,address,address,uint256,uint256)
+        - event: DepositReceived(string,string,indexed address,address,address,uint256,uint256,bytes32)
           handler: handleDepositReceived
-        - event: DepositRefunded(string,string,indexed address,address,address,uint256,uint256)
+        - event: DepositRefunded(string,string,indexed address,address,address,uint256,uint256,bytes32)
           handler: handleDepositRefunded
         - event: BountyPaidout(string,string,indexed address,address,address,uint256,uint256)
           handler: handleBountyPaidout

@@ -8,26 +8,11 @@ import {
 	OrganizationFundedTokenBalance,
 	TokenEvents,
 	FundedTokenBalance,
-	UserBountyTokenDepositCount
 } from "../../generated/schema"
 
 export default function handleDepositReceived(event: DepositReceived): void {
-	// Increment UserBountyTokenDepositCount
-	let userBountyTokenDepositCountId = `${event.params.sender.toHexString()}-${event.params.bountyAddress.toHexString()}-${event.params.tokenAddress.toHexString()}`
-	let userBountyTokenDepositCount = UserBountyTokenDepositCount.load(userBountyTokenDepositCountId)
-
-	if (!userBountyTokenDepositCount) {
-		userBountyTokenDepositCount = new UserBountyTokenDepositCount(userBountyTokenDepositCountId)
-		userBountyTokenDepositCount.count = BigInt.fromI32(0)
-		userBountyTokenDepositCount.save()
-	}
-
 	// CREATE NEW DEPOSIT ENTITY
-	let depositId = `${event.params.sender.toHexString()}-${event.params.bountyAddress.toHexString()}-${event.params.tokenAddress.toHexString()}-${userBountyTokenDepositCount.count}`
-	let deposit = new Deposit(depositId)
-
-	// important to increment count after assiging deposit id so the deposit IDs begin at 0
-	userBountyTokenDepositCount.count = userBountyTokenDepositCount.count.plus(BigInt.fromI32(1))
+	let deposit = new Deposit(event.params.depositId.toHexString())
 
 	deposit.tokenAddress = event.params.tokenAddress
 	deposit.bounty = event.params.bountyAddress.toHexString()
@@ -111,5 +96,4 @@ export default function handleDepositReceived(event: DepositReceived): void {
 	bountyTokenBalance.save()
 	userFundedTokenBalance.save()
 	organizationFundedTokenBalance.save()
-	userBountyTokenDepositCount.save()
 }

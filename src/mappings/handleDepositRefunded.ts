@@ -8,7 +8,6 @@ import {
 	OrganizationFundedTokenBalance,
 	TokenEvents,
 	FundedTokenBalance,
-	UserBountyTokenDepositCount
 } from "../../generated/schema"
 
 export default function handleDepositRefunded(event: DepositRefunded): void {
@@ -21,23 +20,12 @@ export default function handleDepositRefunded(event: DepositRefunded): void {
 	refund.volume = event.params.volume
 	refund.refundTime = event.params.refundTime
 	refund.organization = event.params.organization
+	refund.depositId = event.params.depositId
 
-	// Mark all deposits with matching sender as refunded
-	let userBountyTokenDepositCountId = `${event.params.sender.toHexString()}-${event.params.bountyAddress.toHexString()}-${event.params.tokenAddress.toHexString()}`
-	let userBountyTokenDepositCount = UserBountyTokenDepositCount.load(userBountyTokenDepositCountId)
-
-	if (!userBountyTokenDepositCount) {
-		userBountyTokenDepositCount = new UserBountyTokenDepositCount(userBountyTokenDepositCountId)
-		userBountyTokenDepositCount.save()
-	}
-
-	for (let i = 0; BigInt.fromI32(i).lt(userBountyTokenDepositCount.count); i++) {
-		let depositId = `${event.params.sender.toHexString()}-${event.params.bountyAddress.toHexString()}-${event.params.tokenAddress.toHexString()}-${i}`
-		let deposit = Deposit.load(depositId)
-		if (!deposit) { throw "Error" }
-		deposit.refunded = true
-		deposit.save()
-	}
+	let deposit = Deposit.load(event.params.depositId.toHexString())
+	if (!deposit) { throw "Error" }
+	deposit.refunded = true
+	deposit.save()
 
 	// UPSERT TOKEN EVENTS
 	let tokenEvents = TokenEvents.load(event.params.tokenAddress.toHexString())
