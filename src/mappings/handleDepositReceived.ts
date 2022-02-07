@@ -20,6 +20,7 @@ export default function handleDepositReceived(event: DepositReceived): void {
 
 	deposit.volume = event.params.volume
 	deposit.receiveTime = event.params.receiveTime
+	deposit.transactionHash = event.transaction.hash
 
 	// UPSERT USER
 	let user = User.load(event.transaction.from.toHexString())

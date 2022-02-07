@@ -16,6 +16,7 @@ export default function handleBountyCreated(event: BountyCreated): void {
 	bounty.bountyId = event.params.bountyId
 	bounty.bountyMintTime = event.params.bountyMintTime
 	bounty.status = "OPEN"
+	bounty.transactionHash = event.transaction.hash
 
 	let user = User.load(event.transaction.from.toHexString())
 

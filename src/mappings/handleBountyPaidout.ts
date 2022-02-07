@@ -18,6 +18,7 @@ export default function handleBountyPaidout(event: BountyPaidout): void {
 	payout.volume = event.params.volume
 	payout.payoutTime = event.params.payoutTime
 	payout.organization = event.params.organization
+	payout.transactionHash = event.transaction.hash;
 
 	// UPSERT USER
 	let user = User.load(event.params.payoutAddress.toHexString())
@@ -70,21 +71,9 @@ export default function handleBountyPaidout(event: BountyPaidout): void {
 
 	payoutTokenBalance.volume = payoutTokenBalance.volume.plus(event.params.volume)
 
-	// SET BOUNTY TOKEN BALANCE TO CLAIMED
-	const bountyTokenBalanceId = `${event.params.bountyAddress.toHexString()}-${event.params.tokenAddress.toHexString()}`
-	let bountyTokenBalance = BountyFundedTokenBalance.load(bountyTokenBalanceId)
-
-	if (!bountyTokenBalance) {
-		bountyTokenBalance = new BountyFundedTokenBalance(bountyTokenBalanceId)
-		bountyTokenBalance.bounty = event.params.bountyAddress.toHexString()
-		bountyTokenBalance.tokenAddress = event.params.tokenAddress
-		bountyTokenBalance.save()
-	}
-
 	// SAVE ALL ENTITIES
 	payout.save()
 	tokenEvents.save()
-	bountyTokenBalance.save()
 	userPayoutTokenBalance.save()
 	payoutTokenBalance.save()
 }

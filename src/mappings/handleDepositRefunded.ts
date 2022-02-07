@@ -21,6 +21,7 @@ export default function handleDepositRefunded(event: DepositRefunded): void {
 	refund.refundTime = event.params.refundTime
 	refund.organization = event.params.organization
 	refund.depositId = event.params.depositId
+	refund.transactionHash = event.transaction.hash
 
 	let deposit = Deposit.load(event.params.depositId.toHexString())
 	if (!deposit) { throw "Error" }
@@ -49,11 +50,7 @@ export default function handleDepositRefunded(event: DepositRefunded): void {
 	const userFundedTokenBalanceId = `${event.params.sender.toHexString()}-${event.params.tokenAddress.toHexString()}`
 	let userFundedTokenBalance = UserFundedTokenBalance.load(userFundedTokenBalanceId)
 
-	if (!userFundedTokenBalance) {
-		userFundedTokenBalance = new UserFundedTokenBalance(userFundedTokenBalanceId)
-		userFundedTokenBalance.user = event.params.sender.toHexString()
-		userFundedTokenBalance.tokenAddress = event.params.tokenAddress
-	}
+	if (!userFundedTokenBalance) { throw "Error" }
 
 	userFundedTokenBalance.volume = userFundedTokenBalance.volume.minus(event.params.volume)
 
@@ -61,11 +58,7 @@ export default function handleDepositRefunded(event: DepositRefunded): void {
 	const organizationFundedTokenBalanceID = `${event.params.organization}-${event.params.tokenAddress.toHexString()}`
 	let organizationFundedTokenBalance = OrganizationFundedTokenBalance.load(organizationFundedTokenBalanceID)
 
-	if (!organizationFundedTokenBalance) {
-		organizationFundedTokenBalance = new OrganizationFundedTokenBalance(organizationFundedTokenBalanceID)
-		organizationFundedTokenBalance.organization = event.params.organization
-		organizationFundedTokenBalance.tokenAddress = event.params.tokenAddress
-	}
+	if (!organizationFundedTokenBalance) { throw "Error" }
 
 	organizationFundedTokenBalance.volume = organizationFundedTokenBalance.volume.minus(event.params.volume)
 
@@ -73,12 +66,7 @@ export default function handleDepositRefunded(event: DepositRefunded): void {
 	const bountyTokenBalanceId = `${event.params.bountyAddress.toHexString()}-${event.params.tokenAddress.toHexString()}`
 	let bountyTokenBalance = BountyFundedTokenBalance.load(bountyTokenBalanceId)
 
-	if (!bountyTokenBalance) {
-		bountyTokenBalance = new BountyFundedTokenBalance(bountyTokenBalanceId)
-		bountyTokenBalance.bounty = event.params.bountyAddress.toHexString()
-		bountyTokenBalance.tokenAddress = event.params.tokenAddress
-		bountyTokenBalance.save()
-	}
+	if (!bountyTokenBalance) { throw "Error" }
 
 	bountyTokenBalance.volume = bountyTokenBalance.volume.minus(event.params.volume)
 
