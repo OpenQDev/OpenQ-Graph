@@ -149,9 +149,21 @@
 				"internalType": "uint256",
 				"name": "payoutTime",
 				"type": "uint256"
+			},
+			{
+				"indexed": false,
+				"internalType": "enum Bounty.TokenStandard",
+				"name": "tokenStandard",
+				"type": "uint8"
+			},
+			{
+				"indexed": false,
+				"internalType": "uint256",
+				"name": "tokenId",
+				"type": "uint256"
 			}
 		],
-		"name": "BountyPaidout",
+		"name": "DepositClaimed",
 		"type": "event"
 	},
 	{
@@ -204,6 +216,18 @@
 				"internalType": "bytes32",
 				"name": "depositId",
 				"type": "bytes32"
+			},
+			{
+				"indexed": false,
+				"internalType": "enum Bounty.TokenStandard",
+				"name": "tokenStandard",
+				"type": "uint8"
+			},
+			{
+				"indexed": false,
+				"internalType": "uint256",
+				"name": "tokenId",
+				"type": "uint256"
 			}
 		],
 		"name": "DepositReceived",
@@ -393,7 +417,7 @@
 		"inputs": [
 			{
 				"internalType": "string",
-				"name": "_id",
+				"name": "_bountyId",
 				"type": "string"
 			},
 			{
@@ -423,6 +447,16 @@
 				"internalType": "uint256",
 				"name": "_volume",
 				"type": "uint256"
+			},
+			{
+				"internalType": "bool",
+				"name": "_isNft",
+				"type": "bool"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_tokenId",
+				"type": "uint256"
 			}
 		],
 		"name": "fundBounty",
@@ -433,7 +467,7 @@
 				"type": "bool"
 			}
 		],
-		"stateMutability": "nonpayable",
+		"stateMutability": "payable",
 		"type": "function"
 	},
 	{
@@ -492,7 +526,7 @@
 		"outputs": [
 			{
 				"internalType": "address",
-				"name": "bountyAddress",
+				"name": "",
 				"type": "address"
 			}
 		],
@@ -547,7 +581,7 @@
 			},
 			{
 				"internalType": "bytes32",
-				"name": "depositId",
+				"name": "_depositId",
 				"type": "bytes32"
 			}
 		],

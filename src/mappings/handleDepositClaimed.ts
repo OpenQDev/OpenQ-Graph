@@ -1,4 +1,4 @@
-import { BountyPaidout } from "../../generated/OpenQ/OpenQ"
+import { DepositClaimed } from "../../generated/OpenQ/OpenQ"
 import {
 	BountyFundedTokenBalance,
 	TokenEvents,
@@ -9,7 +9,7 @@ import {
 	PayoutTokenBalance
 } from "../../generated/schema"
 
-export default function handleBountyPaidout(event: BountyPaidout): void {
+export default function handleDepositClaimed(event: DepositClaimed): void {
 	let bountyPayoutId = `${event.params.payoutAddress.toHexString()}-${event.params.bountyAddress.toHexString()}-${event.params.tokenAddress.toHexString()}-${event.params.payoutTime}`
 	let payout = new Payout(bountyPayoutId)
 
