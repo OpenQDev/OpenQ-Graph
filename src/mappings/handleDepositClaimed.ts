@@ -1,12 +1,12 @@
 import { DepositClaimed } from "../../generated/OpenQ/OpenQ"
 import {
-	BountyFundedTokenBalance,
 	TokenEvents,
 	Payout,
 	User,
 	UserPayoutTokenBalance,
 	OrganizationPayoutTokenBalance,
-	PayoutTokenBalance
+	PayoutTokenBalance,
+	Deposit
 } from "../../generated/schema"
 
 export default function handleDepositClaimed(event: DepositClaimed): void {
@@ -71,9 +71,19 @@ export default function handleDepositClaimed(event: DepositClaimed): void {
 
 	payoutTokenBalance.volume = payoutTokenBalance.volume.plus(event.params.volume)
 
+	// UPDATE DEPOSIT CLAIMED
+	let deposit = Deposit.load(event.params.depositId.toHexString())
+
+	if (!deposit) {
+		throw "Error"
+	}
+
+	deposit.claimed = true;
+
 	// SAVE ALL ENTITIES
 	payout.save()
 	tokenEvents.save()
 	userPayoutTokenBalance.save()
 	payoutTokenBalance.save()
+	deposit.save()
 }

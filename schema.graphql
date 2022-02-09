@@ -10,6 +10,9 @@ type Deposit @entity {
 	tokenEvents: TokenEvents!
 	refunded: Boolean!
 	transactionHash: Bytes!
+	tokenStandard: BigInt!
+	tokenId: BigInt!
+	claimed: Boolean!
 }
 
 type Refund @entity {

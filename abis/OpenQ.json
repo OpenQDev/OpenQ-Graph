@@ -161,6 +161,12 @@
 				"internalType": "uint256",
 				"name": "tokenId",
 				"type": "uint256"
+			},
+			{
+				"indexed": false,
+				"internalType": "bytes32",
+				"name": "depositId",
+				"type": "bytes32"
 			}
 		],
 		"name": "DepositClaimed",
