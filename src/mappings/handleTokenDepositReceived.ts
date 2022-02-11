@@ -1,5 +1,5 @@
 import { BigInt } from "@graphprotocol/graph-ts"
-import { DepositReceived } from "../../generated/OpenQ/OpenQ"
+import { TokenDepositReceived } from "../../generated/OpenQ/OpenQ"
 import {
 	User,
 	Deposit,
@@ -10,7 +10,7 @@ import {
 	FundedTokenBalance,
 } from "../../generated/schema"
 
-export default function handleDepositReceived(event: DepositReceived): void {
+export default function handleTokenDepositReceived(event: TokenDepositReceived): void {
 	// CREATE NEW DEPOSIT ENTITY
 	let deposit = new Deposit(event.params.depositId.toHexString())
 
@@ -21,8 +21,6 @@ export default function handleDepositReceived(event: DepositReceived): void {
 	deposit.volume = event.params.volume
 	deposit.receiveTime = event.params.receiveTime
 	deposit.transactionHash = event.transaction.hash
-	deposit.tokenStandard = BigInt.fromI32(event.params.tokenStandard)
-	deposit.tokenId = event.params.tokenId
 
 	// UPSERT USER
 	let user = User.load(event.transaction.from.toHexString())

@@ -1,7 +1,15 @@
 import handleBountyCreated from "./mappings/handleBountyCreated"
-import handleDepositReceived from "./mappings/handleDepositReceived"
+import handleTokenDepositReceived from "./mappings/handleTokenDepositReceived"
+import handleNFTDepositReceived from "./mappings/handleNFTDepositReceived"
 import handleDepositRefunded from "./mappings/handleDepositRefunded"
 import handleDepositClaimed from "./mappings/handleDepositClaimed"
 import handleBountyClosed from "./mappings/handleBountyClosed"
 
-export { handleBountyCreated, handleDepositReceived, handleDepositRefunded, handleDepositClaimed, handleBountyClosed }
+export {
+	handleBountyCreated,
+	handleTokenDepositReceived,
+	handleNFTDepositReceived,
+	handleDepositRefunded,
+	handleDepositClaimed,
+	handleBountyClosed
+}

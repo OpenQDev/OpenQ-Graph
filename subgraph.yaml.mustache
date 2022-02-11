@@ -31,14 +31,14 @@ dataSources:
       eventHandlers:
         - event: BountyCreated(string,string,address,indexed address,uint256)
           handler: handleBountyCreated
-        - event: BountyClosed(string,string,indexed address,address,uint256)
+        - event: TokenDepositReceived(bytes32,indexed address,string,string,address,uint256,address,uint256,uint256)
+          handler: handleTokenDepositReceived
+        - event: NFTDepositReceived(bytes32,indexed address,string,string,address,uint256,address,uint256,uint256)
+          handler: handleNFTDepositReceived
+        - event: BountyClosed(string,indexed address,string,address,uint256)
           handler: handleBountyClosed
-        - event: DepositReceived(string,string,indexed address,address,address,uint256,uint256,bytes32,uint8,uint256)
-          handler: handleDepositReceived
-        - event: DepositRefunded(string,string,indexed address,address,address,uint256,uint256,bytes32)
+        - event: DepositRefunded(bytes32,string,indexed address,string,uint256)
           handler: handleDepositRefunded
-        - event: DepositClaimed(string,string,indexed address,address,address,uint256,uint256,uint8,uint256,bytes32)
+        - event: DepositClaimed(bytes32,string,indexed address,string,address,uint256)
           handler: handleDepositClaimed
-
-
       file: ./src/mapping.ts

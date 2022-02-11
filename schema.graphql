@@ -10,13 +10,12 @@ type Deposit @entity {
 	tokenEvents: TokenEvents!
 	refunded: Boolean!
 	transactionHash: Bytes!
-	tokenStandard: BigInt!
 	tokenId: BigInt!
 	claimed: Boolean!
 }
 
 type Refund @entity {
-	id: ID! # {user address}-{bounty address}-{token-address}-{refundTime}
+	id: ID! # depositId
 	depositId: Bytes!
 	tokenAddress: Bytes!
 	volume: BigInt!
@@ -29,15 +28,16 @@ type Refund @entity {
 }
 
 type Payout @entity {
-	id: ID! # {user address}-{bounty address}-{token-address}-{payoutTime}
+	id: ID! # depositId
 	tokenAddress: Bytes!
 	volume: BigInt!
 	payoutTime: BigInt
-	payoutAddress: User!
+	closer: User!
 	bounty: Bounty!
 	organization: Organization!
 	tokenEvents: TokenEvents!
 	transactionHash: Bytes!
+	payoutAddress: Bytes!
 }
 
 # ----------------- TOKEN BALANCE -----------------
@@ -74,13 +74,14 @@ type Bounty @entity {
 	bountyMintTime: BigInt!
 	bountyClosedTime: BigInt
 	status: BountyStatus!
-	payoutAddress: User
+	closer: User
 	organization: Organization!
 	bountyTokenBalances: [BountyFundedTokenBalance!]! @derivedFrom(field: "bounty")
 	deposits: [Deposit!]! @derivedFrom(field: "bounty")
 	refunds: [Refund!]! @derivedFrom(field: "bounty")
 	payouts: [Payout!]! @derivedFrom(field: "bounty")
 	transactionHash: Bytes!
+	payoutAddress: Bytes!
 }
 
 enum BountyStatus {
@@ -136,10 +137,10 @@ type OrganizationPayoutTokenBalance @entity {
 type User @entity {
 	id: ID! # User address hex string
 	bountiesCreated: [Bounty!]! @derivedFrom(field: "issuer")
-	bountiesClosed: [Bounty!]! @derivedFrom(field: "payoutAddress")
+	bountiesClosed: [Bounty!]! @derivedFrom(field: "closer")
 	deposits: [Deposit!]! @derivedFrom(field: "sender")
 	refunds: [Refund!]! @derivedFrom(field: "sender")
-	payouts: [Payout!]! @derivedFrom(field: "payoutAddress")
+	payouts: [Payout!]! @derivedFrom(field: "closer")
 	payoutTokenBalances: [UserPayoutTokenBalance!]! @derivedFrom(field: "user")
 	fundedTokenBalances: [UserFundedTokenBalance!]! @derivedFrom(field: "user")
 }

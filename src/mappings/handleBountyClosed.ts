@@ -8,7 +8,7 @@ export default function handleBountyClosed(event: BountyClosed): void {
 
 	if (!bounty) { throw "Error" }
 
-	bounty.payoutAddress = event.params.payoutAddress.toHexString()
+	bounty.closer = event.params.closer.toHexString()
 	bounty.bountyClosedTime = event.params.bountyClosedTime
 	bounty.status = "CLOSED"
 
