@@ -23,6 +23,7 @@ export default function handleDepositRefunded(event: DepositRefunded): void {
 	let deposit = Deposit.load(event.params.depositId.toHexString())
 	if (!deposit) { throw "Error" }
 	deposit.refunded = true
+	deposit.refundTime = event.params.refundTime
 	deposit.save()
 
 	// UPSERT TOKEN EVENTS

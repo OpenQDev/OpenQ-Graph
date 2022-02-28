@@ -532,19 +532,6 @@
 		"type": "function"
 	},
 	{
-		"inputs": [],
-		"name": "getOracle",
-		"outputs": [
-			{
-				"internalType": "address",
-				"name": "",
-				"type": "address"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
 		"inputs": [
 			{
 				"internalType": "address",

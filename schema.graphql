@@ -12,6 +12,8 @@ type Deposit @entity {
 	transactionHash: Bytes!
 	tokenId: BigInt!
 	claimed: Boolean!
+	expiration: BigInt!
+	refundTime: BigInt
 }
 
 type Refund @entity {

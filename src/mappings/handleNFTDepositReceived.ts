@@ -16,6 +16,7 @@ export default function handleNftDepositReceived(event: NFTDepositReceived): voi
 	deposit.receiveTime = event.params.receiveTime
 	deposit.transactionHash = event.transaction.hash
 	deposit.tokenId = event.params.tokenId
+	deposit.expiration = event.params.expiration
 	deposit.volume = new BigInt(0)
 
 	// UPSERT USER
