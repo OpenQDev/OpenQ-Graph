@@ -83,6 +83,7 @@ type Bounty @entity {
 	refunds: [Refund!]! @derivedFrom(field: "bounty")
 	payouts: [Payout!]! @derivedFrom(field: "bounty")
 	transactionHash: Bytes!
+	claimedTransactionHash: Bytes
 	payoutAddress: Bytes!
 }
 

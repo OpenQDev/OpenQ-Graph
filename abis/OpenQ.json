@@ -398,7 +398,7 @@
 		"inputs": [
 			{
 				"internalType": "string",
-				"name": "_id",
+				"name": "_bountyId",
 				"type": "string"
 			}
 		],
@@ -417,7 +417,7 @@
 		"inputs": [
 			{
 				"internalType": "string",
-				"name": "_id",
+				"name": "_bountyId",
 				"type": "string"
 			}
 		],
@@ -453,9 +453,9 @@
 	{
 		"inputs": [
 			{
-				"internalType": "address",
-				"name": "_bountyAddress",
-				"type": "address"
+				"internalType": "string",
+				"name": "_bountyId",
+				"type": "string"
 			},
 			{
 				"internalType": "address",
@@ -487,9 +487,9 @@
 	{
 		"inputs": [
 			{
-				"internalType": "address",
-				"name": "_bountyAddress",
-				"type": "address"
+				"internalType": "string",
+				"name": "_bountyId",
+				"type": "string"
 			},
 			{
 				"internalType": "address",
@@ -548,7 +548,7 @@
 		"inputs": [
 			{
 				"internalType": "string",
-				"name": "_id",
+				"name": "_bountyId",
 				"type": "string"
 			},
 			{
@@ -608,11 +608,24 @@
 		"type": "function"
 	},
 	{
+		"inputs": [],
+		"name": "proxiableUUID",
+		"outputs": [
+			{
+				"internalType": "bytes32",
+				"name": "",
+				"type": "bytes32"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
 		"inputs": [
 			{
-				"internalType": "address",
-				"name": "_bountyAddress",
-				"type": "address"
+				"internalType": "string",
+				"name": "_bountyId",
+				"type": "string"
 			},
 			{
 				"internalType": "bytes32",

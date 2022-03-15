@@ -1,3 +1,4 @@
+import { BigInt, store } from "@graphprotocol/graph-ts"
 import { DepositClaimed } from "../../generated/OpenQ/OpenQ"
 import {
 	TokenEvents,
@@ -5,6 +6,7 @@ import {
 	User,
 	UserPayoutTokenBalance,
 	OrganizationPayoutTokenBalance,
+	OrganizationFundedTokenBalance,
 	PayoutTokenBalance,
 	Deposit
 } from "../../generated/schema"
@@ -71,6 +73,16 @@ export default function handleDepositClaimed(event: DepositClaimed): void {
 
 	organizationPayoutTokenBalance.volume = organizationPayoutTokenBalance.volume.plus(deposit.volume)
 
+	// UPDATE ORGANIZATION FUNDED TOKEN BALANCE
+	const organizationFundedTokenBalanceId = `${event.params.organization}-${deposit.tokenAddress.toHexString()}`
+	let organizationFundedTokenBalance = OrganizationFundedTokenBalance.load(organizationFundedTokenBalanceId)
+
+	if (!organizationFundedTokenBalance) {
+		throw "Error"
+	}
+
+	organizationFundedTokenBalance.volume = organizationFundedTokenBalance.volume.minus(deposit.volume)
+
 	// UPSERT TOTAL FUNDED TOKEN BALANCE
 	let payoutTokenBalance = PayoutTokenBalance.load(deposit.tokenAddress.toHexString())
 
@@ -86,4 +98,9 @@ export default function handleDepositClaimed(event: DepositClaimed): void {
 	userPayoutTokenBalance.save()
 	payoutTokenBalance.save()
 	deposit.save()
+	organizationFundedTokenBalance.save()
+
+	if (organizationFundedTokenBalance.volume.equals(new BigInt(0))) {
+		store.remove('OrganizationFundedTokenBalance', organizationFundedTokenBalanceId)
+	}
 }
