@@ -1,4 +1,3 @@
-import { BigInt } from "@graphprotocol/graph-ts"
 import { TokenDepositReceived } from "../../generated/OpenQ/OpenQ"
 import {
 	User,

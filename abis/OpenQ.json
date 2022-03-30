@@ -1,5 +1,10 @@
 [
 	{
+		"inputs": [],
+		"stateMutability": "nonpayable",
+		"type": "constructor"
+	},
+	{
 		"anonymous": false,
 		"inputs": [
 			{
@@ -357,10 +362,6 @@
 		],
 		"name": "Upgraded",
 		"type": "event"
-	},
-	{
-		"stateMutability": "nonpayable",
-		"type": "fallback"
 	},
 	{
 		"inputs": [

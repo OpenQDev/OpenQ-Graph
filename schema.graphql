@@ -106,13 +106,19 @@ type BountyFundedTokenBalance @entity {
 # ----------------- ORGANIZATION -----------------
 
 type Organization @entity {
-	id: ID!
+	id: ID! # Organization ID on GitHub
+	bountiesCount: BigInt!
 	bountiesCreated: [Bounty!]! @derivedFrom(field: "organization")
 	deposits: [Deposit!]! @derivedFrom(field: "organization")
 	refunds: [Refund!]! @derivedFrom(field: "organization")
 	payouts: [Payout!]! @derivedFrom(field: "organization")
 	fundedTokenBalances: [OrganizationFundedTokenBalance!]! @derivedFrom(field: "organization")
 	payoutTokenBalances: [OrganizationPayoutTokenBalance!]! @derivedFrom(field: "organization")
+}
+
+type BountiesCounter @entity {
+    id: ID!
+    count: BigInt!
 }
 
 # Total token balances per Organization per Token

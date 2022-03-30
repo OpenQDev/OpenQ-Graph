@@ -1,8 +1,10 @@
+import { BigInt } from "@graphprotocol/graph-ts"
 import { BountyCreated } from "../../generated/OpenQ/OpenQ"
 import {
 	Bounty,
 	User,
-	Organization
+	Organization,
+	BountiesCounter
 } from "../../generated/schema"
 
 export default function handleBountyCreated(event: BountyCreated): void {
@@ -35,6 +37,18 @@ export default function handleBountyCreated(event: BountyCreated): void {
 	}
 
 	bounty.organization = organization.id
+	organization.bountiesCount = organization.bountiesCount.plus(BigInt.fromString('1'))
+
+	let bountiesCounter = BountiesCounter.load('bountiesCounterId')
+
+	if (!bountiesCounter) {
+		bountiesCounter = new BountiesCounter('bountiesCounterId')
+		bountiesCounter.save()
+	}
+
+	bountiesCounter.count = bountiesCounter.count.plus(BigInt.fromString('1'))
 
 	bounty.save()
+	organization.save()
+	bountiesCounter.save()
 }
