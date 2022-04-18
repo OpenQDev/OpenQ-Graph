@@ -733,7 +733,7 @@
 		"inputs": [
 			{
 				"internalType": "address",
-				"name": "newOracle",
+				"name": "_newOracle",
 				"type": "address"
 			}
 		],
