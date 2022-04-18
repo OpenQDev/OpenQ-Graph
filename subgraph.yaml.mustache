@@ -39,6 +39,6 @@ dataSources:
           handler: handleBountyClosed
         - event: DepositRefunded(bytes32,string,indexed address,string,uint256)
           handler: handleDepositRefunded
-        - event: DepositClaimed(bytes32,string,indexed address,string,address,uint256)
-          handler: handleDepositClaimed
+        - event: TokenBalanceClaimed(string,indexed address,string,address,uint256,address,uint256)
+          handler: handleTokenBalanceClaimed
       file: ./src/mapping.ts
