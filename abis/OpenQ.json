@@ -373,7 +373,7 @@
 		"inputs": [
 			{
 				"internalType": "address",
-				"name": "bountyAddress",
+				"name": "_bountyAddress",
 				"type": "address"
 			}
 		],
@@ -448,7 +448,7 @@
 			},
 			{
 				"internalType": "address",
-				"name": "closer",
+				"name": "_closer",
 				"type": "address"
 			}
 		],
@@ -481,13 +481,7 @@
 			}
 		],
 		"name": "fundBountyNFT",
-		"outputs": [
-			{
-				"internalType": "bool",
-				"name": "success",
-				"type": "bool"
-			}
-		],
+		"outputs": [],
 		"stateMutability": "nonpayable",
 		"type": "function"
 	},
@@ -515,13 +509,7 @@
 			}
 		],
 		"name": "fundBountyToken",
-		"outputs": [
-			{
-				"internalType": "bool",
-				"name": "success",
-				"type": "bool"
-			}
-		],
+		"outputs": [],
 		"stateMutability": "payable",
 		"type": "function"
 	},
@@ -555,7 +543,7 @@
 		"inputs": [
 			{
 				"internalType": "address",
-				"name": "tokenAddress",
+				"name": "_tokenAddress",
 				"type": "address"
 			}
 		],
@@ -660,13 +648,7 @@
 			}
 		],
 		"name": "refundDeposit",
-		"outputs": [
-			{
-				"internalType": "bool",
-				"name": "success",
-				"type": "bool"
-			}
-		],
+		"outputs": [],
 		"stateMutability": "nonpayable",
 		"type": "function"
 	},
