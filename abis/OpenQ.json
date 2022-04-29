@@ -373,7 +373,7 @@
 		"inputs": [
 			{
 				"internalType": "address",
-				"name": "bountyAddress",
+				"name": "_bountyAddress",
 				"type": "address"
 			}
 		],
@@ -405,7 +405,7 @@
 		"inputs": [
 			{
 				"internalType": "string",
-				"name": "_bountyId",
+				"name": "",
 				"type": "string"
 			}
 		],
@@ -448,7 +448,7 @@
 			},
 			{
 				"internalType": "address",
-				"name": "closer",
+				"name": "_closer",
 				"type": "address"
 			}
 		],
@@ -481,13 +481,7 @@
 			}
 		],
 		"name": "fundBountyNFT",
-		"outputs": [
-			{
-				"internalType": "bool",
-				"name": "success",
-				"type": "bool"
-			}
-		],
+		"outputs": [],
 		"stateMutability": "nonpayable",
 		"type": "function"
 	},
@@ -515,13 +509,7 @@
 			}
 		],
 		"name": "fundBountyToken",
-		"outputs": [
-			{
-				"internalType": "bool",
-				"name": "success",
-				"type": "bool"
-			}
-		],
+		"outputs": [],
 		"stateMutability": "payable",
 		"type": "function"
 	},
@@ -555,7 +543,7 @@
 		"inputs": [
 			{
 				"internalType": "address",
-				"name": "tokenAddress",
+				"name": "_tokenAddress",
 				"type": "address"
 			}
 		],
@@ -592,19 +580,6 @@
 			}
 		],
 		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [],
-		"name": "openQStorage",
-		"outputs": [
-			{
-				"internalType": "contract OpenQStorage",
-				"name": "",
-				"type": "address"
-			}
-		],
-		"stateMutability": "view",
 		"type": "function"
 	},
 	{
@@ -673,13 +648,7 @@
 			}
 		],
 		"name": "refundDeposit",
-		"outputs": [
-			{
-				"internalType": "bool",
-				"name": "success",
-				"type": "bool"
-			}
-		],
+		"outputs": [],
 		"stateMutability": "nonpayable",
 		"type": "function"
 	},
@@ -699,19 +668,6 @@
 			}
 		],
 		"name": "setBountyFactory",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "_openQStorage",
-				"type": "address"
-			}
-		],
-		"name": "setOpenQStorage",
 		"outputs": [],
 		"stateMutability": "nonpayable",
 		"type": "function"
