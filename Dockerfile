@@ -5,14 +5,16 @@ RUN apk update && apk upgrade && \
 COPY package.json .
 RUN yarn
 COPY . .
-RUN yarn prepare-local
-RUN yarn codegen
-CMD curl --connect-timeout 5 \
+ENTRYPOINT sleep 5 \
+	&& curl --connect-timeout 5 \
 	--retry-connrefused \
 	--max-time 10 \
 	--retry 5 \
 	--retry-delay 0 \
 	--retry-max-time 40 \
 	'http://graph_node:8020' \
+	&& yarn inject-contract-address-to-local-config \
+	&& yarn prepare-local \
+	&& yarn codegen \
 	&& yarn create-docker \
 	&& yarn deploy-docker
