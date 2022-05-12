@@ -13,7 +13,6 @@ ENTRYPOINT sleep 5 \
 	--retry-delay 0 \
 	--retry-max-time 40 \
 	'http://graph_node:8020' \
-	&& yarn inject-contract-address-to-local-config \
 	&& yarn prepare-local \
 	&& yarn codegen \
 	&& yarn create-docker \
