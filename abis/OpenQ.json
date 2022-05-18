@@ -121,6 +121,25 @@
 			},
 			{
 				"indexed": false,
+				"internalType": "uint256",
+				"name": "newExpiration",
+				"type": "uint256"
+			}
+		],
+		"name": "DepositExtended",
+		"type": "event"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": false,
+				"internalType": "bytes32",
+				"name": "depositId",
+				"type": "bytes32"
+			},
+			{
+				"indexed": false,
 				"internalType": "string",
 				"name": "bountyId",
 				"type": "string"
@@ -453,6 +472,29 @@
 			}
 		],
 		"name": "claimBounty",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "string",
+				"name": "_bountyId",
+				"type": "string"
+			},
+			{
+				"internalType": "bytes32",
+				"name": "_depositId",
+				"type": "bytes32"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_seconds",
+				"type": "uint256"
+			}
+		],
+		"name": "extendDeposit",
 		"outputs": [],
 		"stateMutability": "nonpayable",
 		"type": "function"

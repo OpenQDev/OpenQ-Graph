@@ -41,4 +41,6 @@ dataSources:
           handler: handleDepositRefunded
         - event: TokenBalanceClaimed(string,indexed address,string,address,uint256,address,uint256)
           handler: handleTokenBalanceClaimed
+        - event: DepositExtended(bytes32,uint256)
+          handler: handleDepositExtended
       file: ./src/mapping.ts
