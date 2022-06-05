@@ -68,6 +68,12 @@
 				"internalType": "uint256",
 				"name": "bountyClosedTime",
 				"type": "uint256"
+			},
+			{
+				"indexed": false,
+				"internalType": "string",
+				"name": "closerData",
+				"type": "string"
 			}
 		],
 		"name": "BountyClosed",
@@ -469,6 +475,11 @@
 				"internalType": "address",
 				"name": "_closer",
 				"type": "address"
+			},
+			{
+				"internalType": "string",
+				"name": "_closerData",
+				"type": "string"
 			}
 		],
 		"name": "claimBounty",
@@ -725,6 +736,25 @@
 		"name": "setTokenWhitelist",
 		"outputs": [],
 		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "string",
+				"name": "_bountyId",
+				"type": "string"
+			}
+		],
+		"name": "tokenAddressLimitReached",
+		"outputs": [
+			{
+				"internalType": "bool",
+				"name": "",
+				"type": "bool"
+			}
+		],
+		"stateMutability": "view",
 		"type": "function"
 	},
 	{

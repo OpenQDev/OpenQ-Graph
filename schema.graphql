@@ -75,7 +75,8 @@ type Bounty @entity {
 	bountyMintTime: BigInt!
 	bountyClosedTime: BigInt
 	status: BountyStatus!
-	closer: User
+	closer: User,
+	closerData: String,
 	organization: Organization!
 	bountyTokenBalances: [BountyFundedTokenBalance!]! @derivedFrom(field: "bounty")
 	deposits: [Deposit!]! @derivedFrom(field: "bounty")
