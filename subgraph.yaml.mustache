@@ -36,7 +36,7 @@ dataSources:
         - event: NFTDepositReceived(bytes32,indexed address,string,string,address,uint256,address,uint256,uint256)
           handler: handleNFTDepositReceived
         - event: BountyClosed(string,indexed address,string,address,uint256)
-          handler: handleBountyClosed
+          handler: handleBountyClosedLegacy
         - event: BountyClosed(string,indexed address,string,address,uint256,string)
           handler: handleBountyClosed
         - event: DepositRefunded(bytes32,string,indexed address,string,uint256)
