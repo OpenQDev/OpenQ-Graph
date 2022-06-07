@@ -10,9 +10,10 @@ export default function handleBountyClosed(event: BountyClosed): void {
 
 	bounty.closer = event.params.closer.toHexString()
 	bounty.bountyClosedTime = event.params.bountyClosedTime
-	bounty.closerData = event.params.closerData
 	bounty.status = "CLOSED"
 	bounty.claimedTransactionHash = event.transaction.hash;
+
+	bounty.closerData = event.params.closerData
 
 	// SAVE ALL ENTITIES
 	bounty.save()

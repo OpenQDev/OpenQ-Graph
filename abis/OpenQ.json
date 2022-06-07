@@ -89,6 +89,43 @@
 				"type": "string"
 			},
 			{
+				"indexed": true,
+				"internalType": "address",
+				"name": "bountyAddress",
+				"type": "address"
+			},
+			{
+				"indexed": false,
+				"internalType": "string",
+				"name": "organization",
+				"type": "string"
+			},
+			{
+				"indexed": false,
+				"internalType": "address",
+				"name": "closer",
+				"type": "address"
+			},
+			{
+				"indexed": false,
+				"internalType": "uint256",
+				"name": "bountyClosedTime",
+				"type": "uint256"
+			}
+		],
+		"name": "BountyClosed",
+		"type": "event"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": false,
+				"internalType": "string",
+				"name": "bountyId",
+				"type": "string"
+			},
+			{
 				"indexed": false,
 				"internalType": "string",
 				"name": "organization",
