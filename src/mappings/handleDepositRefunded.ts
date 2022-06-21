@@ -19,6 +19,7 @@ export default function handleDepositRefunded(event: DepositRefunded1): void {
 	refund.organization = event.params.organization
 	refund.depositId = event.params.depositId
 	refund.volume = event.params.volume
+	refund.tokenAddress = event.params.tokenAddress
 	refund.transactionHash = event.transaction.hash
 
 	let deposit = Deposit.load(event.params.depositId.toHexString())
