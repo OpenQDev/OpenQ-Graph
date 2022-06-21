@@ -40,6 +40,8 @@ dataSources:
         - event: BountyClosed(string,indexed address,string,address,uint256,string)
           handler: handleBountyClosed
         - event: DepositRefunded(bytes32,string,indexed address,string,uint256)
+          handler: handleDepositRefundedLegacy
+        - event: DepositRefunded(bytes32,string,indexed address,string,uint256,address,uint256)
           handler: handleDepositRefunded
         - event: TokenBalanceClaimed(string,indexed address,string,address,uint256,address,uint256)
           handler: handleTokenBalanceClaimed
