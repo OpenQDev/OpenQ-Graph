@@ -4,7 +4,7 @@
 	"scripts": {
 		"codegen": "graph codegen",
 		"build": "graph build",
-		"create-gnosis": "graph deploy --product hosted-service flacojones/azuro",
+		"deploy-gnosis": "graph deploy --product hosted-service flacojones/azuro",
 		"deploy-local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 --version-label 1.0.0 openqdev/openq",
 		"deploy-development": "graph deploy --node https://api.thegraph.com/deploy/ openqdev/openq-development",
 		"create-local": "graph create --node http://localhost:8020/ openqdev/openq",

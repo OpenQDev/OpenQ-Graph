@@ -1,10 +1,9 @@
-type User @entity {
-	id: ID!
-	totalCreatedConditions: BigInt
-}
-
 type Condition @entity {
 	id: ID!
-	creator: Bytes!
-	creationTimestamp: BigInt
+	timestamp: BigInt
+}
+
+type Metric @entity {
+	id: ID!
+	count: BigInt!
 }

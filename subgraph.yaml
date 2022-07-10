@@ -14,8 +14,8 @@ dataSources:
       apiVersion: 0.0.5
       language: wasm/assemblyscript
       entities:
-        - User
         - Condition
+        - Metrics
       abis:
         - name: Core
           file: ./abis/Core.json
