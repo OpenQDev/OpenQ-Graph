@@ -2,5 +2,4 @@ node_modules/
 build/
 generated/
 data/
-**/subgraph.yaml
 .DS_Store
