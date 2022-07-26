@@ -14,7 +14,7 @@ export default function handleBountyClosed(event: BountyClosed): void {
 	bounty.claimedTransactionHash = event.transaction.hash;
 
 	// Only available on updated event
-	bounty.closerData = event.params.closerData
+	bounty.closerData = event.params.data
 
 	// SAVE ALL ENTITIES
 	bounty.save()

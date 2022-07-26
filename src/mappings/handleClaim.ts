@@ -2,20 +2,14 @@ import { Claim } from "../../generated/OpenQ/OpenQ"
 import {
 	Bounty
 } from "../../generated/schema"
+import { ethereum } from '@graphprotocol/graph-ts'
 
 export default function handleClaim(event: Claim): void {
-	let bounty = Bounty.load(event.params.bountyAddress.toHexString())
+	// let decoded = ethereum.decode('(address,uint256)', event.params.data);
 
-	if (!bounty) { throw "Error" }
+	// let bounty = Bounty.load(event.params.bountyAddress.toHexString())
 
-	bounty.closer = event.params.closer.toHexString()
-	bounty.bountyClosedTime = event.params.bountyClosedTime
-	bounty.status = "CLOSED"
-	bounty.claimedTransactionHash = event.transaction.hash;
+	// if (!bounty) { throw "Error" }
 
-	// Only available on updated event
-	bounty.closerData = event.params.closerData
-
-	// SAVE ALL ENTITIES
-	bounty.save()
+	// bounty.save()
 }

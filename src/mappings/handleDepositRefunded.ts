@@ -1,5 +1,5 @@
 import { BigInt, store } from "@graphprotocol/graph-ts"
-import { DepositRefunded1 } from "../../generated/OpenQ/OpenQ"
+import { DepositRefunded } from "../../generated/OpenQ/OpenQ"
 import {
 	Deposit,
 	Refund,
@@ -10,7 +10,7 @@ import {
 	FundedTokenBalance,
 } from "../../generated/schema"
 
-export default function handleDepositRefunded(event: DepositRefunded1): void {
+export default function handleDepositRefunded(event: DepositRefunded): void {
 	let refundId = event.params.depositId.toHexString();
 	let refund = new Refund(refundId)
 

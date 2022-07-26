@@ -29,22 +29,22 @@ dataSources:
         - name: OpenQ
           file: ./abis/OpenQ.json
       eventHandlers:
-        - event: BountyCreated(string,string,address,indexed address,uint256,uint256,bytes)
+        - event: BountyCreated(string,string,address,indexed address,uint256,uint256,bytes,uint256)
           handler: handleBountyCreated
-        - event: TokenDepositReceived(bytes32,indexed address,string,string,address,uint256,address,uint256,uint256,uint256,bytes)
+        - event: TokenDepositReceived(bytes32,indexed address,string,string,address,uint256,address,uint256,uint256,uint256,bytes,uint256)
           handler: handleTokenDepositReceived
-        - event: NFTDepositReceived(bytes32,indexed address,string,string,address,uint256,address,uint256,uint256,uint256,bytes)
+        - event: NFTDepositReceived(bytes32,indexed address,string,string,address,uint256,address,uint256,uint256,uint256,bytes,uint256)
           handler: handleNFTDepositReceived
-        - event: BountyClosed(string,indexed address,string,address,uint256,uint256,bytes)
+        - event: BountyClosed(string,indexed address,string,address,uint256,uint256,bytes,uint256)
           handler: handleBountyClosed
-        - event: DepositRefunded(bytes32,string,indexed address,string,uint256,address,uint256,uint256,bytes)
+        - event: DepositRefunded(bytes32,string,indexed address,string,uint256,address,uint256,uint256,bytes,uint256)
           handler: handleDepositRefunded
-        - event: TokenBalanceClaimed(string,indexed address,string,address,uint256,address,uint256,uint256,bytes)
+        - event: TokenBalanceClaimed(string,indexed address,string,address,uint256,address,uint256,uint256,bytes,uint256)
           handler: handleTokenBalanceClaimed
-        - event: DepositExtended(bytes32,uint256,uint256,bytes)
+        - event: DepositExtended(bytes32,uint256,uint256,bytes,uint256)
           handler: handleDepositExtended
-        - event: DepositExtended(bytes32,uint256,uint256,bytes)
+        - event: DepositExtended(bytes32,uint256,uint256,bytes,uint256)
           handler: handleDepositExtended
-        - event: Claim(uint256,bytes)
+        - event: Claim(uint256,bytes,uint256)
           handler: handleClaim
       file: ./src/mapping.ts

@@ -72,7 +72,7 @@
 			{
 				"indexed": false,
 				"internalType": "uint256",
-				"name": "class",
+				"name": "bountyType",
 				"type": "uint256"
 			},
 			{
@@ -80,6 +80,12 @@
 				"internalType": "bytes",
 				"name": "data",
 				"type": "bytes"
+			},
+			{
+				"indexed": false,
+				"internalType": "uint256",
+				"name": "version",
+				"type": "uint256"
 			}
 		],
 		"name": "BountyClosed",
@@ -121,7 +127,7 @@
 			{
 				"indexed": false,
 				"internalType": "uint256",
-				"name": "class",
+				"name": "bountyType",
 				"type": "uint256"
 			},
 			{
@@ -129,6 +135,12 @@
 				"internalType": "bytes",
 				"name": "data",
 				"type": "bytes"
+			},
+			{
+				"indexed": false,
+				"internalType": "uint256",
+				"name": "version",
+				"type": "uint256"
 			}
 		],
 		"name": "BountyCreated",
@@ -140,7 +152,7 @@
 			{
 				"indexed": false,
 				"internalType": "uint256",
-				"name": "class",
+				"name": "bountyType",
 				"type": "uint256"
 			},
 			{
@@ -148,6 +160,12 @@
 				"internalType": "bytes",
 				"name": "data",
 				"type": "bytes"
+			},
+			{
+				"indexed": false,
+				"internalType": "uint256",
+				"name": "version",
+				"type": "uint256"
 			}
 		],
 		"name": "Claim",
@@ -171,7 +189,7 @@
 			{
 				"indexed": false,
 				"internalType": "uint256",
-				"name": "class",
+				"name": "bountyType",
 				"type": "uint256"
 			},
 			{
@@ -179,6 +197,12 @@
 				"internalType": "bytes",
 				"name": "data",
 				"type": "bytes"
+			},
+			{
+				"indexed": false,
+				"internalType": "uint256",
+				"name": "version",
+				"type": "uint256"
 			}
 		],
 		"name": "DepositExtended",
@@ -232,7 +256,7 @@
 			{
 				"indexed": false,
 				"internalType": "uint256",
-				"name": "class",
+				"name": "bountyType",
 				"type": "uint256"
 			},
 			{
@@ -240,6 +264,12 @@
 				"internalType": "bytes",
 				"name": "data",
 				"type": "bytes"
+			},
+			{
+				"indexed": false,
+				"internalType": "uint256",
+				"name": "version",
+				"type": "uint256"
 			}
 		],
 		"name": "DepositRefunded",
@@ -318,7 +348,7 @@
 			{
 				"indexed": false,
 				"internalType": "uint256",
-				"name": "class",
+				"name": "bountyType",
 				"type": "uint256"
 			},
 			{
@@ -326,6 +356,12 @@
 				"internalType": "bytes",
 				"name": "data",
 				"type": "bytes"
+			},
+			{
+				"indexed": false,
+				"internalType": "uint256",
+				"name": "version",
+				"type": "uint256"
 			}
 		],
 		"name": "NFTDepositReceived",
@@ -417,7 +453,7 @@
 			{
 				"indexed": false,
 				"internalType": "uint256",
-				"name": "class",
+				"name": "bountyType",
 				"type": "uint256"
 			},
 			{
@@ -425,6 +461,12 @@
 				"internalType": "bytes",
 				"name": "data",
 				"type": "bytes"
+			},
+			{
+				"indexed": false,
+				"internalType": "uint256",
+				"name": "version",
+				"type": "uint256"
 			}
 		],
 		"name": "TokenBalanceClaimed",
@@ -490,7 +532,7 @@
 			{
 				"indexed": false,
 				"internalType": "uint256",
-				"name": "class",
+				"name": "bountyType",
 				"type": "uint256"
 			},
 			{
@@ -498,6 +540,12 @@
 				"internalType": "bytes",
 				"name": "data",
 				"type": "bytes"
+			},
+			{
+				"indexed": false,
+				"internalType": "uint256",
+				"name": "version",
+				"type": "uint256"
 			}
 		],
 		"name": "TokenDepositReceived",
@@ -530,25 +578,6 @@
 				"internalType": "string",
 				"name": "",
 				"type": "string"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "string",
-				"name": "_bountyId",
-				"type": "string"
-			}
-		],
-		"name": "bountyClass",
-		"outputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
 			}
 		],
 		"stateMutability": "view",
@@ -619,6 +648,25 @@
 				"internalType": "bool",
 				"name": "",
 				"type": "bool"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "string",
+				"name": "_bountyId",
+				"type": "string"
+			}
+		],
+		"name": "bountyType",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
 			}
 		],
 		"stateMutability": "view",
@@ -852,6 +900,35 @@
 		"type": "function"
 	},
 	{
+		"inputs": [
+			{
+				"internalType": "string",
+				"name": "_bountyId",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "claimant",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "claimantAsset",
+				"type": "string"
+			}
+		],
+		"name": "ongoingClaimed",
+		"outputs": [
+			{
+				"internalType": "bool",
+				"name": "",
+				"type": "bool"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
 		"inputs": [],
 		"name": "openQTokenWhitelist",
 		"outputs": [
@@ -952,6 +1029,30 @@
 		"name": "setTokenWhitelist",
 		"outputs": [],
 		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "string",
+				"name": "_bountyId",
+				"type": "string"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_tier",
+				"type": "uint256"
+			}
+		],
+		"name": "tierClaimed",
+		"outputs": [
+			{
+				"internalType": "bool",
+				"name": "",
+				"type": "bool"
+			}
+		],
+		"stateMutability": "view",
 		"type": "function"
 	},
 	{
