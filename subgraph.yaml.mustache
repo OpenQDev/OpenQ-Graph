@@ -31,15 +31,15 @@ dataSources:
       eventHandlers:
         - event: BountyCreated(string,string,address,indexed address,uint256,uint256,bytes)
           handler: handleBountyCreated
-        - event: TokenDepositReceived(bytes32,address,string,string,address,uint256,address,uint256,uint256,uint256,bytes)
+        - event: TokenDepositReceived(bytes32,indexed address,string,string,address,uint256,address,uint256,uint256,uint256,bytes)
           handler: handleTokenDepositReceived
         - event: NFTDepositReceived(bytes32,indexed address,string,string,address,uint256,address,uint256,uint256,uint256,bytes)
           handler: handleNFTDepositReceived
-        - event: BountyClosed(string,address,string,address,uint256,uint256,bytes)
+        - event: BountyClosed(string,indexed address,string,address,uint256,uint256,bytes)
           handler: handleBountyClosed
         - event: DepositRefunded(bytes32,string,indexed address,string,uint256,address,uint256,uint256,bytes)
           handler: handleDepositRefunded
-        - event: TokenBalanceClaimed(string,address,string,address,uint256,address,uint256,uint256,bytes)
+        - event: TokenBalanceClaimed(string,indexed address,string,address,uint256,address,uint256,uint256,bytes)
           handler: handleTokenBalanceClaimed
         - event: DepositExtended(bytes32,uint256,uint256,bytes)
           handler: handleDepositExtended
