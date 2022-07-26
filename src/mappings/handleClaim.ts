@@ -1,9 +1,9 @@
-import { BountyClosed1 } from "../../generated/OpenQ/OpenQ"
+import { Claim } from "../../generated/OpenQ/OpenQ"
 import {
 	Bounty
 } from "../../generated/schema"
 
-export default function handleBountyClosed(event: BountyClosed1): void {
+export default function handleClaim(event: Claim): void {
 	let bounty = Bounty.load(event.params.bountyAddress.toHexString())
 
 	if (!bounty) { throw "Error" }
@@ -12,6 +12,9 @@ export default function handleBountyClosed(event: BountyClosed1): void {
 	bounty.bountyClosedTime = event.params.bountyClosedTime
 	bounty.status = "CLOSED"
 	bounty.claimedTransactionHash = event.transaction.hash;
+
+	// Only available on updated event
+	bounty.closerData = event.params.closerData
 
 	// SAVE ALL ENTITIES
 	bounty.save()
