@@ -82,9 +82,21 @@ type Bounty @entity {
 	deposits: [Deposit!]! @derivedFrom(field: "bounty")
 	refunds: [Refund!]! @derivedFrom(field: "bounty")
 	payouts: [Payout!]! @derivedFrom(field: "bounty")
+	claims: [Claim!]! @derivedFrom(field: "bounty")
 	transactionHash: Bytes!
 	claimedTransactionHash: Bytes
 	payoutAddress: Bytes!
+}
+
+type Claim @entity {
+	id: ID! # claimantId
+	bounty: Bounty!
+	bountyType: BigInt!
+	claimantAsset: String!
+	claimant: User!
+	externalUserId: String!
+	tier: BigInt
+	version: BigInt!
 }
 
 enum BountyStatus {

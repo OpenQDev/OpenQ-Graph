@@ -45,6 +45,6 @@ dataSources:
           handler: handleDepositExtended
         - event: DepositExtended(bytes32,uint256,uint256,bytes,uint256)
           handler: handleDepositExtended
-        - event: Claim(uint256,bytes,uint256)
-          handler: handleClaim
+        - event: ClaimSuccess(uint256,bytes,uint256)
+          handler: handleClaimSuccess
       file: ./src/mapping.ts
