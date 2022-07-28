@@ -1,7 +1,49 @@
-import { Bytes, BigInt, Address, ethereum, store, Entity } from '@graphprotocol/graph-ts';
+import { Bytes, BigInt, Address, ethereum } from '@graphprotocol/graph-ts';
 import { BountyClosed } from "../generated/OpenQ/OpenQ";
-import { newMockEvent, test, assert, logStore, log, clearStore, afterEach, describe, beforeEach } from "matchstick-as/assembly/index";
+import { newMockEvent, test, assert, clearStore, afterEach, describe, beforeEach } from "matchstick-as/assembly/index";
 import { handleBountyClosed } from "../src/mapping";
+import seedBounty from './utils';
+
+describe('handleBountyClosed', () => {
+	const bountyEntityId = '0xb0f8fb2093c515e5f40f7b43ee99bb758befa9d4'
+
+	beforeEach(() => {
+		seedBounty(
+			bountyEntityId,
+			'mockBountyId',
+			'0xb0f8fb2093c515e5f40f7b43ee99bb758befa9d4',
+			'0xb0f8fb2093c515e5f40f7b43ee99bb758befa9d4',
+			'1',
+			'1',
+			'orgMock',
+			'0xb0f8fb2093c515e5f40f7b43ee99bb758befa9d4'
+		)
+	})
+
+	afterEach(() => {
+		clearStore()
+	})
+
+	test('can handle new bounty closed', () => {
+		let newBountyClosedEvent = createNewBountyClosedEvent(
+			"mockBountyId",
+			bountyEntityId,
+			"orgMock",
+			"0xb0f8fb2093c515e5f40f7b43ee99bb758befa9d4",
+			'12345678',
+			'1',
+			'0x00000000000000000000000046e09468616365256f11f4544e65ce0c70ee624b',
+			'1')
+
+		newBountyClosedEvent.transaction.hash = Bytes.fromHexString("0x")
+		handleBountyClosed(newBountyClosedEvent)
+
+		assert.fieldEquals('Bounty', bountyEntityId, 'bountyClosedTime', '12345678')
+		assert.fieldEquals('Bounty', bountyEntityId, 'bountyClosedTime', '12345678')
+		assert.fieldEquals('Bounty', bountyEntityId, 'closer', '0xb0f8fb2093c515e5f40f7b43ee99bb758befa9d4')
+		assert.fieldEquals('Bounty', bountyEntityId, 'status', '2')
+	})
+})
 
 export function createNewBountyClosedEvent(
 	bountyId: string,
@@ -29,71 +71,3 @@ export function createNewBountyClosedEvent(
 
 	return newBountyClosedEvent
 }
-
-afterEach(() => {
-	clearStore()
-})
-
-export function seedBounty(
-	id: string,
-	bountyId: string,
-	bountyAddress: string,
-	issuer: string,
-	bountyMintTime: string,
-	status: string,
-	organization: string,
-	transactionHash: string): void {
-	let entity = new Entity()
-	entity.setString('id', bountyAddress)
-	entity.setString('bountyId', bountyId)
-	entity.setBytes('bountyAddress', Address.fromString(bountyAddress))
-	entity.setString('issuer', issuer)
-	entity.setBigInt('bountyMintTime', BigInt.fromString(bountyMintTime))
-	entity.setBigInt('status', BigInt.fromString(status))
-	entity.setString('organization', organization)
-	entity.setBytes('transactionHash', Bytes.fromHexString(transactionHash))
-
-	store.set('Bounty', '0xb0f8fb2093c515e5f40f7b43ee99bb758befa9d4', entity)
-}
-
-beforeEach(() => {
-	seedBounty(
-		'0xb0f8fb2093c515e5f40f7b43ee99bb758befa9d4',
-		'mockBountyId',
-		'0xb0f8fb2093c515e5f40f7b43ee99bb758befa9d4',
-		'0xb0f8fb2093c515e5f40f7b43ee99bb758befa9d4',
-		'1',
-		'1',
-		'orgMock',
-		'0xb0f8fb2093c515e5f40f7b43ee99bb758befa9d4'
-	)
-})
-
-
-
-describe('handleBountyClosed', () => {
-	test('can handle new bounty closed', () => {
-
-		let newBountyClosedEvent = createNewBountyClosedEvent(
-			"mockBountyId",
-			"0xb0f8fb2093c515e5f40f7b43ee99bb758befa9d4",
-			"orgMock",
-			"0xb0f8fb2093c515e5f40f7b43ee99bb758befa9d4",
-			'1',
-			'1',
-			'0x00000000000000000000000046e09468616365256f11f4544e65ce0c70ee624b',
-			'1')
-
-		logStore()
-
-		newBountyClosedEvent.transaction.hash = Bytes.fromHexString("0x")
-		handleBountyClosed(newBountyClosedEvent)
-
-		logStore()
-
-		// assert.fieldEquals('Bounty', '0x', 'bountyId', 'mockId')
-		// assert.notInStore('Bounty', '0xnothere')
-
-		// log.success("hi", [])
-	})
-})

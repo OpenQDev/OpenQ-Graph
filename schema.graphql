@@ -72,6 +72,7 @@ type Bounty @entity {
 	bountyId: String!
 	bountyAddress: String!
 	issuer: User!
+	bountyType: BigInt!
 	bountyMintTime: BigInt!
 	bountyClosedTime: BigInt
 	status: BigInt!
@@ -86,6 +87,7 @@ type Bounty @entity {
 	transactionHash: Bytes!
 	claimedTransactionHash: Bytes
 	payoutAddress: Bytes
+	version: BigInt!
 }
 
 type Claim @entity {
