@@ -74,7 +74,7 @@ type Bounty @entity {
 	issuer: User!
 	bountyMintTime: BigInt!
 	bountyClosedTime: BigInt
-	status: BountyStatus!
+	status: BigInt!
 	closer: User,
 	closerData: Bytes,
 	organization: Organization!
@@ -85,7 +85,7 @@ type Bounty @entity {
 	claims: [Claim!]! @derivedFrom(field: "bounty")
 	transactionHash: Bytes!
 	claimedTransactionHash: Bytes
-	payoutAddress: Bytes!
+	payoutAddress: Bytes
 }
 
 type Claim @entity {
@@ -97,11 +97,6 @@ type Claim @entity {
 	externalUserId: String!
 	tier: BigInt
 	version: BigInt!
-}
-
-enum BountyStatus {
-  OPEN
-	CLOSED
 }
 
 # Total token balances per Bounty per Token

@@ -2,7 +2,7 @@ import { ClaimSuccess } from "../../generated/OpenQ/OpenQ"
 import {
 	Claim
 } from "../../generated/schema"
-import { ethereum, crypto, BigInt, Address } from '@graphprotocol/graph-ts'
+import { ethereum, crypto, BigInt, Address, log } from '@graphprotocol/graph-ts'
 
 export default function handleClaimSuccess(event: ClaimSuccess): void {
 	const SINGLE = BigInt.fromString('0');
@@ -11,11 +11,10 @@ export default function handleClaimSuccess(event: ClaimSuccess): void {
 
 	let bountyType = event.params.bountyType;
 
-	let decoded = ethereum.decode('(address,string,address,string)', event.params.data)!.toTuple();
+	let decoded = ethereum.decode("(address,string,address,string)", event.params.data)!.toTuple();
 
-	let closerAddress = decoded[1].toAddress()
-	let claimantAsset = decoded[2].toString()
-	let externalUserId = decoded[2].toString()
+	let claimantAsset = decoded[3].toString()
+	let externalUserId = decoded[1].toString()
 
 	// Recreate claimantId from externalUserId (GitHub ID) and claimantAsset (PR URL)
 	let tupleArray: Array<ethereum.Value> = [
@@ -33,12 +32,10 @@ export default function handleClaimSuccess(event: ClaimSuccess): void {
 		claim = new Claim(claimantId)
 	}
 
-	let bountyAddress = decoded[0].toAddress().toHexString()
-
 	claim.bountyType = bountyType;
-	claim.claimant = closerAddress.toString();
+	claim.claimant = decoded[2].toAddress().toString();
 	claim.claimantAsset = claimantAsset
-	claim.bounty = bountyAddress;
+	claim.bounty = decoded[0].toAddress().toHexString()
 
 	claim.save()
 }
