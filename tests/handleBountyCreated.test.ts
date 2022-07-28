@@ -39,6 +39,12 @@ describe('handleBountyCreated', () => {
 		assert.fieldEquals('Bounty', bountyEntityId, 'bountyMintTime', '12345678')
 		assert.fieldEquals('Bounty', bountyEntityId, 'bountyType', '1')
 		assert.fieldEquals('Bounty', bountyEntityId, 'version', '1')
+
+		assert.fieldEquals('User', '0xa16081f360e3847006db660bae1c6d1b2e17ec2a', 'id', '0xa16081f360e3847006db660bae1c6d1b2e17ec2a')
+
+		assert.fieldEquals('Organization', 'orgMock', 'id', 'orgMock')
+
+		assert.fieldEquals('BountiesCounter', 'bountiesCounterId', 'count', '1')
 	})
 })
 
