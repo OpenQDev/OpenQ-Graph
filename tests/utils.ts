@@ -7,7 +7,7 @@ export function seedBounty(): void {
 	entity.setString('id', Constants.id)
 	entity.setString('bountyId', Constants.bountyId)
 	entity.setBytes('bountyAddress', Address.fromString(Constants.bountyAddress))
-	entity.setString('issuer', Constants.issuer)
+	entity.setString('issuer', Constants.userId)
 	entity.setBigInt('bountyMintTime', BigInt.fromString(Constants.bountyMintTime))
 	entity.setBigInt('status', BigInt.fromString(Constants.status))
 	entity.setString('organization', Constants.organization)

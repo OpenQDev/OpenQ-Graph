@@ -13,7 +13,7 @@ export default class Constants {
 		return '0x06b306c85e5f33b1b2d971822ce0ed42fb7ab9a1';
 	}
 
-	static get issuer(): string {
+	static get userId(): string {
 		return '0x46e09468616365256f11f4544e65ce0c70ee624b';
 	}
 
@@ -63,6 +63,26 @@ export default class Constants {
 
 	static get data(): string {
 		return '0x00000000000000000000000046e09468616365256f11f4544e65ce0c70ee624b';
+	}
+
+	static get depositId(): string {
+		return '0x06b306c85e5f33b1b2d971822ce0ed42fb7ab9a1';
+	}
+
+	static get receiveTime(): string {
+		return '12345';
+	}
+
+	static get expiration(): string {
+		return '12345';
+	}
+
+	static get volume(): string {
+		return '100';
+	}
+
+	static get tokenAddress(): string {
+		return '0x8f3cf7ad23cd3cadbd9735aff958023239c6a063';
 	}
 
 	// @dev This is hardcoded in the handleBountyCreated mapping

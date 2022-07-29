@@ -19,7 +19,7 @@ describe('handleBountyCreated', () => {
 		let newBountyCreatedEvent = createNewBountyCreatedEvent(
 			Constants.bountyId,
 			Constants.organization,
-			Constants.issuer,
+			Constants.userId,
 			Constants.bountyAddress,
 			Constants.bountyMintTime,
 			Constants.bountyType,
@@ -28,7 +28,7 @@ describe('handleBountyCreated', () => {
 		)
 
 		newBountyCreatedEvent.transaction.hash = Bytes.fromHexString(Constants.transactionHash)
-		newBountyCreatedEvent.transaction.from = Address.fromString(Constants.issuer)
+		newBountyCreatedEvent.transaction.from = Address.fromString(Constants.userId)
 
 		// ACT
 		handleBountyCreated(newBountyCreatedEvent)
@@ -36,14 +36,14 @@ describe('handleBountyCreated', () => {
 		// ASSERT
 		assert.fieldEquals('Bounty', Constants.id, 'bountyId', Constants.bountyId)
 		assert.fieldEquals('Bounty', Constants.id, 'organization', Constants.organization)
-		assert.fieldEquals('Bounty', Constants.id, 'issuer', Constants.issuer)
+		assert.fieldEquals('Bounty', Constants.id, 'issuer', Constants.userId)
 		assert.fieldEquals('Bounty', Constants.id, 'bountyAddress', Constants.id)
 		assert.fieldEquals('Bounty', Constants.id, 'bountyMintTime', Constants.bountyMintTime)
 		assert.fieldEquals('Bounty', Constants.id, 'bountyType', Constants.bountyType)
 		assert.fieldEquals('Bounty', Constants.id, 'version', Constants.version)
 		assert.fieldEquals('Bounty', Constants.id, 'transactionHash', Constants.transactionHash)
 
-		assert.fieldEquals('User', Constants.issuer, 'id', Constants.issuer)
+		assert.fieldEquals('User', Constants.userId, 'id', Constants.userId)
 
 		assert.fieldEquals('Organization', Constants.organization, 'id', Constants.organization)
 		assert.fieldEquals('Organization', Constants.organization, 'bountiesCount', '1')
