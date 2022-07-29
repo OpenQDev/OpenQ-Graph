@@ -1,4 +1,4 @@
-import { BigInt } from "@graphprotocol/graph-ts"
+import { BigInt, ethereum } from "@graphprotocol/graph-ts"
 import { BountyCreated } from "../../generated/OpenQ/OpenQ"
 import {
 	Bounty,
@@ -14,13 +14,22 @@ export default function handleBountyCreated(event: BountyCreated): void {
 		bounty = new Bounty(event.params.bountyAddress.toHexString())
 	}
 
+	let bountyType = event.params.bountyType
 	bounty.bountyAddress = event.params.bountyAddress.toHexString()
 	bounty.bountyId = event.params.bountyId
 	bounty.bountyMintTime = event.params.bountyMintTime
-	bounty.bountyType = event.params.bountyType
+	bounty.bountyType = bountyType
 	bounty.version = event.params.version
 	bounty.status = BigInt.fromString('0')
 	bounty.transactionHash = event.transaction.hash
+
+	const FUNDING_GOAL = BigInt.fromString('3')
+
+	if (bountyType == FUNDING_GOAL) {
+		let decoded = ethereum.decode("(address,uint256)", event.params.data)!.toTuple();
+		bounty.fundingGoalTokenAddress = decoded[0].toAddress()
+		bounty.fundingGoalVolume = decoded[1].toBigInt()
+	}
 
 	let user = User.load(event.transaction.from.toHexString())
 

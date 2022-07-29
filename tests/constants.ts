@@ -35,6 +35,10 @@ export default class Constants {
 		return '0';
 	}
 
+	static get bountyType_FUNDING_GOAL(): string {
+		return '3';
+	}
+
 	static get bountyMintTime(): string {
 		return '123';
 	}
@@ -70,12 +74,50 @@ export default class Constants {
 		return claimId;
 	}
 
+	static get fundingGoalTokenAddress(): string {
+		return '0x8f3cf7ad23cd3cadbd9735aff958023239c6a063';
+	}
+
+	static get fundingGoalVolume(): string {
+		return '100';
+	}
+
+	static get initData_FUNDING_GOAL(): string {
+		let tupleArray: Array<ethereum.Value> = [
+			ethereum.Value.fromAddress(Address.fromString(Constants.fundingGoalTokenAddress)),
+			ethereum.Value.fromSignedBigInt(BigInt.fromString(Constants.fundingGoalVolume)),
+		]
+		return Constants.encodeTuple(tupleArray)
+	}
+
+	static encodeTuple(tupleArray: ethereum.Value[]): string {
+		let tuple = changetype<ethereum.Tuple>(tupleArray)
+		let encoded = ethereum.encode(ethereum.Value.fromTuple(tuple))!
+		return encoded.toHexString();
+	}
+
 	static get closerData_SINGLE(): string {
 		let tupleArray: Array<ethereum.Value> = [
 			ethereum.Value.fromAddress(Address.fromString(Constants.id)),
 			ethereum.Value.fromString(Constants.externalUserId),
 			ethereum.Value.fromAddress(Address.fromString(Constants.userId)),
 			ethereum.Value.fromString(Constants.claimantAsset)
+		]
+
+		let tuple = changetype<ethereum.Tuple>(tupleArray)
+
+		let encoded = ethereum.encode(ethereum.Value.fromTuple(tuple))!
+
+		return encoded.toHexString();
+	}
+
+	static get closerData_TIERED(): string {
+		let tupleArray: Array<ethereum.Value> = [
+			ethereum.Value.fromAddress(Address.fromString(Constants.id)),
+			ethereum.Value.fromString(Constants.externalUserId),
+			ethereum.Value.fromAddress(Address.fromString(Constants.userId)),
+			ethereum.Value.fromString(Constants.claimantAsset),
+			ethereum.Value.fromSignedBigInt(BigInt.fromString('1'))
 		]
 
 		let tuple = changetype<ethereum.Tuple>(tupleArray)

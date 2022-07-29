@@ -11,23 +11,29 @@ export default function handleClaimSuccess(event: ClaimSuccess): void {
 
 	let bountyType = event.params.bountyType;
 
-	let decoded = ethereum.decode("(address,string,address,string)", event.params.data)!.toTuple();
+	let decoded: ethereum.Value[]
+	if (bountyType == SINGLE || bountyType == ONGOING) {
+		decoded = ethereum.decode("(address,string,address,string)", event.params.data)!.toTuple();
+	} else {
+		decoded = ethereum.decode("(address,string,address,string,uint256)", event.params.data)!.toTuple();
+	}
 
 	let bountyAddress = decoded[0].toAddress().toHexString()
 	let externalUserId = decoded[1].toString()
 	let closer = decoded[2].toAddress().toHexString()
 	let claimantAsset = decoded[3].toString()
+	let tier = bountyType == TIERED ? decoded[4].toBigInt() : null
 
 	let claimId = generateClaimId(externalUserId, claimantAsset)
 
 	let claim = new Claim(claimId)
 
 	claim.bountyType = bountyType
-
 	claim.bounty = bountyAddress
 	claim.externalUserId = externalUserId
 	claim.claimant = closer
 	claim.claimantAsset = claimantAsset
+	claim.tier = tier
 
 	claim.save()
 }
