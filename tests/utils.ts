@@ -1,16 +1,24 @@
 import { Bytes, BigInt, Address, store, Entity } from '@graphprotocol/graph-ts';
+import Constants from './constants'
 
-export default function seedBounty(
-	id: string,
-	bountyId: string,
-	bountyAddress: string,
-	issuer: string,
-	bountyMintTime: string,
-	status: string,
-	organization: string,
-	bountyType: string,
-	version: string,
-	transactionHash: string): void {
+export function seedBounty(): void {
+	let entity = new Entity()
+
+	entity.setString('id', Constants.id)
+	entity.setString('bountyId', Constants.bountyId)
+	entity.setBytes('bountyAddress', Address.fromString(Constants.bountyAddress))
+	entity.setString('issuer', Constants.issuer)
+	entity.setBigInt('bountyMintTime', BigInt.fromString(Constants.bountyMintTime))
+	entity.setBigInt('status', BigInt.fromString(Constants.status))
+	entity.setString('organization', Constants.organization)
+	entity.setString('bountyType', Constants.bountyType)
+	entity.setBytes('transactionHash', Bytes.fromHexString(Constants.transactionHash))
+	entity.setBigInt('version', BigInt.fromString(Constants.version))
+
+	store.set('Bounty', Constants.id, entity)
+}
+
+export function seedDeposit(): void {
 	let entity = new Entity()
 	entity.setString('id', bountyAddress)
 	entity.setString('bountyId', bountyId)

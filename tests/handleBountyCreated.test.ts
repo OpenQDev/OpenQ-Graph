@@ -2,11 +2,13 @@ import { Bytes, BigInt, Address, ethereum } from '@graphprotocol/graph-ts';
 import { BountyCreated } from "../generated/OpenQ/OpenQ";
 import { newMockEvent, test, assert, clearStore, afterEach, describe, beforeEach, logStore, log } from "matchstick-as/assembly/index";
 import { handleBountyCreated } from "../src/mapping";
+import Constants from './constants';
+import { seedBounty } from './utils'
 
 describe('handleBountyCreated', () => {
-	const bountyEntityId = '0xb0f8fb2093c515e5f40f7b43ee99bb758befa9d4'
-
-	beforeEach(() => { })
+	beforeEach(() => {
+		seedBounty()
+	})
 
 	afterEach(() => {
 		clearStore()
@@ -15,38 +17,38 @@ describe('handleBountyCreated', () => {
 	test('can handle new BountyCreated', () => {
 		// ARRANGE
 		let newBountyCreatedEvent = createNewBountyCreatedEvent(
-			"mockBountyId",
-			"orgMock",
-			"0xb0f8fb2093c515e5f40f7b43ee99bb758befa9d4",
-			bountyEntityId,
-			'12345678',
-			'1',
-			'0x00000000000000000000000046e09468616365256f11f4544e65ce0c70ee624b',
-			'1')
+			Constants.bountyId,
+			Constants.organization,
+			Constants.issuer,
+			Constants.bountyAddress,
+			Constants.bountyMintTime,
+			Constants.bountyType,
+			Constants.data,
+			Constants.version
+		)
 
-		const transactionHash = Bytes.fromHexString("0x00000000000000000000000046e09468616365256f11f4544e65ce0c70ee624b")
-		newBountyCreatedEvent.transaction.hash = transactionHash
-		newBountyCreatedEvent.transaction.from = Address.fromString(bountyEntityId)
+		newBountyCreatedEvent.transaction.hash = Bytes.fromHexString(Constants.transactionHash)
+		newBountyCreatedEvent.transaction.from = Address.fromString(Constants.issuer)
 
 		// ACT
 		handleBountyCreated(newBountyCreatedEvent)
 
 		// ASSERT
-		assert.fieldEquals('Bounty', bountyEntityId, 'bountyId', 'mockBountyId')
-		assert.fieldEquals('Bounty', bountyEntityId, 'organization', 'orgMock')
-		assert.fieldEquals('Bounty', bountyEntityId, 'issuer', bountyEntityId)
-		assert.fieldEquals('Bounty', bountyEntityId, 'bountyAddress', bountyEntityId)
-		assert.fieldEquals('Bounty', bountyEntityId, 'bountyMintTime', '12345678')
-		assert.fieldEquals('Bounty', bountyEntityId, 'bountyType', '1')
-		assert.fieldEquals('Bounty', bountyEntityId, 'version', '1')
-		assert.fieldEquals('Bounty', bountyEntityId, 'transactionHash', transactionHash.toHexString())
+		assert.fieldEquals('Bounty', Constants.id, 'bountyId', Constants.bountyId)
+		assert.fieldEquals('Bounty', Constants.id, 'organization', Constants.organization)
+		assert.fieldEquals('Bounty', Constants.id, 'issuer', Constants.issuer)
+		assert.fieldEquals('Bounty', Constants.id, 'bountyAddress', Constants.id)
+		assert.fieldEquals('Bounty', Constants.id, 'bountyMintTime', Constants.bountyMintTime)
+		assert.fieldEquals('Bounty', Constants.id, 'bountyType', Constants.bountyType)
+		assert.fieldEquals('Bounty', Constants.id, 'version', Constants.version)
+		assert.fieldEquals('Bounty', Constants.id, 'transactionHash', Constants.transactionHash)
 
-		assert.fieldEquals('User', bountyEntityId, 'id', bountyEntityId)
+		assert.fieldEquals('User', Constants.issuer, 'id', Constants.issuer)
 
-		assert.fieldEquals('Organization', 'orgMock', 'id', 'orgMock')
-		assert.fieldEquals('Organization', 'orgMock', 'bountiesCount', '1')
+		assert.fieldEquals('Organization', Constants.organization, 'id', Constants.organization)
+		assert.fieldEquals('Organization', Constants.organization, 'bountiesCount', '1')
 
-		assert.fieldEquals('BountiesCounter', 'bountiesCounterId', 'count', '1')
+		assert.fieldEquals('BountiesCounter', Constants.bountiesCounterId, 'count', '1')
 	})
 })
 
