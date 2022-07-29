@@ -1,8 +1,18 @@
+import { Bytes, BigInt, Address, ethereum, crypto } from '@graphprotocol/graph-ts';
+
 export default class Constants {
 	constructor () { }
 
 	static get id(): string {
 		return '0x06b306c85e5f33b1b2d971822ce0ed42fb7ab9a1';
+	}
+
+	static get externalUserId(): string {
+		return 'externalUserId';
+	}
+
+	static get claimantAsset(): string {
+		return 'https://github.com/OpenQDev/OpenQ-Frontend/pull/398';
 	}
 
 	static get bountyId(): string {
@@ -45,8 +55,34 @@ export default class Constants {
 		return '0x814f9a1b407ba75d9e685fa007ba60783440804e';
 	}
 
-	static get closerData(): string {
-		return '0x00000000000000000000000046e09468616365256f11f4544e65ce0c70ee624b';
+	static get claimId(): string {
+		let tupleArray: Array<ethereum.Value> = [
+			ethereum.Value.fromString(Constants.externalUserId),
+			ethereum.Value.fromString(Constants.claimantAsset)
+		]
+
+		let tuple = changetype<ethereum.Tuple>(tupleArray)
+
+		let encoded = ethereum.encode(ethereum.Value.fromTuple(tuple))!
+
+		let claimId = crypto.keccak256(encoded).toHexString()
+
+		return claimId;
+	}
+
+	static get closerData_SINGLE(): string {
+		let tupleArray: Array<ethereum.Value> = [
+			ethereum.Value.fromAddress(Address.fromString(Constants.id)),
+			ethereum.Value.fromString(Constants.externalUserId),
+			ethereum.Value.fromAddress(Address.fromString(Constants.userId)),
+			ethereum.Value.fromString(Constants.claimantAsset)
+		]
+
+		let tuple = changetype<ethereum.Tuple>(tupleArray)
+
+		let encoded = ethereum.encode(ethereum.Value.fromTuple(tuple))!
+
+		return encoded.toHexString();
 	}
 
 	static get organization(): string {

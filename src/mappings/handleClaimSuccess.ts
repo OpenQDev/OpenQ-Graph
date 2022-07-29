@@ -13,29 +13,36 @@ export default function handleClaimSuccess(event: ClaimSuccess): void {
 
 	let decoded = ethereum.decode("(address,string,address,string)", event.params.data)!.toTuple();
 
-	let claimantAsset = decoded[3].toString()
+	let bountyAddress = decoded[0].toAddress().toHexString()
 	let externalUserId = decoded[1].toString()
+	let closer = decoded[2].toAddress().toHexString()
+	let claimantAsset = decoded[3].toString()
 
-	// Recreate claimantId from externalUserId (GitHub ID) and claimantAsset (PR URL)
-	let tupleArray: Array<ethereum.Value> = [
+	let claimId = generateClaimId(externalUserId, claimantAsset)
+
+	let claim = new Claim(claimId)
+
+	claim.bountyType = bountyType
+
+	claim.bounty = bountyAddress
+	claim.externalUserId = externalUserId
+	claim.claimant = closer
+	claim.claimantAsset = claimantAsset
+
+	claim.save()
+}
+
+function generateClaimId(externalUserId: string, claimantAsset: string): string {
+	let claimantIdArray: Array<ethereum.Value> = [
 		ethereum.Value.fromString(externalUserId),
 		ethereum.Value.fromString(claimantAsset)
 	]
 
-	let tuple = tupleArray as ethereum.Tuple
+	let tuple = changetype<ethereum.Tuple>(claimantIdArray)
+
 	let encoded = ethereum.encode(ethereum.Value.fromTuple(tuple))!
-	let claimantId = crypto.keccak256(encoded).toString()
 
-	let claim = Claim.load(claimantId.toString());
+	let claimId = crypto.keccak256(encoded).toHexString()
 
-	if (!claim) {
-		claim = new Claim(claimantId)
-	}
-
-	claim.bountyType = bountyType;
-	claim.claimant = decoded[2].toAddress().toString();
-	claim.claimantAsset = claimantAsset
-	claim.bounty = decoded[0].toAddress().toHexString()
-
-	claim.save()
+	return claimId;
 }

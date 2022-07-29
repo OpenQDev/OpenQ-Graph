@@ -1,56 +1,45 @@
 import { Bytes, BigInt, Address, ethereum } from '@graphprotocol/graph-ts';
 import { ClaimSuccess } from "../generated/OpenQ/OpenQ";
-import { newMockEvent, test, assert, clearStore, afterEach, describe, beforeEach } from "matchstick-as/assembly/index";
+import { newMockEvent, test, assert, clearStore, afterEach, describe, beforeEach, log, logStore } from "matchstick-as/assembly/index";
 import { handleClaimSuccess } from "../src/mapping";
-import seedBounty from './utils';
+import { seedBounty } from './utils';
+import Constants from './constants'
 
 describe('handleClaimSuccess', () => {
-	const bountyEntityId = '0xb0f8fb2093c515e5f40f7b43ee99bb758befa9d4'
 
-	beforeEach(() => {
-		seedBounty(
-			bountyEntityId,
-			'mockBountyId',
-			'0xb0f8fb2093c515e5f40f7b43ee99bb758befa9d4',
-			'0xb0f8fb2093c515e5f40f7b43ee99bb758befa9d4',
-			'1',
-			'1',
-			'orgMock',
-			'0xb0f8fb2093c515e5f40f7b43ee99bb758befa9d4'
-		)
-	})
+	beforeEach(() => { })
 
 	afterEach(() => {
 		clearStore()
 	})
 
-	test('can handle new bounty closed', () => {
+	test('can handle new claim success', () => {
 		let newClaimSuccessEvent = createNewClaimSuccessEvent(
-			"1",
-			"0x",
-			"1")
+			Constants.bountyType,
+			Constants.closerData_SINGLE,
+			Constants.version
+		)
 
-		newClaimSuccessEvent.transaction.hash = Bytes.fromHexString("0x")
+		newClaimSuccessEvent.transaction.hash = Bytes.fromHexString(Constants.transactionHash)
+		newClaimSuccessEvent.transaction.from = Address.fromString(Constants.userId)
+
 		handleClaimSuccess(newClaimSuccessEvent)
 
-		assert.fieldEquals('Claim', bountyEntityId, 'bountyClosedTime', '12345678')
-		assert.fieldEquals('Claim', bountyEntityId, 'bountyClosedTime', '12345678')
-		assert.fieldEquals('Claim', bountyEntityId, 'closer', '0xb0f8fb2093c515e5f40f7b43ee99bb758befa9d4')
+		assert.fieldEquals('Claim', Constants.claimId, 'id', Constants.claimId)
+		assert.fieldEquals('Claim', Constants.claimId, 'bounty', Constants.id)
+		assert.fieldEquals('Claim', Constants.claimId, 'externalUserId', Constants.externalUserId)
+		assert.fieldEquals('Claim', Constants.claimId, 'claimant', Constants.userId)
+		assert.fieldEquals('Claim', Constants.claimId, 'claimantAsset', Constants.claimantAsset)
 	})
 })
 
-event ClaimSuccess(uint256 bountyType, bytes data, uint256 version);
-
-export function createNewClaimSuccessEvent(
-	bountyType: string,
-	data: string,
-	version: string): ClaimSuccess {
+export function createNewClaimSuccessEvent(bountyType: string, data: string, version: string): ClaimSuccess {
 	let newClaimSuccessEvent = changetype<ClaimSuccess>(newMockEvent());
 
 	let parameters: Array<ethereum.EventParam> = [
 		new ethereum.EventParam("bountyType", ethereum.Value.fromUnsignedBigInt(BigInt.fromString(bountyType))),
 		new ethereum.EventParam("data", ethereum.Value.fromBytes(Bytes.fromHexString(data))),
-		new ethereum.EventParam("version", ethereum.Value.fromUnsignedBigInt(BigInt.fromString(version)))
+		new ethereum.EventParam("version", ethereum.Value.fromUnsignedBigInt(BigInt.fromString(version))),
 	]
 
 	newClaimSuccessEvent.parameters = parameters;
