@@ -16,6 +16,8 @@ describe('handleBountyClosed', () => {
 			'1',
 			'1',
 			'orgMock',
+			'1',
+			'1',
 			'0xb0f8fb2093c515e5f40f7b43ee99bb758befa9d4'
 		)
 	})

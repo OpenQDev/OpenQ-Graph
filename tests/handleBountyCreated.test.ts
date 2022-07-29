@@ -24,25 +24,27 @@ describe('handleBountyCreated', () => {
 			'0x00000000000000000000000046e09468616365256f11f4544e65ce0c70ee624b',
 			'1')
 
-		newBountyCreatedEvent.transaction.hash = Bytes.fromHexString("0x")
+		const transactionHash = Bytes.fromHexString("0x00000000000000000000000046e09468616365256f11f4544e65ce0c70ee624b")
+		newBountyCreatedEvent.transaction.hash = transactionHash
+		newBountyCreatedEvent.transaction.from = Address.fromString(bountyEntityId)
 
 		// ACT
 		handleBountyCreated(newBountyCreatedEvent)
 
-		logStore()
-
 		// ASSERT
 		assert.fieldEquals('Bounty', bountyEntityId, 'bountyId', 'mockBountyId')
 		assert.fieldEquals('Bounty', bountyEntityId, 'organization', 'orgMock')
-		assert.fieldEquals('Bounty', bountyEntityId, 'issuer', '0xa16081f360e3847006db660bae1c6d1b2e17ec2a')
+		assert.fieldEquals('Bounty', bountyEntityId, 'issuer', bountyEntityId)
 		assert.fieldEquals('Bounty', bountyEntityId, 'bountyAddress', bountyEntityId)
 		assert.fieldEquals('Bounty', bountyEntityId, 'bountyMintTime', '12345678')
 		assert.fieldEquals('Bounty', bountyEntityId, 'bountyType', '1')
 		assert.fieldEquals('Bounty', bountyEntityId, 'version', '1')
+		assert.fieldEquals('Bounty', bountyEntityId, 'transactionHash', transactionHash.toHexString())
 
-		assert.fieldEquals('User', '0xa16081f360e3847006db660bae1c6d1b2e17ec2a', 'id', '0xa16081f360e3847006db660bae1c6d1b2e17ec2a')
+		assert.fieldEquals('User', bountyEntityId, 'id', bountyEntityId)
 
 		assert.fieldEquals('Organization', 'orgMock', 'id', 'orgMock')
+		assert.fieldEquals('Organization', 'orgMock', 'bountiesCount', '1')
 
 		assert.fieldEquals('BountiesCounter', 'bountiesCounterId', 'count', '1')
 	})

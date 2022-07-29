@@ -8,6 +8,8 @@ export default function seedBounty(
 	bountyMintTime: string,
 	status: string,
 	organization: string,
+	bountyType: string,
+	version: string,
 	transactionHash: string): void {
 	let entity = new Entity()
 	entity.setString('id', bountyAddress)
@@ -17,7 +19,9 @@ export default function seedBounty(
 	entity.setBigInt('bountyMintTime', BigInt.fromString(bountyMintTime))
 	entity.setBigInt('status', BigInt.fromString(status))
 	entity.setString('organization', organization)
+	entity.setString('bountyType', bountyType)
 	entity.setBytes('transactionHash', Bytes.fromHexString(transactionHash))
+	entity.setBigInt('version', BigInt.fromString(version))
 
 	store.set('Bounty', '0xb0f8fb2093c515e5f40f7b43ee99bb758befa9d4', entity)
 }
