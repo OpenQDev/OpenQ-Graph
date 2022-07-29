@@ -26,7 +26,7 @@ describe('handleTokenDepositReceived', () => {
 			Constants.userId,
 			Constants.expiration,
 			Constants.volume,
-			Constants.bountyType,
+			Constants.bountyType_SINGLE,
 			Constants.data,
 			Constants.version
 		)

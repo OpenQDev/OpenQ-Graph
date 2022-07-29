@@ -14,7 +14,7 @@ describe('handleClaimSuccess', () => {
 
 	test('can handle new claim success - SINGLE', () => {
 		let newClaimSuccessEvent = createNewClaimSuccessEvent(
-			Constants.bountyType,
+			Constants.bountyType_SINGLE,
 			Constants.closerData_SINGLE,
 			Constants.version
 		)
@@ -29,11 +29,12 @@ describe('handleClaimSuccess', () => {
 		assert.fieldEquals('Claim', Constants.claimId, 'externalUserId', Constants.externalUserId)
 		assert.fieldEquals('Claim', Constants.claimId, 'claimant', Constants.userId)
 		assert.fieldEquals('Claim', Constants.claimId, 'claimantAsset', Constants.claimantAsset)
+		assert.fieldEquals('Claim', Constants.claimId, 'tier', 'null')
 	})
 
 	test('can handle new claim success - ONGOING', () => {
 		let newClaimSuccessEvent = createNewClaimSuccessEvent(
-			'1',
+			Constants.bountyType_ONGOING,
 			Constants.closerData_TIERED,
 			Constants.version
 		)
@@ -48,12 +49,12 @@ describe('handleClaimSuccess', () => {
 		assert.fieldEquals('Claim', Constants.claimId, 'externalUserId', Constants.externalUserId)
 		assert.fieldEquals('Claim', Constants.claimId, 'claimant', Constants.userId)
 		assert.fieldEquals('Claim', Constants.claimId, 'claimantAsset', Constants.claimantAsset)
-		assert.fieldEquals('Claim', Constants.claimId, 'tier', '1')
+		assert.fieldEquals('Claim', Constants.claimId, 'tier', 'null')
 	})
 
 	test('can handle new claim success - TIERED', () => {
 		let newClaimSuccessEvent = createNewClaimSuccessEvent(
-			'2',
+			Constants.bountyType_TIERED,
 			Constants.closerData_TIERED,
 			Constants.version
 		)
@@ -68,7 +69,7 @@ describe('handleClaimSuccess', () => {
 		assert.fieldEquals('Claim', Constants.claimId, 'externalUserId', Constants.externalUserId)
 		assert.fieldEquals('Claim', Constants.claimId, 'claimant', Constants.userId)
 		assert.fieldEquals('Claim', Constants.claimId, 'claimantAsset', Constants.claimantAsset)
-		assert.fieldEquals('Claim', Constants.claimId, 'tier', '1')
+		assert.fieldEquals('Claim', Constants.claimId, 'tier', Constants.FIRST_PLACE)
 	})
 })
 

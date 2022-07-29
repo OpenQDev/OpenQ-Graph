@@ -27,12 +27,24 @@ export default class Constants {
 		return '0x46e09468616365256f11f4544e65ce0c70ee624b';
 	}
 
+	static get FIRST_PLACE(): string {
+		return '0';
+	}
+
 	static get refundTime(): string {
 		return '123';
 	}
 
-	static get bountyType(): string {
+	static get bountyType_SINGLE(): string {
 		return '0';
+	}
+
+	static get bountyType_ONGOING(): string {
+		return '1';
+	}
+
+	static get bountyType_TIERED(): string {
+		return '2';
 	}
 
 	static get bountyType_FUNDING_GOAL(): string {
@@ -117,7 +129,7 @@ export default class Constants {
 			ethereum.Value.fromString(Constants.externalUserId),
 			ethereum.Value.fromAddress(Address.fromString(Constants.userId)),
 			ethereum.Value.fromString(Constants.claimantAsset),
-			ethereum.Value.fromSignedBigInt(BigInt.fromString('1'))
+			ethereum.Value.fromSignedBigInt(BigInt.fromString(Constants.FIRST_PLACE))
 		]
 
 		let tuple = changetype<ethereum.Tuple>(tupleArray)
