@@ -1,6 +1,6 @@
 import { Bytes, BigInt, Address, ethereum } from '@graphprotocol/graph-ts';
 import { ClaimSuccess } from "../generated/OpenQ/OpenQ";
-import { newMockEvent, test, assert, clearStore, afterEach, describe, beforeEach, log, logStore } from "matchstick-as/assembly/index";
+import { newMockEvent, test, assert, clearStore, afterEach, describe, beforeEach } from "matchstick-as/assembly/index";
 import { handleClaimSuccess } from "../src/mapping";
 import Constants from './constants'
 

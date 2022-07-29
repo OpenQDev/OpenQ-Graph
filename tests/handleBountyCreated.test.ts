@@ -1,6 +1,6 @@
 import { Bytes, BigInt, Address, ethereum } from '@graphprotocol/graph-ts';
 import { BountyCreated } from "../generated/OpenQ/OpenQ";
-import { newMockEvent, test, assert, clearStore, afterEach, describe, beforeEach, logStore, log } from "matchstick-as/assembly/index";
+import { newMockEvent, test, assert, clearStore, afterEach, describe, beforeEach } from "matchstick-as/assembly/index";
 import { handleBountyCreated } from "../src/mapping";
 import Constants from './constants';
 import { seedBounty } from './utils'

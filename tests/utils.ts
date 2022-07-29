@@ -11,7 +11,7 @@ export function seedBounty(): void {
 	entity.setBigInt('bountyMintTime', BigInt.fromString(Constants.bountyMintTime))
 	entity.setBigInt('status', BigInt.fromString(Constants.status))
 	entity.setString('organization', Constants.organization)
-	entity.setString('bountyType', Constants.bountyType)
+	entity.setString('bountyType', Constants.bountyType_SINGLE)
 	entity.setBytes('transactionHash', Bytes.fromHexString(Constants.transactionHash))
 	entity.setBigInt('version', BigInt.fromString(Constants.version))
 

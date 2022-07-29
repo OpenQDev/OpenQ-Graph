@@ -1,6 +1,6 @@
 import { Bytes, BigInt, Address, ethereum } from '@graphprotocol/graph-ts';
 import { DepositExtended } from "../generated/OpenQ/OpenQ";
-import { newMockEvent, test, assert, clearStore, afterEach, describe, beforeEach, logStore } from "matchstick-as/assembly/index";
+import { newMockEvent, test, assert, clearStore, afterEach, describe, beforeEach } from "matchstick-as/assembly/index";
 import { handleDepositExtended } from "../src/mapping";
 import { seedBounty, seedDeposit } from './utils';
 import Constants from './constants'
@@ -20,7 +20,7 @@ describe('handleDepositExtended', () => {
 		let newDepositExtendedEvent = createNewDepositExtendedEvent(
 			Constants.depositId,
 			Constants.expiration.concat('1'),
-			Constants.bountyType,
+			Constants.bountyType_SINGLE,
 			Constants.data,
 			Constants.version
 		)
