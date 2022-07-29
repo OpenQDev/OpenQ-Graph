@@ -17,6 +17,10 @@ export default class Constants {
 		return '0x46e09468616365256f11f4544e65ce0c70ee624b';
 	}
 
+	static get refundTime(): string {
+		return '123';
+	}
+
 	static get bountyType(): string {
 		return '0';
 	}
