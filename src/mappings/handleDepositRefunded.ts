@@ -22,75 +22,79 @@ export default function handleDepositRefunded(event: DepositRefunded): void {
 	refund.tokenAddress = event.params.tokenAddress
 	refund.transactionHash = event.transaction.hash
 	refund.save()
-	// let deposit = Deposit.load(event.params.depositId.toHexString())
-	// if (!deposit) { throw "Error" }
-	// deposit.refunded = true
-	// deposit.refundTime = event.params.refundTime
-	// deposit.save()
 
-	// // UPSERT TOKEN EVENTS
-	// let tokenEvents = TokenEvents.load(deposit.tokenAddress.toHexString())
+	let deposit = Deposit.load(event.params.depositId.toHexString())
+	if (!deposit) { throw "Error" }
+	deposit.refunded = true
+	deposit.refundTime = event.params.refundTime
+	deposit.save()
 
-	// if (!tokenEvents) {
-	// 	tokenEvents = new TokenEvents(deposit.tokenAddress.toHexString())
-	// }
+	// UPSERT TOKEN EVENTS
+	let tokenEvents = TokenEvents.load(deposit.tokenAddress.toHexString())
 
-	// refund.tokenEvents = tokenEvents.id
+	if (!tokenEvents) {
+		tokenEvents = new TokenEvents(deposit.tokenAddress.toHexString())
+	}
+
+	refund.tokenEvents = tokenEvents.id
+	tokenEvents.save()
 
 	// // UPSERT FUNDED TOKEN BALANCES
-	// let fundedTokenBalance = FundedTokenBalance.load(deposit.tokenAddress.toHexString())
+	let fundedTokenBalance = FundedTokenBalance.load(deposit.tokenAddress.toHexString())
 
-	// if (!fundedTokenBalance) {
-	// 	fundedTokenBalance = new FundedTokenBalance(deposit.tokenAddress.toHexString())
-	// }
+	if (!fundedTokenBalance) {
+		fundedTokenBalance = new FundedTokenBalance(deposit.tokenAddress.toHexString())
+	}
 
-	// fundedTokenBalance.volume = fundedTokenBalance.volume.minus(deposit.volume)
-
-	// // UPSERT USER FUNDED TOKEN BALANCES
-	// const userFundedTokenBalanceId = `${deposit.sender}-${deposit.tokenAddress.toHexString()}`
-	// let userFundedTokenBalance = UserFundedTokenBalance.load(userFundedTokenBalanceId)
-
-	// if (!userFundedTokenBalance) { throw "Error" }
-
-	// userFundedTokenBalance.volume = userFundedTokenBalance.volume.minus(deposit.volume)
+	fundedTokenBalance.volume = fundedTokenBalance.volume.minus(deposit.volume)
+	fundedTokenBalance.save()
 
 	// // UPSERT USER FUNDED TOKEN BALANCES
-	// const organizationFundedTokenBalanceID = `${event.params.organization}-${deposit.tokenAddress.toHexString()}`
-	// let organizationFundedTokenBalance = OrganizationFundedTokenBalance.load(organizationFundedTokenBalanceID)
+	const userFundedTokenBalanceId = `${deposit.sender}-${deposit.tokenAddress.toHexString()}`
+	let userFundedTokenBalance = UserFundedTokenBalance.load(userFundedTokenBalanceId)
 
-	// if (!organizationFundedTokenBalance) { throw "Error" }
+	if (!userFundedTokenBalance) {
+		userFundedTokenBalance = new UserFundedTokenBalance(userFundedTokenBalanceId)
+	}
 
-	// organizationFundedTokenBalance.volume = organizationFundedTokenBalance.volume.minus(deposit.volume)
+	userFundedTokenBalance.volume = userFundedTokenBalance.volume.minus(deposit.volume)
+	userFundedTokenBalance.save()
+
+	// // UPSERT USER FUNDED TOKEN BALANCES
+	const organizationFundedTokenBalanceID = `${event.params.organization}-${deposit.tokenAddress.toHexString()}`
+	let organizationFundedTokenBalance = OrganizationFundedTokenBalance.load(organizationFundedTokenBalanceID)
+
+	if (!organizationFundedTokenBalance) {
+		organizationFundedTokenBalance = new OrganizationFundedTokenBalance(organizationFundedTokenBalanceID)
+	}
+
+	organizationFundedTokenBalance.volume = organizationFundedTokenBalance.volume.minus(deposit.volume)
+	organizationFundedTokenBalance.save()
 
 	// // UPSERT BOUNTY TOKEN BALANCE
-	// const bountyTokenBalanceId = `${event.params.bountyAddress.toHexString()}-${deposit.tokenAddress.toHexString()}`
-	// let bountyTokenBalance = BountyFundedTokenBalance.load(bountyTokenBalanceId)
+	const bountyTokenBalanceId = `${event.params.bountyAddress.toHexString()}-${deposit.tokenAddress.toHexString()}`
+	let bountyTokenBalance = BountyFundedTokenBalance.load(bountyTokenBalanceId)
 
-	// if (!bountyTokenBalance) { throw "Error" }
+	if (!bountyTokenBalance) {
+		bountyTokenBalance = new BountyFundedTokenBalance(bountyTokenBalanceId)
+	}
 
-	// bountyTokenBalance.volume = bountyTokenBalance.volume.minus(deposit.volume)
+	bountyTokenBalance.volume = bountyTokenBalance.volume.minus(deposit.volume)
+	bountyTokenBalance.save()
 
-	// // SAVE ALL ENTITIES
-	// refund.save()
-	// tokenEvents.save()
-	// fundedTokenBalance.save()
-	// bountyTokenBalance.save()
-	// userFundedTokenBalance.save()
-	// organizationFundedTokenBalance.save()
+	if (bountyTokenBalance.volume.equals(new BigInt(0))) {
+		store.remove('BountyFundedTokenBalance', bountyTokenBalanceId)
+	}
 
-	// if (bountyTokenBalance.volume.equals(new BigInt(0))) {
-	// 	store.remove('BountyFundedTokenBalance', bountyTokenBalanceId)
-	// }
+	if (organizationFundedTokenBalance.volume.equals(new BigInt(0))) {
+		store.remove('OrganizationFundedTokenBalance', organizationFundedTokenBalance.id)
+	}
 
-	// if (organizationFundedTokenBalance.volume.equals(new BigInt(0))) {
-	// 	store.remove('OrganizationFundedTokenBalance', organizationFundedTokenBalance.id)
-	// }
+	if (userFundedTokenBalance.volume.equals(new BigInt(0))) {
+		store.remove('UserFundedTokenBalance', userFundedTokenBalance.id)
+	}
 
-	// if (userFundedTokenBalance.volume.equals(new BigInt(0))) {
-	// 	store.remove('UserFundedTokenBalance', userFundedTokenBalance.id)
-	// }
-
-	// if (fundedTokenBalance.volume.equals(new BigInt(0))) {
-	// 	store.remove('FundedTokenBalance', fundedTokenBalance.id)
-	// }
+	if (fundedTokenBalance.volume.equals(new BigInt(0))) {
+		store.remove('FundedTokenBalance', fundedTokenBalance.id)
+	}
 }

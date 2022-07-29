@@ -20,16 +20,20 @@ export function seedBounty(): void {
 
 export function seedDeposit(): void {
 	let entity = new Entity()
-	entity.setString('id', bountyAddress)
-	entity.setString('bountyId', bountyId)
-	entity.setBytes('bountyAddress', Address.fromString(bountyAddress))
-	entity.setString('issuer', issuer)
-	entity.setBigInt('bountyMintTime', BigInt.fromString(bountyMintTime))
-	entity.setBigInt('status', BigInt.fromString(status))
-	entity.setString('organization', organization)
-	entity.setString('bountyType', bountyType)
-	entity.setBytes('transactionHash', Bytes.fromHexString(transactionHash))
-	entity.setBigInt('version', BigInt.fromString(version))
 
-	store.set('Bounty', '0xb0f8fb2093c515e5f40f7b43ee99bb758befa9d4', entity)
+	entity.setString('id', Constants.id)
+	entity.setBytes('tokenAddress', Bytes.fromHexString(Constants.tokenAddress))
+	entity.setBigInt('volume', BigInt.fromString(Constants.volume))
+	entity.setString('sender', Constants.userId)
+	entity.setString('bounty', Constants.id)
+	entity.setBigInt('receiveTime', BigInt.fromString(Constants.receiveTime))
+	entity.setString('organization', Constants.organization)
+	entity.setString('tokenEvents', Constants.tokenAddress)
+	entity.setBoolean('refunded', false)
+	entity.setBytes('transactionHash', Bytes.fromHexString(Constants.transactionHash))
+	entity.setBigInt('tokenId', BigInt.fromString('0'))
+	entity.setBigInt('expiration', BigInt.fromString(Constants.expiration))
+	entity.setBigInt('refundTime', BigInt.fromString('0'))
+
+	store.set('Deposit', Constants.depositId, entity)
 }
