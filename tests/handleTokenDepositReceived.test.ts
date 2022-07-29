@@ -43,7 +43,7 @@ describe('handleTokenDepositReceived', () => {
 		)
 
 		newTokenDepositReceivedEvent.transaction.hash = Bytes.fromHexString("0x00000000000000000000000046e09468616365256f11f4544e65ce0c70ee624b")
-		newTokenDepositReceivedEvent.transaction.from = Address.fromString(bountyEntityId)
+		// newTokenDepositReceivedEvent.transaction.from = Address.fromString(bountyEntityId)
 
 		handleTokenDepositReceived(newTokenDepositReceivedEvent)
 	})
@@ -66,7 +66,7 @@ export function createNewTokenDepositReceivedEvent(
 	let newTokenDepositReceivedEvent = changetype<TokenDepositReceived>(newMockEvent());
 
 	let parameters: Array<ethereum.EventParam> = [
-		new ethereum.EventParam("depositId", ethereum.Value.fromString(depositId)),
+		new ethereum.EventParam("depositId", ethereum.Value.fromBytes(Bytes.fromHexString(data))),
 		new ethereum.EventParam("bountyAddress", ethereum.Value.fromAddress(Address.fromString(bountyAddress))),
 		new ethereum.EventParam("bountyId", ethereum.Value.fromString(bountyId)),
 		new ethereum.EventParam("organization", ethereum.Value.fromString(organization)),
