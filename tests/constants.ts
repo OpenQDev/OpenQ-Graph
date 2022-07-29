@@ -33,6 +33,10 @@ export default class Constants {
 		return '0';
 	}
 
+	static get status_CLOSED(): string {
+		return '1';
+	}
+
 	static get closer(): string {
 		return '0x814f9a1b407ba75d9e685fa007ba60783440804e';
 	}

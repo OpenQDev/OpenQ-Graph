@@ -2,24 +2,12 @@ import { Bytes, BigInt, Address, ethereum } from '@graphprotocol/graph-ts';
 import { BountyClosed } from "../generated/OpenQ/OpenQ";
 import { newMockEvent, test, assert, clearStore, afterEach, describe, beforeEach } from "matchstick-as/assembly/index";
 import { handleBountyClosed } from "../src/mapping";
-import seedBounty from './utils';
+import { seedBounty } from './utils';
+import Constants from './constants';
 
 describe('handleBountyClosed', () => {
-	const bountyEntityId = '0xb0f8fb2093c515e5f40f7b43ee99bb758befa9d4'
-
 	beforeEach(() => {
-		seedBounty(
-			bountyEntityId,
-			'mockBountyId',
-			'0xb0f8fb2093c515e5f40f7b43ee99bb758befa9d4',
-			'0xb0f8fb2093c515e5f40f7b43ee99bb758befa9d4',
-			'1',
-			'1',
-			'orgMock',
-			'1',
-			'1',
-			'0xb0f8fb2093c515e5f40f7b43ee99bb758befa9d4'
-		)
+		seedBounty()
 	})
 
 	afterEach(() => {
@@ -28,22 +16,22 @@ describe('handleBountyClosed', () => {
 
 	test('can handle new bounty closed', () => {
 		let newBountyClosedEvent = createNewBountyClosedEvent(
-			"mockBountyId",
-			bountyEntityId,
-			"orgMock",
-			"0xb0f8fb2093c515e5f40f7b43ee99bb758befa9d4",
-			'12345678',
-			'1',
-			'0x00000000000000000000000046e09468616365256f11f4544e65ce0c70ee624b',
-			'1')
+			Constants.bountyId,
+			Constants.id,
+			Constants.organization,
+			Constants.userId,
+			Constants.bountyClosedTime,
+			Constants.bountyType,
+			Constants.data,
+			Constants.version)
 
-		newBountyClosedEvent.transaction.hash = Bytes.fromHexString("0x")
+		newBountyClosedEvent.transaction.hash = Bytes.fromHexString(Constants.transactionHash)
+
 		handleBountyClosed(newBountyClosedEvent)
 
-		assert.fieldEquals('Bounty', bountyEntityId, 'bountyClosedTime', '12345678')
-		assert.fieldEquals('Bounty', bountyEntityId, 'bountyClosedTime', '12345678')
-		assert.fieldEquals('Bounty', bountyEntityId, 'closer', '0xb0f8fb2093c515e5f40f7b43ee99bb758befa9d4')
-		assert.fieldEquals('Bounty', bountyEntityId, 'status', '2')
+		assert.fieldEquals('Bounty', Constants.id, 'bountyClosedTime', Constants.bountyClosedTime)
+		assert.fieldEquals('Bounty', Constants.id, 'closer', Constants.userId)
+		assert.fieldEquals('Bounty', Constants.id, 'status', Constants.status_CLOSED)
 	})
 })
 
