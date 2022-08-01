@@ -3,6 +3,7 @@ import {
 	Claim
 } from "../../generated/schema"
 import { ethereum, crypto, BigInt, Address, log, ByteArray, Bytes } from '@graphprotocol/graph-ts'
+import { tuplify } from '../utils'
 
 export default function handleClaimSuccess(event: ClaimSuccess): void {
 	const SINGLE = BigInt.fromString('0');
@@ -11,24 +12,13 @@ export default function handleClaimSuccess(event: ClaimSuccess): void {
 
 	let bountyType = event.params.bountyType;
 
-	log.info('DATA: {}', [event.params.data.toHexString()]);
-
-	// Must pre-pend a tuple prefix for decoding
-
-	const tuplePrefix = '0x0000000000000000000000000000000000000000000000000000000000000020'
-
-	const no0xParams = event.params.data.toHexString().substring(2)
-	log.info('STRIPPED: {}', [no0xParams])
-	const withTuplePrefix = tuplePrefix.concat(no0xParams)
-
-	const prefixedData = Bytes.fromHexString(withTuplePrefix)
-	log.info('WHOLE: {}', [prefixedData.toHexString()])
+	const tuplifyEncodedData = tuplify(event.params.data)
 
 	let decoded: ethereum.Value[] = []
 	if (bountyType == SINGLE || bountyType == ONGOING) {
-		decoded = ethereum.decode("(address,string,address,string)", prefixedData)!.toTuple();
+		decoded = ethereum.decode("(address,string,address,string)", tuplifyEncodedData)!.toTuple();
 	} else {
-		decoded = ethereum.decode("(address,string,address,string,uint256)", prefixedData)!.toTuple();
+		decoded = ethereum.decode("(address,string,address,string,uint256)", tuplifyEncodedData)!.toTuple();
 	}
 
 	let bountyAddress = decoded[0].toAddress().toHexString()
@@ -38,7 +28,6 @@ export default function handleClaimSuccess(event: ClaimSuccess): void {
 	let tier = bountyType == TIERED ? decoded[4].toBigInt() : null
 
 	let claimId = generateClaimId(externalUserId, claimantAsset)
-	log.info('claim: {}', [claimId])
 
 	let claim = new Claim(claimId)
 
