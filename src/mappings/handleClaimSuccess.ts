@@ -2,7 +2,7 @@ import { ClaimSuccess } from "../../generated/OpenQ/OpenQ"
 import {
 	Claim
 } from "../../generated/schema"
-import { ethereum, crypto, BigInt, Address, log } from '@graphprotocol/graph-ts'
+import { ethereum, crypto, BigInt, Address, log, ByteArray, Bytes } from '@graphprotocol/graph-ts'
 
 export default function handleClaimSuccess(event: ClaimSuccess): void {
 	const SINGLE = BigInt.fromString('0');
@@ -11,11 +11,24 @@ export default function handleClaimSuccess(event: ClaimSuccess): void {
 
 	let bountyType = event.params.bountyType;
 
-	let decoded: ethereum.Value[]
+	log.info('DATA: {}', [event.params.data.toHexString()]);
+
+	// Must pre-pend a tuple prefix for decoding
+
+	const tuplePrefix = '0x0000000000000000000000000000000000000000000000000000000000000020'
+
+	const no0xParams = event.params.data.toHexString().substring(2)
+	log.info('STRIPPED: {}', [no0xParams])
+	const withTuplePrefix = tuplePrefix.concat(no0xParams)
+
+	const prefixedData = Bytes.fromHexString(withTuplePrefix)
+	log.info('WHOLE: {}', [prefixedData.toHexString()])
+
+	let decoded: ethereum.Value[] = []
 	if (bountyType == SINGLE || bountyType == ONGOING) {
-		decoded = ethereum.decode("(address,string,address,string)", event.params.data)!.toTuple();
+		decoded = ethereum.decode("(address,string,address,string)", prefixedData)!.toTuple();
 	} else {
-		decoded = ethereum.decode("(address,string,address,string,uint256)", event.params.data)!.toTuple();
+		decoded = ethereum.decode("(address,string,address,string,uint256)", prefixedData)!.toTuple();
 	}
 
 	let bountyAddress = decoded[0].toAddress().toHexString()
@@ -25,6 +38,7 @@ export default function handleClaimSuccess(event: ClaimSuccess): void {
 	let tier = bountyType == TIERED ? decoded[4].toBigInt() : null
 
 	let claimId = generateClaimId(externalUserId, claimantAsset)
+	log.info('claim: {}', [claimId])
 
 	let claim = new Claim(claimId)
 

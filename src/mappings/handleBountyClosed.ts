@@ -10,6 +10,7 @@ export default function handleBountyClosed(event: BountyClosed): void {
 	if (!bounty) { throw "Error" }
 
 	bounty.closer = event.params.closer.toHexString()
+	event.params.data
 	bounty.bountyClosedTime = event.params.bountyClosedTime
 
 	if (event.params.bountyType == BigInt.fromString('0')) {

@@ -1,4 +1,4 @@
-import { Bytes, BigInt, Address, ethereum, crypto } from '@graphprotocol/graph-ts';
+import { Bytes, BigInt, ByteArray, Address, ethereum, crypto, log } from '@graphprotocol/graph-ts';
 
 export default class Constants {
 	constructor () { }
@@ -102,25 +102,26 @@ export default class Constants {
 		return Constants.encodeTuple(tupleArray)
 	}
 
-	static encodeTuple(tupleArray: ethereum.Value[]): string {
+	static encodeTuple(tupleArray: ethereum.Value[]): Bytes {
 		let tuple = changetype<ethereum.Tuple>(tupleArray)
 		let encoded = ethereum.encode(ethereum.Value.fromTuple(tuple))!
-		return encoded.toHexString();
+		return encoded;
 	}
 
-	static get closerData_SINGLE(): string {
+	static get closerData_SINGLE(): Bytes {
 		let tupleArray: Array<ethereum.Value> = [
-			ethereum.Value.fromAddress(Address.fromString(Constants.id)),
-			ethereum.Value.fromString(Constants.externalUserId),
-			ethereum.Value.fromAddress(Address.fromString(Constants.userId)),
-			ethereum.Value.fromString(Constants.claimantAsset)
+			ethereum.Value.fromAddress(Address.fromString('0x8acd85898458400f7db866d53fcff6f0d49741ff')),
+			ethereum.Value.fromString("FlacoJones"),
+			ethereum.Value.fromAddress(Address.fromString('0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266')),
+			ethereum.Value.fromString("https://github.com/OpenQDev/OpenQ-Frontend/pull/398")
 		]
 
 		let tuple = changetype<ethereum.Tuple>(tupleArray)
 
 		let encoded = ethereum.encode(ethereum.Value.fromTuple(tuple))!
 
-		return encoded.toHexString();
+		// return encoded
+		return Bytes.fromHexString("0x0000000000000000000000008acd85898458400f7db866d53fcff6f0d49741ff0000000000000000000000000000000000000000000000000000000000000080000000000000000000000000f39fd6e51aad88f6f4ce6ab8827279cfffb9226600000000000000000000000000000000000000000000000000000000000000c0000000000000000000000000000000000000000000000000000000000000000a466c61636f4a6f6e657300000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000003368747470733a2f2f6769746875622e636f6d2f4f70656e514465762f4f70656e512d46726f6e74656e642f70756c6c2f33393800000000000000000000000000")
 	}
 
 	static get closerData_TIERED(): string {

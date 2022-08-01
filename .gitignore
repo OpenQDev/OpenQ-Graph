@@ -4,3 +4,4 @@ generated/
 data/
 **/subgraph.yaml
 .DS_Store
+tests/.bin/
