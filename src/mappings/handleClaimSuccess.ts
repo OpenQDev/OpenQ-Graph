@@ -2,7 +2,7 @@ import { ClaimSuccess } from "../../generated/OpenQ/OpenQ"
 import {
 	Claim
 } from "../../generated/schema"
-import { ethereum, crypto, BigInt, Address, log, ByteArray, Bytes } from '@graphprotocol/graph-ts'
+import { ethereum, crypto, BigInt } from '@graphprotocol/graph-ts'
 import { tuplify } from '../utils'
 
 export default function handleClaimSuccess(event: ClaimSuccess): void {
