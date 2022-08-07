@@ -1,4 +1,4 @@
-import { BigInt, ethereum } from "@graphprotocol/graph-ts"
+import { log, BigInt, ethereum } from "@graphprotocol/graph-ts"
 import { BountyCreated } from "../../generated/OpenQ/OpenQ"
 import {
 	Bounty,
@@ -6,6 +6,7 @@ import {
 	Organization,
 	BountiesCounter
 } from "../../generated/schema"
+import { addTuplePrefix } from '../utils'
 
 export default function handleBountyCreated(event: BountyCreated): void {
 	let bounty = Bounty.load(event.params.bountyAddress.toHexString())
@@ -27,17 +28,20 @@ export default function handleBountyCreated(event: BountyCreated): void {
 	const TIERED = BigInt.fromString('2')
 	const ONGOING = BigInt.fromString('1')
 
+	let decoded: ethereum.Value[] = []
 	if (bountyType == FUNDING_GOAL) {
-		let decoded = ethereum.decode("(address,uint256)", event.params.data)!.toTuple();
+		log.info('event.params.data in TIERED {}', [event.params.data.toHexString()])
+		decoded = ethereum.decode("(address,uint256)", event.params.data)!.toTuple();
 		bounty.fundingGoalTokenAddress = decoded[0].toAddress()
 		bounty.fundingGoalVolume = decoded[1].toBigInt()
-	} else if (bountyType == TIERED) {
-		let decoded = ethereum.decode("(uint256[])", event.params.data)!.toTuple();
-		bounty.payoutSchedule = decoded[0].toBigIntArray()
 	} else if (bountyType == ONGOING) {
-		let decoded = ethereum.decode("(address,uint256)", event.params.data)!.toTuple();
+		log.info('event.params.data in ONGOING {}', [event.params.data.toHexString()])
+		decoded = ethereum.decode("(address,uint256)", event.params.data)!.toTuple();
 		bounty.payoutTokenAddress = decoded[0].toAddress()
 		bounty.payoutTokenVolume = decoded[1].toBigInt()
+	} else if (bountyType == TIERED) {
+		decoded = ethereum.decode("(uint256[])", event.params.data)!.toTuple();
+		bounty.payoutSchedule = decoded[0].toBigIntArray()
 	}
 
 	let user = User.load(event.transaction.from.toHexString())

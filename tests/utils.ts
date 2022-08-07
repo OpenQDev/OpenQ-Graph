@@ -37,3 +37,10 @@ export function seedDeposit(): void {
 
 	store.set('Deposit', Constants.depositId, entity)
 }
+
+export const removeTuplePrefix = (encoded: Bytes): string => {
+	const tuplePrefix = '0x0000000000000000000000000000000000000000000000000000000000000020'
+	const noTuplePrefix = encoded.toHexString().replace(tuplePrefix, '')
+	const withoutTuplePrefixWith0x = '0x'.concat(noTuplePrefix)
+	return withoutTuplePrefixWith0x
+}

@@ -2,8 +2,8 @@ import { ClaimSuccess } from "../../generated/OpenQ/OpenQ"
 import {
 	Claim
 } from "../../generated/schema"
-import { ethereum, crypto, BigInt } from '@graphprotocol/graph-ts'
-import { tuplify } from '../utils'
+import { log, ethereum, crypto, BigInt } from '@graphprotocol/graph-ts'
+import { addTuplePrefix } from '../utils'
 
 export default function handleClaimSuccess(event: ClaimSuccess): void {
 	const SINGLE = BigInt.fromString('0');
@@ -12,13 +12,14 @@ export default function handleClaimSuccess(event: ClaimSuccess): void {
 
 	let bountyType = event.params.bountyType;
 
-	const tuplifyEncodedData = tuplify(event.params.data)
+	// const tuplifyEncodedData = addTuplePrefix(event.params.data)
+	// log.info('{}', [tuplifyEncodedData.toHexString()])
 
 	let decoded: ethereum.Value[] = []
 	if (bountyType == SINGLE || bountyType == ONGOING) {
-		decoded = ethereum.decode("(address,string,address,string)", tuplifyEncodedData)!.toTuple();
+		decoded = ethereum.decode("(address,string,address,string)", event.params.data)!.toTuple();
 	} else {
-		decoded = ethereum.decode("(address,string,address,string,uint256)", tuplifyEncodedData)!.toTuple();
+		decoded = ethereum.decode("(address,string,address,string,uint256)", event.params.data)!.toTuple();
 	}
 
 	let bountyAddress = decoded[0].toAddress().toHexString()

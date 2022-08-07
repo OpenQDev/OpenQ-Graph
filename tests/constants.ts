@@ -99,14 +99,20 @@ export default class Constants {
 			ethereum.Value.fromAddress(Address.fromString(Constants.fundingGoalTokenAddress)),
 			ethereum.Value.fromSignedBigInt(BigInt.fromString(Constants.fundingGoalVolume)),
 		]
-		return Constants.encodeTuple(tupleArray)
+
+		let tuple = changetype<ethereum.Tuple>(tupleArray)
+		let encoded = ethereum.encode(ethereum.Value.fromTuple(tuple))!
+		return encoded.toHexString()
 	}
 
 	static get initData_TIERED(): string {
 		let tupleArray: Array<ethereum.Value> = [
 			ethereum.Value.fromArray([ethereum.Value.fromI32(80), ethereum.Value.fromI32(20)]),
 		]
-		return Constants.encodeTuple(tupleArray)
+
+		let tuple = changetype<ethereum.Tuple>(tupleArray)
+		let encoded = ethereum.encode(ethereum.Value.fromTuple(tuple))!
+		return encoded.toHexString()
 	}
 
 	static get initData_ONGOING(): string {
@@ -114,7 +120,10 @@ export default class Constants {
 			ethereum.Value.fromAddress(Address.fromString(Constants.fundingGoalTokenAddress)),
 			ethereum.Value.fromSignedBigInt(BigInt.fromString(Constants.fundingGoalVolume))
 		]
-		return Constants.encodeTuple(tupleArray)
+
+		let tuple = changetype<ethereum.Tuple>(tupleArray)
+		let encoded = ethereum.encode(ethereum.Value.fromTuple(tuple))!
+		return encoded.toHexString()
 	}
 
 	static get payoutSchedule(): Array<BigInt> {
@@ -127,13 +136,6 @@ export default class Constants {
 		return encoded.toHexString();
 	}
 
-	static removeTuplePrefix(encoded: Bytes): string {
-		const tuplePrefix = '0x0000000000000000000000000000000000000000000000000000000000000020'
-		const noTuplePrefix = encoded.toHexString().replace(tuplePrefix, '')
-		const withoutTuplePrefixWith0x = '0x'.concat(noTuplePrefix)
-		return withoutTuplePrefixWith0x
-	}
-
 	static get closerData_SINGLE(): string {
 		let tupleArray: Array<ethereum.Value> = [
 			ethereum.Value.fromAddress(Address.fromString(Constants.id)),
@@ -143,12 +145,8 @@ export default class Constants {
 		]
 
 		let tuple = changetype<ethereum.Tuple>(tupleArray)
-
 		let encoded = ethereum.encode(ethereum.Value.fromTuple(tuple))!
-
-		const withoutTuplePrefixWith0x = Constants.removeTuplePrefix(encoded)
-
-		return withoutTuplePrefixWith0x
+		return encoded.toHexString()
 	}
 
 	static get closerData_ONGOING(): string {
@@ -158,14 +156,9 @@ export default class Constants {
 			ethereum.Value.fromAddress(Address.fromString(Constants.userId)),
 			ethereum.Value.fromString(Constants.claimantAsset)
 		]
-
 		let tuple = changetype<ethereum.Tuple>(tupleArray)
-
 		let encoded = ethereum.encode(ethereum.Value.fromTuple(tuple))!
-
-		const withoutTuplePrefixWith0x = Constants.removeTuplePrefix(encoded)
-
-		return withoutTuplePrefixWith0x
+		return encoded.toHexString()
 	}
 
 	static get closerData_TIERED(): string {
@@ -178,12 +171,8 @@ export default class Constants {
 		]
 
 		let tuple = changetype<ethereum.Tuple>(tupleArray)
-
 		let encoded = ethereum.encode(ethereum.Value.fromTuple(tuple))!
-
-		const withoutTuplePrefixWith0x = Constants.removeTuplePrefix(encoded)
-
-		return withoutTuplePrefixWith0x
+		return encoded.toHexString()
 	}
 
 	static get organization(): string {
@@ -207,15 +196,6 @@ export default class Constants {
 	}
 
 	static get data(): string {
-		return '0x00000000000000000000000046e09468616365256f11f4544e65ce0c70ee624b';
-	}
-
-	static get initOperation_ATOMIC(): string {
-		return '0x00000000000000000000000046e09468616365256f11f4544e65ce0c70ee624b';
-	}
-
-	static get initOperation_TEIRED(): string {
-
 		return '0x00000000000000000000000046e09468616365256f11f4544e65ce0c70ee624b';
 	}
 
