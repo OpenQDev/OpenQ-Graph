@@ -109,6 +109,14 @@ export default class Constants {
 		return Constants.encodeTuple(tupleArray)
 	}
 
+	static get initData_ONGOING(): string {
+		let tupleArray: Array<ethereum.Value> = [
+			ethereum.Value.fromAddress(Address.fromString(Constants.fundingGoalTokenAddress)),
+			ethereum.Value.fromSignedBigInt(BigInt.fromString(Constants.fundingGoalVolume))
+		]
+		return Constants.encodeTuple(tupleArray)
+	}
+
 	static get payoutSchedule(): Array<BigInt> {
 		return [BigInt.fromString('80'), BigInt.fromString('20')]
 	}

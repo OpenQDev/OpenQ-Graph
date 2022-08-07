@@ -90,6 +90,8 @@ type Bounty @entity {
 	version: BigInt!
 	fundingGoalTokenAddress: Bytes
 	fundingGoalVolume: BigInt
+	payoutTokenAddress: Bytes
+	payoutTokenVolume: BigInt
 	payoutSchedule: [BigInt!]
 }
 

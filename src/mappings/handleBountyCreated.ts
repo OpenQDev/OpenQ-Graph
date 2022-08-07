@@ -25,6 +25,7 @@ export default function handleBountyCreated(event: BountyCreated): void {
 
 	const FUNDING_GOAL = BigInt.fromString('3')
 	const TIERED = BigInt.fromString('2')
+	const ONGOING = BigInt.fromString('1')
 
 	if (bountyType == FUNDING_GOAL) {
 		let decoded = ethereum.decode("(address,uint256)", event.params.data)!.toTuple();
@@ -33,6 +34,10 @@ export default function handleBountyCreated(event: BountyCreated): void {
 	} else if (bountyType == TIERED) {
 		let decoded = ethereum.decode("(uint256[])", event.params.data)!.toTuple();
 		bounty.payoutSchedule = decoded[0].toBigIntArray()
+	} else if (bountyType == ONGOING) {
+		let decoded = ethereum.decode("(address,uint256)", event.params.data)!.toTuple();
+		bounty.payoutTokenAddress = decoded[0].toAddress()
+		bounty.payoutTokenVolume = decoded[1].toBigInt()
 	}
 
 	let user = User.load(event.transaction.from.toHexString())
