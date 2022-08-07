@@ -150,7 +150,7 @@ export default class Constants {
 		let tuple = changetype<ethereum.Tuple>(tupleArray)
 		let encoded = ethereum.encode(ethereum.Value.fromTuple(tuple))!
 		log.info('claim {}', [encoded.toHexString()])
-		return encoded.toHexString()
+		return removeTuplePrefix(encoded)
 	}
 
 	static get closerData_ONGOING(): string {
@@ -162,7 +162,7 @@ export default class Constants {
 		]
 		let tuple = changetype<ethereum.Tuple>(tupleArray)
 		let encoded = ethereum.encode(ethereum.Value.fromTuple(tuple))!
-		return encoded.toHexString()
+		return removeTuplePrefix(encoded)
 	}
 
 	static get closerData_TIERED(): string {
@@ -176,7 +176,7 @@ export default class Constants {
 
 		let tuple = changetype<ethereum.Tuple>(tupleArray)
 		let encoded = ethereum.encode(ethereum.Value.fromTuple(tuple))!
-		return "0x0000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000000000000000000000000000000000000000200000000000000000000000000000000000000000000000000000000000000500000000000000000000000000000000000000000000000000000000000000014"
+		return removeTuplePrefix(encoded)
 	}
 
 	static get organization(): string {

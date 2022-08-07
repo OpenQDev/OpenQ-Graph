@@ -14,14 +14,12 @@ export default function handleClaimSuccess(event: ClaimSuccess): void {
 
 	let decoded: ethereum.Value[] = []
 	if (bountyType == SINGLE || bountyType == ONGOING) {
-		log.info('CLAIM event.params.data.toHexString() {}', [event.params.data.toHexString()])
-		decoded = ethereum.decode("(address,string,address,string)", event.params.data)!.toTuple();
+		decoded = ethereum.decode("(address,string,address,string)", addTuplePrefix(event.params.data))!.toTuple();
 	} else {
 		decoded = ethereum.decode("(address,string,address,string,uint256)", addTuplePrefix(event.params.data))!.toTuple();
 	}
 
 	let bountyAddress = decoded[0].toAddress().toHexString()
-	log.info('bountyAddress {}', [bountyAddress])
 	let externalUserId = decoded[1].toString()
 	let closer = decoded[2].toAddress().toHexString()
 	let claimantAsset = decoded[3].toString()
