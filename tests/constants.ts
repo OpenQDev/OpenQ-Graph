@@ -1,4 +1,5 @@
 import { Bytes, BigInt, ByteArray, Address, ethereum, crypto, log } from '@graphprotocol/graph-ts';
+import { removeTuplePrefix } from './utils'
 
 export default class Constants {
 	constructor () { }
@@ -102,6 +103,7 @@ export default class Constants {
 
 		let tuple = changetype<ethereum.Tuple>(tupleArray)
 		let encoded = ethereum.encode(ethereum.Value.fromTuple(tuple))!
+		log.info('ONGOING CREATED encoded.toHexString() {}', [encoded.toHexString()])
 		return encoded.toHexString()
 	}
 
@@ -109,10 +111,10 @@ export default class Constants {
 		let tupleArray: Array<ethereum.Value> = [
 			ethereum.Value.fromArray([ethereum.Value.fromI32(80), ethereum.Value.fromI32(20)]),
 		]
-
 		let tuple = changetype<ethereum.Tuple>(tupleArray)
 		let encoded = ethereum.encode(ethereum.Value.fromTuple(tuple))!
-		return encoded.toHexString()
+		log.info('TIERED CREATED encoded.toHexString() {}', [encoded.toHexString()])
+		return removeTuplePrefix(encoded)
 	}
 
 	static get initData_ONGOING(): string {
@@ -123,6 +125,7 @@ export default class Constants {
 
 		let tuple = changetype<ethereum.Tuple>(tupleArray)
 		let encoded = ethereum.encode(ethereum.Value.fromTuple(tuple))!
+		log.info('ONGOING CREATED encoded.toHexString() {}', [encoded.toHexString()])
 		return encoded.toHexString()
 	}
 
@@ -146,6 +149,7 @@ export default class Constants {
 
 		let tuple = changetype<ethereum.Tuple>(tupleArray)
 		let encoded = ethereum.encode(ethereum.Value.fromTuple(tuple))!
+		log.info('claim {}', [encoded.toHexString()])
 		return encoded.toHexString()
 	}
 
@@ -172,7 +176,7 @@ export default class Constants {
 
 		let tuple = changetype<ethereum.Tuple>(tupleArray)
 		let encoded = ethereum.encode(ethereum.Value.fromTuple(tuple))!
-		return encoded.toHexString()
+		return "0x0000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000000000000000000000000000000000000000200000000000000000000000000000000000000000000000000000000000000500000000000000000000000000000000000000000000000000000000000000014"
 	}
 
 	static get organization(): string {
