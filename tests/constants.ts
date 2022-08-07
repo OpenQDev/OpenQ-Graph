@@ -102,6 +102,17 @@ export default class Constants {
 		return Constants.encodeTuple(tupleArray)
 	}
 
+	static get initData_TIERED(): string {
+		let tupleArray: Array<ethereum.Value> = [
+			ethereum.Value.fromArray([ethereum.Value.fromI32(80), ethereum.Value.fromI32(20)]),
+		]
+		return Constants.encodeTuple(tupleArray)
+	}
+
+	static get payoutSchedule(): Array<BigInt> {
+		return [BigInt.fromString('80'), BigInt.fromString('20')]
+	}
+
 	static encodeTuple(tupleArray: ethereum.Value[]): string {
 		let tuple = changetype<ethereum.Tuple>(tupleArray)
 		let encoded = ethereum.encode(ethereum.Value.fromTuple(tuple))!
@@ -188,6 +199,15 @@ export default class Constants {
 	}
 
 	static get data(): string {
+		return '0x00000000000000000000000046e09468616365256f11f4544e65ce0c70ee624b';
+	}
+
+	static get initOperation_ATOMIC(): string {
+		return '0x00000000000000000000000046e09468616365256f11f4544e65ce0c70ee624b';
+	}
+
+	static get initOperation_TEIRED(): string {
+
 		return '0x00000000000000000000000046e09468616365256f11f4544e65ce0c70ee624b';
 	}
 

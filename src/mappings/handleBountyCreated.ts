@@ -24,11 +24,15 @@ export default function handleBountyCreated(event: BountyCreated): void {
 	bounty.transactionHash = event.transaction.hash
 
 	const FUNDING_GOAL = BigInt.fromString('3')
+	const TIERED = BigInt.fromString('2')
 
 	if (bountyType == FUNDING_GOAL) {
 		let decoded = ethereum.decode("(address,uint256)", event.params.data)!.toTuple();
 		bounty.fundingGoalTokenAddress = decoded[0].toAddress()
 		bounty.fundingGoalVolume = decoded[1].toBigInt()
+	} else if (bountyType == TIERED) {
+		let decoded = ethereum.decode("(uint256[])", event.params.data)!.toTuple();
+		bounty.payoutSchedule = decoded[0].toBigIntArray()
 	}
 
 	let user = User.load(event.transaction.from.toHexString())
