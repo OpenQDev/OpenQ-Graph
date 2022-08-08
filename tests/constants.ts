@@ -12,6 +12,10 @@ export default class Constants {
 		return 'externalUserId';
 	}
 
+	static get claimTime(): string {
+		return '1234567';
+	}
+
 	static get claimantAsset(): string {
 		return 'https://github.com/OpenQDev/OpenQ-Frontend/pull/398';
 	}

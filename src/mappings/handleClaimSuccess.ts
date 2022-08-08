@@ -35,6 +35,7 @@ export default function handleClaimSuccess(event: ClaimSuccess): void {
 	claim.claimant = closer
 	claim.claimantAsset = claimantAsset
 	claim.tier = tier
+	claim.claimTime = event.params.claimTime
 
 	claim.save()
 }

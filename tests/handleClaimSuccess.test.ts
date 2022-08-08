@@ -14,6 +14,7 @@ describe('handleClaimSuccess', () => {
 
 	test('can handle new claim success - SINGLE', () => {
 		let newClaimSuccessEvent = createNewClaimSuccessEvent(
+			Constants.claimTime,
 			Constants.bountyType_SINGLE,
 			Constants.closerData_SINGLE,
 			Constants.version
@@ -30,10 +31,12 @@ describe('handleClaimSuccess', () => {
 		assert.fieldEquals('Claim', Constants.claimId, 'claimant', Constants.userId)
 		assert.fieldEquals('Claim', Constants.claimId, 'claimantAsset', Constants.claimantAsset)
 		assert.fieldEquals('Claim', Constants.claimId, 'tier', 'null')
+		assert.fieldEquals('Claim', Constants.claimId, 'claimTime', Constants.claimTime)
 	})
 
 	test('can handle new claim success - ONGOING', () => {
 		let newClaimSuccessEvent = createNewClaimSuccessEvent(
+			Constants.claimTime,
 			Constants.bountyType_ONGOING,
 			Constants.closerData_ONGOING,
 			Constants.version
@@ -50,10 +53,12 @@ describe('handleClaimSuccess', () => {
 		assert.fieldEquals('Claim', Constants.claimId, 'claimant', Constants.userId)
 		assert.fieldEquals('Claim', Constants.claimId, 'claimantAsset', Constants.claimantAsset)
 		assert.fieldEquals('Claim', Constants.claimId, 'tier', 'null')
+		assert.fieldEquals('Claim', Constants.claimId, 'claimTime', Constants.claimTime)
 	})
 
 	test('can handle new claim success - TIERED', () => {
 		let newClaimSuccessEvent = createNewClaimSuccessEvent(
+			Constants.claimTime,
 			Constants.bountyType_TIERED,
 			Constants.closerData_TIERED,
 			Constants.version
@@ -70,13 +75,15 @@ describe('handleClaimSuccess', () => {
 		assert.fieldEquals('Claim', Constants.claimId, 'claimant', Constants.userId)
 		assert.fieldEquals('Claim', Constants.claimId, 'claimantAsset', Constants.claimantAsset)
 		assert.fieldEquals('Claim', Constants.claimId, 'tier', Constants.FIRST_PLACE)
+		assert.fieldEquals('Claim', Constants.claimId, 'claimTime', Constants.claimTime)
 	})
 })
 
-export function createNewClaimSuccessEvent(bountyType: string, data: string, version: string): ClaimSuccess {
+export function createNewClaimSuccessEvent(claimTime: string, bountyType: string, data: string, version: string): ClaimSuccess {
 	let newClaimSuccessEvent = changetype<ClaimSuccess>(newMockEvent());
 
 	let parameters: Array<ethereum.EventParam> = [
+		new ethereum.EventParam("claimTime", ethereum.Value.fromUnsignedBigInt(BigInt.fromString(claimTime))),
 		new ethereum.EventParam("bountyType", ethereum.Value.fromUnsignedBigInt(BigInt.fromString(bountyType))),
 		new ethereum.EventParam("data", ethereum.Value.fromBytes(Bytes.fromHexString(data))),
 		new ethereum.EventParam("version", ethereum.Value.fromUnsignedBigInt(BigInt.fromString(version))),

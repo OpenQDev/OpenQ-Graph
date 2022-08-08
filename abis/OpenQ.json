@@ -152,6 +152,12 @@
 			{
 				"indexed": false,
 				"internalType": "uint256",
+				"name": "claimTime",
+				"type": "uint256"
+			},
+			{
+				"indexed": false,
+				"internalType": "uint256",
 				"name": "bountyType",
 				"type": "uint256"
 			},
@@ -565,6 +571,19 @@
 		"type": "event"
 	},
 	{
+		"inputs": [],
+		"name": "VERSION_1",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
 		"inputs": [
 			{
 				"internalType": "address",
@@ -884,19 +903,6 @@
 			}
 		],
 		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [],
-		"name": "newStorageVar",
-		"outputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"stateMutability": "view",
 		"type": "function"
 	},
 	{
