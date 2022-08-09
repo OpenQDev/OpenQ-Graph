@@ -88,6 +88,7 @@ type Bounty @entity {
 	claimedTransactionHash: Bytes
 	payoutAddress: Bytes
 	version: BigInt!
+	hasFundingGoal: Boolean!
 	fundingGoalTokenAddress: Bytes
 	fundingGoalVolume: BigInt
 	payoutTokenAddress: Bytes

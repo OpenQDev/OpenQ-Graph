@@ -20,7 +20,7 @@ describe('handleDepositExtended', () => {
 		let newDepositExtendedEvent = createNewDepositExtendedEvent(
 			Constants.depositId,
 			Constants.expiration.concat('1'),
-			Constants.bountyType_SINGLE,
+			Constants.bountyType_ATOMIC,
 			Constants.data,
 			Constants.version
 		)

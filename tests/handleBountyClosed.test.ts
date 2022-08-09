@@ -21,7 +21,7 @@ describe('handleBountyClosed', () => {
 			Constants.organization,
 			Constants.userId,
 			Constants.bountyClosedTime,
-			Constants.bountyType_SINGLE,
+			Constants.bountyType_ATOMIC,
 			Constants.data,
 			Constants.version)
 

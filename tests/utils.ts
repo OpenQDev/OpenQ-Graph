@@ -11,9 +11,10 @@ export function seedBounty(): void {
 	entity.setBigInt('bountyMintTime', BigInt.fromString(Constants.bountyMintTime))
 	entity.setBigInt('status', BigInt.fromString(Constants.status))
 	entity.setString('organization', Constants.organization)
-	entity.setString('bountyType', Constants.bountyType_SINGLE)
+	entity.setString('bountyType', Constants.bountyType_ATOMIC)
 	entity.setBytes('transactionHash', Bytes.fromHexString(Constants.transactionHash))
 	entity.setBigInt('version', BigInt.fromString(Constants.version))
+	entity.setBoolean('hasFundingGoal', false)
 
 	store.set('Bounty', Constants.id, entity)
 }

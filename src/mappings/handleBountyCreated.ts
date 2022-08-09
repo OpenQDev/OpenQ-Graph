@@ -24,25 +24,25 @@ export default function handleBountyCreated(event: BountyCreated): void {
 	bounty.status = BigInt.fromString('0')
 	bounty.transactionHash = event.transaction.hash
 
-	const SINGLE = BigInt.fromString('0')
-	const FUNDING_GOAL = BigInt.fromString('3')
+	const ATOMIC = BigInt.fromString('0')
 	const TIERED = BigInt.fromString('2')
 	const ONGOING = BigInt.fromString('1')
 
 	let decoded: ethereum.Value[] = []
-	if (bountyType == FUNDING_GOAL) {
-		decoded = ethereum.decode("(address,uint256)", event.params.data)!.toTuple();
+	if (bountyType == ATOMIC) {
+		decoded = ethereum.decode("(address,uint256,bool)", event.params.data)!.toTuple();
 		bounty.fundingGoalTokenAddress = decoded[0].toAddress()
 		bounty.fundingGoalVolume = decoded[1].toBigInt()
+		bounty.hasFundingGoal = decoded[2].toBoolean();
 	} else if (bountyType == ONGOING) {
 		decoded = ethereum.decode("(address,uint256)", event.params.data)!.toTuple();
 		bounty.payoutTokenAddress = decoded[0].toAddress()
 		bounty.payoutTokenVolume = decoded[1].toBigInt()
+		bounty.hasFundingGoal = false;
 	} else if (bountyType == TIERED) {
 		decoded = ethereum.decode("(uint256[])", addTuplePrefix(event.params.data))!.toTuple();
 		bounty.payoutSchedule = decoded[0].toBigIntArray()
-	} else if (bountyType == SINGLE) {
-		log.info('single', [])
+		bounty.hasFundingGoal = false;
 	}
 
 	let user = User.load(event.transaction.from.toHexString())

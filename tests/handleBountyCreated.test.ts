@@ -1,4 +1,4 @@
-import { Bytes, BigInt, Address, ethereum } from '@graphprotocol/graph-ts';
+import { Bytes, BigInt, Address, ethereum, log } from '@graphprotocol/graph-ts';
 import { BountyCreated } from "../generated/OpenQ/OpenQ";
 import { newMockEvent, test, assert, clearStore, afterEach, describe, beforeEach } from "matchstick-as/assembly/index";
 import { handleBountyCreated } from "../src/mapping";
@@ -14,7 +14,7 @@ describe('handleBountyCreated', () => {
 		clearStore()
 	})
 
-	test('can handle new BountyCreated - SINGLE', () => {
+	test('can handle new BountyCreated - ATOMIC', () => {
 		// ARRANGE
 		let newBountyCreatedEvent = createNewBountyCreatedEvent(
 			Constants.bountyId,
@@ -22,8 +22,8 @@ describe('handleBountyCreated', () => {
 			Constants.userId,
 			Constants.bountyAddress,
 			Constants.bountyMintTime,
-			Constants.bountyType_SINGLE,
-			Constants.data,
+			Constants.bountyType_ATOMIC,
+			Constants.initData_ATOMIC,
 			Constants.version
 		)
 
@@ -39,46 +39,10 @@ describe('handleBountyCreated', () => {
 		assert.fieldEquals('Bounty', Constants.id, 'issuer', Constants.userId)
 		assert.fieldEquals('Bounty', Constants.id, 'bountyAddress', Constants.id)
 		assert.fieldEquals('Bounty', Constants.id, 'bountyMintTime', Constants.bountyMintTime)
-		assert.fieldEquals('Bounty', Constants.id, 'bountyType', Constants.bountyType_SINGLE)
+		assert.fieldEquals('Bounty', Constants.id, 'bountyType', Constants.bountyType_ATOMIC)
 		assert.fieldEquals('Bounty', Constants.id, 'version', Constants.version)
 		assert.fieldEquals('Bounty', Constants.id, 'transactionHash', Constants.transactionHash)
-
-		assert.fieldEquals('User', Constants.userId, 'id', Constants.userId)
-
-		assert.fieldEquals('Organization', Constants.organization, 'id', Constants.organization)
-		assert.fieldEquals('Organization', Constants.organization, 'bountiesCount', '1')
-
-		assert.fieldEquals('BountiesCounter', Constants.bountiesCounterId, 'count', '1')
-	})
-
-	test('can handle new BountyCreated - FUNDING GOAL', () => {
-		// ARRANGE
-		let newBountyCreatedEvent = createNewBountyCreatedEvent(
-			Constants.bountyId,
-			Constants.organization,
-			Constants.userId,
-			Constants.bountyAddress,
-			Constants.bountyMintTime,
-			Constants.bountyType_FUNDING_GOAL,
-			Constants.initData_FUNDING_GOAL,
-			Constants.version
-		)
-
-		newBountyCreatedEvent.transaction.hash = Bytes.fromHexString(Constants.transactionHash)
-		newBountyCreatedEvent.transaction.from = Address.fromString(Constants.userId)
-
-		// ACT
-		handleBountyCreated(newBountyCreatedEvent)
-
-		// ASSERT
-		assert.fieldEquals('Bounty', Constants.id, 'bountyId', Constants.bountyId)
-		assert.fieldEquals('Bounty', Constants.id, 'organization', Constants.organization)
-		assert.fieldEquals('Bounty', Constants.id, 'issuer', Constants.userId)
-		assert.fieldEquals('Bounty', Constants.id, 'bountyAddress', Constants.id)
-		assert.fieldEquals('Bounty', Constants.id, 'bountyMintTime', Constants.bountyMintTime)
-		assert.fieldEquals('Bounty', Constants.id, 'bountyType', Constants.bountyType_FUNDING_GOAL)
-		assert.fieldEquals('Bounty', Constants.id, 'version', Constants.version)
-		assert.fieldEquals('Bounty', Constants.id, 'transactionHash', Constants.transactionHash)
+		assert.fieldEquals('Bounty', Constants.id, 'hasFundingGoal', 'true')
 		assert.fieldEquals('Bounty', Constants.id, 'fundingGoalTokenAddress', Constants.fundingGoalTokenAddress)
 		assert.fieldEquals('Bounty', Constants.id, 'fundingGoalVolume', Constants.fundingGoalVolume)
 

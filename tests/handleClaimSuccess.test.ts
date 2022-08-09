@@ -15,7 +15,7 @@ describe('handleClaimSuccess', () => {
 	test('can handle new claim success - SINGLE', () => {
 		let newClaimSuccessEvent = createNewClaimSuccessEvent(
 			Constants.claimTime,
-			Constants.bountyType_SINGLE,
+			Constants.bountyType_ATOMIC,
 			Constants.closerData_SINGLE,
 			Constants.version
 		)

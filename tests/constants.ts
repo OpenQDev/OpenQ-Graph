@@ -40,7 +40,7 @@ export default class Constants {
 		return '123';
 	}
 
-	static get bountyType_SINGLE(): string {
+	static get bountyType_ATOMIC(): string {
 		return '0';
 	}
 
@@ -50,10 +50,6 @@ export default class Constants {
 
 	static get bountyType_TIERED(): string {
 		return '2';
-	}
-
-	static get bountyType_FUNDING_GOAL(): string {
-		return '3';
 	}
 
 	static get bountyMintTime(): string {
@@ -99,26 +95,16 @@ export default class Constants {
 		return '100';
 	}
 
-	static get initData_FUNDING_GOAL(): string {
+	static get initData_ATOMIC(): string {
 		let tupleArray: Array<ethereum.Value> = [
 			ethereum.Value.fromAddress(Address.fromString(Constants.fundingGoalTokenAddress)),
 			ethereum.Value.fromSignedBigInt(BigInt.fromString(Constants.fundingGoalVolume)),
+			ethereum.Value.fromBoolean(true),
 		]
 
 		let tuple = changetype<ethereum.Tuple>(tupleArray)
 		let encoded = ethereum.encode(ethereum.Value.fromTuple(tuple))!
-		log.info('ONGOING CREATED encoded.toHexString() {}', [encoded.toHexString()])
 		return encoded.toHexString()
-	}
-
-	static get initData_TIERED(): string {
-		let tupleArray: Array<ethereum.Value> = [
-			ethereum.Value.fromArray([ethereum.Value.fromI32(80), ethereum.Value.fromI32(20)]),
-		]
-		let tuple = changetype<ethereum.Tuple>(tupleArray)
-		let encoded = ethereum.encode(ethereum.Value.fromTuple(tuple))!
-		log.info('TIERED CREATED encoded.toHexString() {}', [encoded.toHexString()])
-		return removeTuplePrefix(encoded)
 	}
 
 	static get initData_ONGOING(): string {
@@ -129,8 +115,16 @@ export default class Constants {
 
 		let tuple = changetype<ethereum.Tuple>(tupleArray)
 		let encoded = ethereum.encode(ethereum.Value.fromTuple(tuple))!
-		log.info('ONGOING CREATED encoded.toHexString() {}', [encoded.toHexString()])
 		return encoded.toHexString()
+	}
+
+	static get initData_TIERED(): string {
+		let tupleArray: Array<ethereum.Value> = [
+			ethereum.Value.fromArray([ethereum.Value.fromI32(80), ethereum.Value.fromI32(20)]),
+		]
+		let tuple = changetype<ethereum.Tuple>(tupleArray)
+		let encoded = ethereum.encode(ethereum.Value.fromTuple(tuple))!
+		return removeTuplePrefix(encoded)
 	}
 
 	static get payoutSchedule(): Array<BigInt> {
@@ -153,7 +147,6 @@ export default class Constants {
 
 		let tuple = changetype<ethereum.Tuple>(tupleArray)
 		let encoded = ethereum.encode(ethereum.Value.fromTuple(tuple))!
-		log.info('claim {}', [encoded.toHexString()])
 		return removeTuplePrefix(encoded)
 	}
 

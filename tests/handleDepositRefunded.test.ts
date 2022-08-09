@@ -25,7 +25,7 @@ describe('handleDepositRefunded', () => {
 			Constants.refundTime,
 			Constants.tokenAddress,
 			Constants.volume,
-			Constants.bountyType_SINGLE,
+			Constants.bountyType_ATOMIC,
 			Constants.data,
 			Constants.version
 		)

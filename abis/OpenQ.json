@@ -286,6 +286,49 @@
 		"inputs": [
 			{
 				"indexed": false,
+				"internalType": "address",
+				"name": "bountyAddress",
+				"type": "address"
+			},
+			{
+				"indexed": false,
+				"internalType": "address",
+				"name": "fundingGoalTokenAddress",
+				"type": "address"
+			},
+			{
+				"indexed": false,
+				"internalType": "uint256",
+				"name": "fundingGoalVolume",
+				"type": "uint256"
+			},
+			{
+				"indexed": false,
+				"internalType": "uint256",
+				"name": "bountyType",
+				"type": "uint256"
+			},
+			{
+				"indexed": false,
+				"internalType": "bytes",
+				"name": "data",
+				"type": "bytes"
+			},
+			{
+				"indexed": false,
+				"internalType": "uint256",
+				"name": "version",
+				"type": "uint256"
+			}
+		],
+		"name": "FundingGoalSet",
+		"type": "event"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": false,
 				"internalType": "uint8",
 				"name": "version",
 				"type": "uint8"
@@ -889,7 +932,7 @@
 						"type": "bytes"
 					}
 				],
-				"internalType": "struct OpenQDefinitions.Operation",
+				"internalType": "struct OpenQDefinitions.InitOperation",
 				"name": "_initOperation",
 				"type": "tuple"
 			}
@@ -1020,6 +1063,29 @@
 			}
 		],
 		"name": "setBountyFactory",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "string",
+				"name": "_bountyId",
+				"type": "string"
+			},
+			{
+				"internalType": "address",
+				"name": "_fundingGoalToken",
+				"type": "address"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_fundingGoalVolume",
+				"type": "uint256"
+			}
+		],
+		"name": "setFundingGoal",
 		"outputs": [],
 		"stateMutability": "nonpayable",
 		"type": "function"

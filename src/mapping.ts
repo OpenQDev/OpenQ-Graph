@@ -6,6 +6,7 @@ import handleTokenBalanceClaimed from "./mappings/handleTokenBalanceClaimed"
 import handleBountyClosed from "./mappings/handleBountyClosed"
 import handleDepositExtended from "./mappings/handleDepositExtended"
 import handleClaimSuccess from "./mappings/handleClaimSuccess"
+import handleFundingGoalSet from "./mappings/handleFundingGoalSet"
 
 export {
 	handleBountyCreated,
@@ -15,5 +16,6 @@ export {
 	handleTokenBalanceClaimed,
 	handleBountyClosed,
 	handleDepositExtended,
-	handleClaimSuccess
+	handleClaimSuccess,
+	handleFundingGoalSet
 }
