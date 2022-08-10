@@ -47,6 +47,8 @@ dataSources:
           handler: handleDepositExtended
         - event: ClaimSuccess(uint256,uint256,bytes,uint256)
           handler: handleClaimSuccess
-        - event: SetFundingGoal(address,address,uint256,uint256,bytes,uint256)
-          handler: handleSetFundingGoal
+        - event: FundingGoalSet(address,address,uint256,uint256,bytes,uint256)
+          handler: handleFundingGoalSet
+        - event: PayoutSet(address,address,uint256,uint256,bytes,uint256)
+          handler: handlePayoutSet
       file: ./src/mapping.ts

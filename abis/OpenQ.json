@@ -459,6 +459,49 @@
 		"inputs": [
 			{
 				"indexed": false,
+				"internalType": "address",
+				"name": "bountyAddress",
+				"type": "address"
+			},
+			{
+				"indexed": false,
+				"internalType": "address",
+				"name": "payoutTokenAddress",
+				"type": "address"
+			},
+			{
+				"indexed": false,
+				"internalType": "uint256",
+				"name": "payoutTokenVolume",
+				"type": "uint256"
+			},
+			{
+				"indexed": false,
+				"internalType": "uint256",
+				"name": "bountyType",
+				"type": "uint256"
+			},
+			{
+				"indexed": false,
+				"internalType": "bytes",
+				"name": "data",
+				"type": "bytes"
+			},
+			{
+				"indexed": false,
+				"internalType": "uint256",
+				"name": "version",
+				"type": "uint256"
+			}
+		],
+		"name": "PayoutSet",
+		"type": "event"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": false,
 				"internalType": "string",
 				"name": "bountyId",
 				"type": "string"
@@ -1086,6 +1129,29 @@
 			}
 		],
 		"name": "setFundingGoal",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "string",
+				"name": "_bountyId",
+				"type": "string"
+			},
+			{
+				"internalType": "address",
+				"name": "_payoutToken",
+				"type": "address"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_payoutVolume",
+				"type": "uint256"
+			}
+		],
+		"name": "setPayout",
 		"outputs": [],
 		"stateMutability": "nonpayable",
 		"type": "function"
