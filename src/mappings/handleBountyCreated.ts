@@ -30,19 +30,23 @@ export default function handleBountyCreated(event: BountyCreated): void {
 
 	let decoded: ethereum.Value[] = []
 	if (bountyType == ATOMIC) {
-		decoded = ethereum.decode("(address,uint256,bool)", event.params.data)!.toTuple();
-		bounty.fundingGoalTokenAddress = decoded[0].toAddress()
-		bounty.fundingGoalVolume = decoded[1].toBigInt()
-		bounty.hasFundingGoal = decoded[2].toBoolean();
+		decoded = ethereum.decode("(bool,address,uint256)", event.params.data)!.toTuple();
+		bounty.hasFundingGoal = decoded[0].toBoolean();
+		bounty.fundingGoalTokenAddress = decoded[1].toAddress()
+		bounty.fundingGoalVolume = decoded[2].toBigInt()
 	} else if (bountyType == ONGOING) {
-		decoded = ethereum.decode("(address,uint256)", event.params.data)!.toTuple();
+		decoded = ethereum.decode("(address,uint256,bool,address,uint256)", event.params.data)!.toTuple();
 		bounty.payoutTokenAddress = decoded[0].toAddress()
 		bounty.payoutTokenVolume = decoded[1].toBigInt()
-		bounty.hasFundingGoal = false;
+		bounty.hasFundingGoal = decoded[2].toBoolean();
+		bounty.fundingGoalTokenAddress = decoded[3].toAddress()
+		bounty.fundingGoalVolume = decoded[4].toBigInt()
 	} else if (bountyType == TIERED) {
-		decoded = ethereum.decode("(uint256[])", addTuplePrefix(event.params.data))!.toTuple();
+		decoded = ethereum.decode("(uint256[],bool,address,uint256)", addTuplePrefix(event.params.data))!.toTuple();
 		bounty.payoutSchedule = decoded[0].toBigIntArray()
-		bounty.hasFundingGoal = false;
+		bounty.hasFundingGoal = decoded[1].toBoolean();
+		bounty.fundingGoalTokenAddress = decoded[2].toAddress()
+		bounty.fundingGoalVolume = decoded[3].toBigInt()
 	}
 
 	let user = User.load(event.transaction.from.toHexString())

@@ -97,9 +97,9 @@ export default class Constants {
 
 	static get initData_ATOMIC(): string {
 		let tupleArray: Array<ethereum.Value> = [
-			ethereum.Value.fromAddress(Address.fromString(Constants.fundingGoalTokenAddress)),
-			ethereum.Value.fromSignedBigInt(BigInt.fromString(Constants.fundingGoalVolume)),
 			ethereum.Value.fromBoolean(true),
+			ethereum.Value.fromAddress(Address.fromString(Constants.fundingGoalTokenAddress)),
+			ethereum.Value.fromSignedBigInt(BigInt.fromString(Constants.fundingGoalVolume))
 		]
 
 		let tuple = changetype<ethereum.Tuple>(tupleArray)
@@ -109,6 +109,9 @@ export default class Constants {
 
 	static get initData_ONGOING(): string {
 		let tupleArray: Array<ethereum.Value> = [
+			ethereum.Value.fromAddress(Address.fromString(Constants.fundingGoalTokenAddress)),
+			ethereum.Value.fromSignedBigInt(BigInt.fromString(Constants.fundingGoalVolume)),
+			ethereum.Value.fromBoolean(true),
 			ethereum.Value.fromAddress(Address.fromString(Constants.fundingGoalTokenAddress)),
 			ethereum.Value.fromSignedBigInt(BigInt.fromString(Constants.fundingGoalVolume))
 		]
@@ -121,6 +124,9 @@ export default class Constants {
 	static get initData_TIERED(): string {
 		let tupleArray: Array<ethereum.Value> = [
 			ethereum.Value.fromArray([ethereum.Value.fromI32(80), ethereum.Value.fromI32(20)]),
+			ethereum.Value.fromBoolean(true),
+			ethereum.Value.fromAddress(Address.fromString(Constants.fundingGoalTokenAddress)),
+			ethereum.Value.fromSignedBigInt(BigInt.fromString(Constants.fundingGoalVolume))
 		]
 		let tuple = changetype<ethereum.Tuple>(tupleArray)
 		let encoded = ethereum.encode(ethereum.Value.fromTuple(tuple))!
