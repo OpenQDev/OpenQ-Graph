@@ -25,7 +25,7 @@ describe('handleNftDepositReceived', () => {
 			Constants.receiveTime,
 			Constants.userId,
 			Constants.expiration,
-			Constants.tokenid,
+			Constants.tokenId,
 			Constants.bountyType_ATOMIC,
 			Constants.data,
 			Constants.version

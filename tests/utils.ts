@@ -23,7 +23,6 @@ export function seedOrganizationFundedTokenBalance(): void {
 	let entity = new Entity()
 
 	const organizationId = `${Constants.organization}-${Constants.tokenAddress}`
-	log.info('organizationId other: {}', [organizationId])
 
 	entity.setString('id', organizationId)
 	entity.setString('organization', Constants.organization)
@@ -49,6 +48,7 @@ export function seedDeposit(): void {
 	entity.setBigInt('tokenId', BigInt.fromString('0'))
 	entity.setBigInt('expiration', BigInt.fromString(Constants.expiration))
 	entity.setBigInt('refundTime', BigInt.fromString('0'))
+	entity.setBoolean('isNft', false)
 
 	store.set('Deposit', Constants.depositId, entity)
 }

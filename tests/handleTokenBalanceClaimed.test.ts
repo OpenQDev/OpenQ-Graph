@@ -55,19 +55,25 @@ describe('handleTokenBalanceClaimed', () => {
 		assert.fieldEquals('OrganizationFundedTokenBalance', organizationFundedTokenBalanceId, 'tokenAddress', Constants.tokenAddress)
 		assert.fieldEquals('OrganizationFundedTokenBalance', organizationFundedTokenBalanceId, 'volume', '900')
 
-		// const userFundedTokenBalanceId = `${Constants.userId}-${Constants.tokenAddress}`
-		// assert.fieldEquals('UserFundedTokenBalance', userFundedTokenBalanceId, 'id', userFundedTokenBalanceId)
-		// assert.fieldEquals('UserFundedTokenBalance', userFundedTokenBalanceId, 'user', Constants.userId)
-		// assert.fieldEquals('UserFundedTokenBalance', userFundedTokenBalanceId, 'tokenAddress', Constants.tokenAddress)
-		// assert.fieldEquals('UserFundedTokenBalance', userFundedTokenBalanceId, 'volume', '100')
+		const organizationPayoutTokenBalanceId = `${Constants.organization}-${Constants.tokenAddress}`
+		assert.fieldEquals('OrganizationPayoutTokenBalance', organizationPayoutTokenBalanceId, 'id', organizationPayoutTokenBalanceId)
+		assert.fieldEquals('OrganizationPayoutTokenBalance', organizationPayoutTokenBalanceId, 'organization', Constants.organization)
+		assert.fieldEquals('OrganizationPayoutTokenBalance', organizationPayoutTokenBalanceId, 'tokenAddress', Constants.tokenAddress)
+		assert.fieldEquals('OrganizationPayoutTokenBalance', organizationPayoutTokenBalanceId, 'volume', Constants.volume)
 
-		// const bountyFundedTokenBalanceId = `${Constants.id}-${Constants.tokenAddress}`
-		// assert.fieldEquals('BountyFundedTokenBalance', bountyFundedTokenBalanceId, 'id', bountyFundedTokenBalanceId)
-		// assert.fieldEquals('BountyFundedTokenBalance', bountyFundedTokenBalanceId, 'bounty', Constants.id)
-		// assert.fieldEquals('BountyFundedTokenBalance', bountyFundedTokenBalanceId, 'tokenAddress', Constants.tokenAddress)
-		// assert.fieldEquals('BountyFundedTokenBalance', bountyFundedTokenBalanceId, 'volume', Constants.volume)
+		const userPayoutTokenBalanceId = `${Constants.closer}-${Constants.tokenAddress}`
+		assert.fieldEquals('UserPayoutTokenBalance', userPayoutTokenBalanceId, 'id', userPayoutTokenBalanceId)
+		assert.fieldEquals('UserPayoutTokenBalance', userPayoutTokenBalanceId, 'user', Constants.closer)
+		assert.fieldEquals('UserPayoutTokenBalance', userPayoutTokenBalanceId, 'tokenAddress', Constants.tokenAddress)
+		assert.fieldEquals('UserPayoutTokenBalance', userPayoutTokenBalanceId, 'volume', Constants.volume)
 
-		// DELETES ORG IF ZERO
+		assert.fieldEquals('PayoutTokenBalance', Constants.tokenAddress, 'id', Constants.tokenAddress)
+		assert.fieldEquals('PayoutTokenBalance', Constants.tokenAddress, 'volume', Constants.volume)
+
+		assert.fieldEquals('TokenEvents', Constants.tokenAddress, 'id', Constants.tokenAddress)
+		assert.fieldEquals('PayoutTokenBalance', Constants.tokenAddress, 'volume', Constants.volume)
+
+		// DELETES OrganizationFundedTokenBalance IF ZERO
 		let newerTokenBalanceClaimedEvent = createNewTokenBalanceClaimedEvent(
 			Constants.bountyId,
 			Constants.bountyAddress,

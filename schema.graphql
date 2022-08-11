@@ -2,7 +2,7 @@
 type Deposit @entity {
 	id: ID! # {depositId}
 	tokenAddress: Bytes!
-	volume: BigInt
+	volume: BigInt!
 	sender: User!
 	bounty: Bounty!
 	receiveTime: BigInt

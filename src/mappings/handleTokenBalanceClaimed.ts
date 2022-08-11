@@ -89,6 +89,7 @@ export default function handleTokenBalanceClaimed(event: TokenBalanceClaimed): v
 	userPayoutTokenBalance.save()
 	payoutTokenBalance.save()
 	organizationFundedTokenBalance.save()
+	organizationPayoutTokenBalance.save()
 
 	if (organizationFundedTokenBalance.volume.equals(new BigInt(0))) {
 		store.remove('OrganizationFundedTokenBalance', organizationFundedTokenBalanceId)

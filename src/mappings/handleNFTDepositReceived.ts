@@ -13,6 +13,7 @@ export default function handleNftDepositReceived(event: NFTDepositReceived): voi
 	deposit.tokenAddress = event.params.tokenAddress
 	deposit.bounty = event.params.bountyAddress.toHexString()
 	deposit.organization = event.params.organization
+	deposit.volume = BigInt.fromString('0')
 
 	deposit.receiveTime = event.params.receiveTime
 	deposit.transactionHash = event.transaction.hash

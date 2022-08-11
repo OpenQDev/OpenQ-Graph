@@ -34,16 +34,18 @@ describe('handleNftClaimed', () => {
 
 		handleNftClaimed(newNFTClaimedEvent)
 
-		assert.fieldEquals('Deposit', Constants.depositId, 'id', Constants.depositId)
-		assert.fieldEquals('Deposit', Constants.depositId, 'tokenAddress', Constants.tokenAddress)
-		assert.fieldEquals('Deposit', Constants.depositId, 'payoutAddress', Constants.closer)
-		assert.fieldEquals('Deposit', Constants.depositId, 'bounty', Constants.id)
-		assert.fieldEquals('Deposit', Constants.depositId, 'payoutTime', Constants.payoutTime)
-		assert.fieldEquals('Deposit', Constants.depositId, 'organization', Constants.organization)
-		assert.fieldEquals('Deposit', Constants.depositId, 'tokenEvents', Constants.tokenAddress)
-		assert.fieldEquals('Deposit', Constants.depositId, 'transactionHash', Constants.transactionHash)
-		assert.fieldEquals('Deposit', Constants.depositId, 'tokenId', '1')
-		assert.fieldEquals('Deposit', Constants.depositId, 'isNft', 'true')
+		let payoutId = `${Constants.closer}-${Constants.id}-${Constants.tokenAddress}-${Constants.payoutTime}`
+
+		assert.fieldEquals('Payout', payoutId, 'id', payoutId)
+		assert.fieldEquals('Payout', payoutId, 'tokenAddress', Constants.tokenAddress)
+		assert.fieldEquals('Payout', payoutId, 'bounty', Constants.id)
+		assert.fieldEquals('Payout', payoutId, 'payoutTime', Constants.payoutTime)
+		assert.fieldEquals('Payout', payoutId, 'isNft', 'true')
+		assert.fieldEquals('Payout', payoutId, 'tokenId', Constants.tokenId)
+		assert.fieldEquals('Payout', payoutId, 'organization', Constants.organization)
+		assert.fieldEquals('Payout', payoutId, 'transactionHash', Constants.transactionHash)
+
+		assert.fieldEquals('User', Constants.closer, 'id', Constants.closer)
 	})
 })
 
