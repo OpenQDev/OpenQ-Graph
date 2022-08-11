@@ -214,6 +214,10 @@ export default class Constants {
 		return '12345';
 	}
 
+	static get payoutTime(): string {
+		return '54321';
+	}
+
 	static get expiration(): string {
 		return '12345';
 	}
@@ -222,7 +226,7 @@ export default class Constants {
 		return '100';
 	}
 
-	static get tokenid(): string {
+	static get tokenId(): string {
 		return '1';
 	}
 
