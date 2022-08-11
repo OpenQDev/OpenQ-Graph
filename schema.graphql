@@ -41,7 +41,6 @@ type Payout @entity {
 	organization: Organization!
 	tokenEvents: TokenEvents!
 	transactionHash: Bytes!
-	payoutAddress: Bytes!
 }
 
 # ----------------- TOKEN BALANCE -----------------

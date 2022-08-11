@@ -1,4 +1,4 @@
-import { BigInt, store } from "@graphprotocol/graph-ts"
+import { log, BigInt, store } from "@graphprotocol/graph-ts"
 import { TokenBalanceClaimed } from "../../generated/OpenQ/OpenQ"
 import {
 	TokenEvents,

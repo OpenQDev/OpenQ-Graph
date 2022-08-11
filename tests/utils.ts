@@ -1,4 +1,4 @@
-import { Bytes, BigInt, Address, store, Entity } from '@graphprotocol/graph-ts';
+import { log, Bytes, BigInt, Address, store, Entity } from '@graphprotocol/graph-ts';
 import Constants from './constants'
 
 export function seedBounty(): void {
@@ -17,6 +17,20 @@ export function seedBounty(): void {
 	entity.setBoolean('hasFundingGoal', false)
 
 	store.set('Bounty', Constants.id, entity)
+}
+
+export function seedOrganizationFundedTokenBalance(): void {
+	let entity = new Entity()
+
+	const organizationId = `${Constants.organization}-${Constants.tokenAddress}`
+	log.info('organizationId other: {}', [organizationId])
+
+	entity.setString('id', organizationId)
+	entity.setString('organization', Constants.organization)
+	entity.setBytes('tokenAddress', Bytes.fromHexString(Constants.tokenAddress))
+	entity.setBigInt('volume', BigInt.fromString('1000'))
+
+	store.set('OrganizationFundedTokenBalance', organizationId, entity)
 }
 
 export function seedDeposit(): void {
