@@ -19,6 +19,7 @@ export default function handleTokenBalanceClaimed(event: TokenBalanceClaimed): v
 	payout.volume = event.params.volume
 	payout.payoutTime = event.params.payoutTime
 	payout.organization = event.params.organization
+	payout.isNft = false
 	payout.transactionHash = event.transaction.hash;
 
 	// UPSERT USER

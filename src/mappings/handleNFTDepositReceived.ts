@@ -2,7 +2,8 @@ import { BigInt } from "@graphprotocol/graph-ts"
 import { NFTDepositReceived } from "../../generated/OpenQ/OpenQ"
 import {
 	User,
-	Deposit
+	Deposit,
+	TokenEvents
 } from "../../generated/schema"
 
 export default function handleNftDepositReceived(event: NFTDepositReceived): void {
@@ -17,7 +18,7 @@ export default function handleNftDepositReceived(event: NFTDepositReceived): voi
 	deposit.transactionHash = event.transaction.hash
 	deposit.tokenId = event.params.tokenId
 	deposit.expiration = event.params.expiration
-	deposit.volume = new BigInt(0)
+	deposit.isNft = true
 
 	// UPSERT USER
 	let user = User.load(event.transaction.from.toHexString())
@@ -29,6 +30,17 @@ export default function handleNftDepositReceived(event: NFTDepositReceived): voi
 
 	deposit.sender = user.id
 
+	// UPSERT TOKEN EVENT
+	let tokenEvents = TokenEvents.load(event.params.tokenAddress.toHexString())
+
+	if (!tokenEvents) {
+		tokenEvents = new TokenEvents(event.params.tokenAddress.toHexString())
+		tokenEvents.save()
+	}
+
+	deposit.tokenEvents = tokenEvents.id
+
 	// SAVE ALL ENTITIES
 	deposit.save()
+	tokenEvents.save()
 }

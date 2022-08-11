@@ -222,6 +222,10 @@ export default class Constants {
 		return '100';
 	}
 
+	static get tokenid(): string {
+		return '1';
+	}
+
 	static get tokenAddress(): string {
 		return '0x8f3cf7ad23cd3cadbd9735aff958023239c6a063';
 	}

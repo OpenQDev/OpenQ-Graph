@@ -2,7 +2,7 @@
 type Deposit @entity {
 	id: ID! # {depositId}
 	tokenAddress: Bytes!
-	volume: BigInt!
+	volume: BigInt
 	sender: User!
 	bounty: Bounty!
 	receiveTime: BigInt
@@ -13,6 +13,7 @@ type Deposit @entity {
 	tokenId: BigInt!
 	expiration: BigInt!
 	refundTime: BigInt
+	isNft: Boolean!
 }
 
 type Refund @entity {
@@ -33,6 +34,8 @@ type Payout @entity {
 	tokenAddress: Bytes!
 	volume: BigInt!
 	payoutTime: BigInt
+	tokenId: BigInt
+	isNft: Boolean!
 	closer: User!
 	bounty: Bounty!
 	organization: Organization!

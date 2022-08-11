@@ -21,6 +21,7 @@ export default function handleTokenDepositReceived(event: TokenDepositReceived):
 	deposit.receiveTime = event.params.receiveTime
 	deposit.transactionHash = event.transaction.hash
 	deposit.expiration = event.params.expiration
+	deposit.isNft = false
 
 	// UPSERT USER
 	let user = User.load(event.transaction.from.toHexString())

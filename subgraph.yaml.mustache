@@ -51,4 +51,6 @@ dataSources:
           handler: handleFundingGoalSet
         - event: PayoutSet(address,address,uint256,uint256,bytes,uint256)
           handler: handlePayoutSet
+        - event: NFTClaimed(string,address,string,address,uint256,address,uint256,uint256,bytes,uint256)
+          handler: handleNftClaimed
       file: ./src/mapping.ts
