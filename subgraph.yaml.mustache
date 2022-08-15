@@ -6,11 +6,11 @@ dataSources:
     name: OpenQ
     network: {{ network }}
     source:
-      address: '{{ address }}'
+      address: '{{ openQAddress }}'
       abi: OpenQ
-{{#startBlock}}
-      startBlock: {{ startBlock }}
-{{/startBlock}}
+{{#openQStartBlock}}
+      startBlock: {{ openQStartBlock }}
+{{/openQStartBlock}}
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.5
@@ -28,6 +28,110 @@ dataSources:
       abis:
         - name: OpenQ
           file: ./abis/OpenQ.json
+      eventHandlers:
+        - event: BountyCreated(string,string,address,address,uint256,uint256,bytes,uint256)
+          handler: handleBountyCreated
+        - event: TokenDepositReceived(bytes32,address,string,string,address,uint256,address,uint256,uint256,uint256,bytes,uint256)
+          handler: handleTokenDepositReceived
+        - event: NFTDepositReceived(bytes32,address,string,string,address,uint256,address,uint256,uint256,uint256,bytes,uint256)
+          handler: handleNftDepositReceived
+        - event: BountyClosed(string,address,string,address,uint256,uint256,bytes,uint256)
+          handler: handleBountyClosed
+        - event: DepositRefunded(bytes32,string,address,string,uint256,address,uint256,uint256,bytes,uint256)
+          handler: handleDepositRefunded
+        - event: TokenBalanceClaimed(string,address,string,address,uint256,address,uint256,uint256,bytes,uint256)
+          handler: handleTokenBalanceClaimed
+        - event: DepositExtended(bytes32,uint256,uint256,bytes,uint256)
+          handler: handleDepositExtended
+        - event: DepositExtended(bytes32,uint256,uint256,bytes,uint256)
+          handler: handleDepositExtended
+        - event: ClaimSuccess(uint256,uint256,bytes,uint256)
+          handler: handleClaimSuccess
+        - event: FundingGoalSet(address,address,uint256,uint256,bytes,uint256)
+          handler: handleFundingGoalSet
+        - event: PayoutSet(address,address,uint256,uint256,bytes,uint256)
+          handler: handlePayoutSet
+        - event: NFTClaimed(string,address,string,address,uint256,address,uint256,uint256,bytes,uint256)
+          handler: handleNftClaimed
+      file: ./src/mapping.ts
+  - kind: ethereum/contract
+    name: ClaimManager
+    network: {{ network }}
+    source:
+      address: '{{ claimManagerAddress }}'
+      abi: ClaimManager
+{{#claimManagerStartBlock}}
+      startBlock: {{ claimManagerStartBlock }}
+{{/claimManagerStartBlock}}
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.5
+      language: wasm/assemblyscript
+      entities:
+        - Bounty
+        - User
+        - Deposit
+        - Refund
+        - Payout
+        - Organization
+        - TokenBalance
+        - UserEarnedTokenBalance
+        - UserFundedTokenBalance
+      abis:
+        - name: ClaimManager
+          file: ./abis/ClaimManager.json
+      eventHandlers:
+        - event: BountyCreated(string,string,address,address,uint256,uint256,bytes,uint256)
+          handler: handleBountyCreated
+        - event: TokenDepositReceived(bytes32,address,string,string,address,uint256,address,uint256,uint256,uint256,bytes,uint256)
+          handler: handleTokenDepositReceived
+        - event: NFTDepositReceived(bytes32,address,string,string,address,uint256,address,uint256,uint256,uint256,bytes,uint256)
+          handler: handleNftDepositReceived
+        - event: BountyClosed(string,address,string,address,uint256,uint256,bytes,uint256)
+          handler: handleBountyClosed
+        - event: DepositRefunded(bytes32,string,address,string,uint256,address,uint256,uint256,bytes,uint256)
+          handler: handleDepositRefunded
+        - event: TokenBalanceClaimed(string,address,string,address,uint256,address,uint256,uint256,bytes,uint256)
+          handler: handleTokenBalanceClaimed
+        - event: DepositExtended(bytes32,uint256,uint256,bytes,uint256)
+          handler: handleDepositExtended
+        - event: DepositExtended(bytes32,uint256,uint256,bytes,uint256)
+          handler: handleDepositExtended
+        - event: ClaimSuccess(uint256,uint256,bytes,uint256)
+          handler: handleClaimSuccess
+        - event: FundingGoalSet(address,address,uint256,uint256,bytes,uint256)
+          handler: handleFundingGoalSet
+        - event: PayoutSet(address,address,uint256,uint256,bytes,uint256)
+          handler: handlePayoutSet
+        - event: NFTClaimed(string,address,string,address,uint256,address,uint256,uint256,bytes,uint256)
+          handler: handleNftClaimed
+      file: ./src/mapping.ts
+  - kind: ethereum/contract
+    name: DepositManager
+    network: {{ network }}
+    source:
+      address: '{{ depositManagerAddress }}'
+      abi: DepositManager
+{{#depositManagerStartBlock}}
+      startBlock: {{ depositManagerStartBlock }}
+{{/depositManagerStartBlock}}
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.5
+      language: wasm/assemblyscript
+      entities:
+        - Bounty
+        - User
+        - Deposit
+        - Refund
+        - Payout
+        - Organization
+        - TokenBalance
+        - UserEarnedTokenBalance
+        - UserFundedTokenBalance
+      abis:
+        - name: DepositManager
+          file: ./abis/DepositManager.json
       eventHandlers:
         - event: BountyCreated(string,string,address,address,uint256,uint256,bytes,uint256)
           handler: handleBountyCreated

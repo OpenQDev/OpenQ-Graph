@@ -1,5 +1,9 @@
 {
 	"network": "mainnet",
-	"address": "0xDc64a140Aa3E981100a9becA4E685f962f0cF6C9",
-	"startBlock": 0
+	"openQAddress": "0xDc64a140Aa3E981100a9becA4E685f962f0cF6C9",
+	"openQStartBlock": 0,
+	"claimManagerAddress": "0xDc64a140Aa3E981100a9becA4E685f962f0cF6C9",
+	"claimManagerStartBlock": 0,
+	"depositManagerAddress": "0xDc64a140Aa3E981100a9becA4E685f962f0cF6C9",
+	"depositManagerStartBlock": 0
 }
