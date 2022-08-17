@@ -53,6 +53,8 @@ dataSources:
           handler: handlePayoutSet
         - event: NFTClaimed(string,address,string,address,uint256,address,uint256,uint256,bytes,uint256)
           handler: handleNftClaimed
+        - event: PayoutScheduleSet(address,address,uint256[],uint256,bytes,uint256)
+          handler: handlePayoutScheduleSet
       file: ./src/mapping.ts
   - kind: ethereum/contract
     name: ClaimManager
@@ -105,6 +107,10 @@ dataSources:
           handler: handlePayoutSet
         - event: NFTClaimed(string,address,string,address,uint256,address,uint256,uint256,bytes,uint256)
           handler: handleNftClaimed
+        - event: NFTClaimed(string,address,string,address,uint256,address,uint256,uint256,bytes,uint256)
+          handler: handleNftClaimed
+        - event: PayoutScheduleSet(address,address,uint256[],uint256,bytes,uint256)
+          handler: handlePayoutScheduleSet
       file: ./src/mapping.ts
   - kind: ethereum/contract
     name: DepositManager
@@ -157,4 +163,6 @@ dataSources:
           handler: handlePayoutSet
         - event: NFTClaimed(string,address,string,address,uint256,address,uint256,uint256,bytes,uint256)
           handler: handleNftClaimed
+        - event: PayoutScheduleSet(address,address,uint256[],uint256,bytes,uint256)
+          handler: handlePayoutScheduleSet
       file: ./src/mapping.ts

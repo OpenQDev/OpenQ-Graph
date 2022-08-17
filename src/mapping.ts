@@ -9,6 +9,7 @@ import handleClaimSuccess from "./mappings/handleClaimSuccess"
 import handleFundingGoalSet from "./mappings/handleFundingGoalSet"
 import handlePayoutSet from "./mappings/handlePayoutSet"
 import handleNftClaimed from "./mappings/handleNftClaimed"
+import handlePayoutScheduleSet from "./mappings/handlePayoutScheduleSet"
 
 export {
 	handleBountyCreated,
@@ -21,5 +22,6 @@ export {
 	handleClaimSuccess,
 	handleFundingGoalSet,
 	handlePayoutSet,
-	handleNftClaimed
+	handleNftClaimed,
+	handlePayoutScheduleSet
 }
