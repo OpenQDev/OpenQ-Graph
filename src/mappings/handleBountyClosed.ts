@@ -12,14 +12,7 @@ export default function handleBountyClosed(event: BountyClosed): void {
 	bounty.closer = event.params.closer.toHexString()
 	event.params.data
 	bounty.bountyClosedTime = event.params.bountyClosedTime
-
-	if (event.params.bountyType == BigInt.fromString('0')) {
-		bounty.status = BigInt.fromString('1')
-	} else if (event.params.bountyType == BigInt.fromString('1')) {
-		bounty.status = BigInt.fromString('2')
-	} else if (event.params.bountyType == BigInt.fromString('2')) {
-		bounty.status = BigInt.fromString('3')
-	}
+	bounty.status = BigInt.fromString('1')
 
 	bounty.claimedTransactionHash = event.transaction.hash;
 
