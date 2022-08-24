@@ -2,7 +2,7 @@ import { Bytes, BigInt, Address, ethereum } from '@graphprotocol/graph-ts';
 import { DepositRefunded } from "../generated/OpenQ/OpenQ";
 import { newMockEvent, test, assert, clearStore, afterEach, describe, beforeEach } from "matchstick-as/assembly/index";
 import { handleDepositRefunded } from "../src/mapping";
-import { seedBounty, seedDeposit } from './utils';
+import { seedBounty, seedDeposit, seedDeposit2, seedBountyFundedTokenBalance, seedOrganizationFundedTokenBalance, seedUserFundedTokenBalance, seedFundedTokenBalance } from './utils';
 import Constants from './constants'
 
 describe('handleDepositRefunded', () => {
@@ -10,6 +10,11 @@ describe('handleDepositRefunded', () => {
 	beforeEach(() => {
 		seedBounty()
 		seedDeposit()
+		seedDeposit2()
+		seedBountyFundedTokenBalance()
+		seedOrganizationFundedTokenBalance()
+		seedUserFundedTokenBalance()
+		seedFundedTokenBalance()
 	})
 
 	afterEach(() => {
@@ -50,19 +55,42 @@ describe('handleDepositRefunded', () => {
 		assert.fieldEquals('TokenEvents', Constants.tokenAddress, 'id', Constants.tokenAddress)
 
 		assert.fieldEquals('FundedTokenBalance', Constants.tokenAddress, 'id', Constants.tokenAddress)
-		assert.fieldEquals('FundedTokenBalance', Constants.tokenAddress, 'volume', '-100')
+		assert.fieldEquals('FundedTokenBalance', Constants.tokenAddress, 'volume', '900')
 
 		const userFundedTokenBalanceId = `${Constants.userId}-${Constants.tokenAddress}`
 		assert.fieldEquals('UserFundedTokenBalance', userFundedTokenBalanceId, 'id', userFundedTokenBalanceId)
-		assert.fieldEquals('UserFundedTokenBalance', userFundedTokenBalanceId, 'volume', '-100')
+		assert.fieldEquals('UserFundedTokenBalance', userFundedTokenBalanceId, 'volume', '900')
 
 		const organizationFundedTokenBalanceId = `${Constants.organization}-${Constants.tokenAddress}`
 		assert.fieldEquals('OrganizationFundedTokenBalance', organizationFundedTokenBalanceId, 'id', organizationFundedTokenBalanceId)
-		assert.fieldEquals('OrganizationFundedTokenBalance', organizationFundedTokenBalanceId, 'volume', '-100')
+		assert.fieldEquals('OrganizationFundedTokenBalance', organizationFundedTokenBalanceId, 'volume', '900')
 
 		const bountyFundedTokenBalanceId = `${Constants.id}-${Constants.tokenAddress}`
 		assert.fieldEquals('BountyFundedTokenBalance', bountyFundedTokenBalanceId, 'id', bountyFundedTokenBalanceId)
-		assert.fieldEquals('BountyFundedTokenBalance', bountyFundedTokenBalanceId, 'volume', '-100')
+		assert.fieldEquals('BountyFundedTokenBalance', bountyFundedTokenBalanceId, 'volume', '900')
+
+		let secondDepositRefundedEvent = createNewDepositRefundedEvent(
+			Constants.depositId2,
+			Constants.bountyId,
+			Constants.id,
+			Constants.organization,
+			Constants.refundTime,
+			Constants.tokenAddress,
+			Constants.volume_900,
+			Constants.bountyType_ATOMIC,
+			Constants.data,
+			Constants.version
+		)
+
+		newDepositRefundedEvent.transaction.hash = Bytes.fromHexString(Constants.transactionHash)
+		newDepositRefundedEvent.transaction.from = Address.fromString(Constants.userId)
+
+		handleDepositRefunded(secondDepositRefundedEvent)
+
+		assert.notInStore('OrganizationFundedTokenBalance', organizationFundedTokenBalanceId)
+		assert.notInStore('BountyFundedTokenBalance', bountyFundedTokenBalanceId)
+		assert.notInStore('UserFundedTokenBalance', userFundedTokenBalanceId)
+		assert.notInStore('FundedTokenBalance', Constants.tokenAddress)
 	})
 })
 

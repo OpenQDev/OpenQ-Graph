@@ -32,6 +32,30 @@ export function seedOrganizationFundedTokenBalance(): void {
 	store.set('OrganizationFundedTokenBalance', organizationId, entity)
 }
 
+export function seedUserFundedTokenBalance(): void {
+	let entity = new Entity()
+
+	const userFundedTokenBalanceId = `${Constants.userId}-${Constants.tokenAddress}`
+
+	entity.setString('id', userFundedTokenBalanceId)
+	entity.setString('user', Constants.userId)
+	entity.setBytes('tokenAddress', Bytes.fromHexString(Constants.tokenAddress))
+	entity.setBigInt('volume', BigInt.fromString('1000'))
+
+	store.set('UserFundedTokenBalance', userFundedTokenBalanceId, entity)
+}
+
+export function seedFundedTokenBalance(): void {
+	let entity = new Entity()
+
+	const fundedTokenBalanceId = Constants.tokenAddress;
+
+	entity.setString('id', fundedTokenBalanceId)
+	entity.setBigInt('volume', BigInt.fromString('1000'))
+
+	store.set('FundedTokenBalance', fundedTokenBalanceId, entity)
+}
+
 export function seedBountyFundedTokenBalance(): void {
 	let entity = new Entity()
 
@@ -48,7 +72,7 @@ export function seedBountyFundedTokenBalance(): void {
 export function seedDeposit(): void {
 	let entity = new Entity()
 
-	entity.setString('id', Constants.id)
+	entity.setString('id', Constants.depositId)
 	entity.setBytes('tokenAddress', Bytes.fromHexString(Constants.tokenAddress))
 	entity.setBigInt('volume', BigInt.fromString(Constants.volume))
 	entity.setString('sender', Constants.userId)
@@ -64,6 +88,27 @@ export function seedDeposit(): void {
 	entity.setBoolean('isNft', false)
 
 	store.set('Deposit', Constants.depositId, entity)
+}
+
+export function seedDeposit2(): void {
+	let entity = new Entity()
+
+	entity.setString('id', Constants.depositId2)
+	entity.setBytes('tokenAddress', Bytes.fromHexString(Constants.tokenAddress))
+	entity.setBigInt('volume', BigInt.fromString(Constants.volume_900))
+	entity.setString('sender', Constants.userId)
+	entity.setString('bounty', Constants.id)
+	entity.setBigInt('receiveTime', BigInt.fromString(Constants.receiveTime))
+	entity.setString('organization', Constants.organization)
+	entity.setString('tokenEvents', Constants.tokenAddress)
+	entity.setBoolean('refunded', false)
+	entity.setBytes('transactionHash', Bytes.fromHexString(Constants.transactionHash))
+	entity.setBigInt('tokenId', BigInt.fromString('0'))
+	entity.setBigInt('expiration', BigInt.fromString(Constants.expiration))
+	entity.setBigInt('refundTime', BigInt.fromString('0'))
+	entity.setBoolean('isNft', false)
+
+	store.set('Deposit', Constants.depositId2, entity)
 }
 
 export const removeTuplePrefix = (encoded: Bytes): string => {
