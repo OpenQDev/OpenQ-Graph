@@ -5,6 +5,7 @@ import {
 	Payout,
 	User,
 	UserPayoutTokenBalance,
+	BountyFundedTokenBalance,
 	OrganizationPayoutTokenBalance,
 	OrganizationFundedTokenBalance,
 	PayoutTokenBalance
@@ -52,6 +53,19 @@ export default function handleTokenBalanceClaimed(event: TokenBalanceClaimed): v
 
 	userPayoutTokenBalance.volume = userPayoutTokenBalance.volume.plus(event.params.volume)
 
+	// UPSERT BOUNTY TOKEN BALANCE
+	const bountyFundedTokenBalanceId = `${event.params.bountyAddress.toHexString()}-${event.params.tokenAddress.toHexString()}`
+	let bountyFundedTokenBalance = BountyFundedTokenBalance.load(bountyFundedTokenBalanceId)
+
+	if (!bountyFundedTokenBalance) {
+		bountyFundedTokenBalance = new BountyFundedTokenBalance(bountyFundedTokenBalanceId)
+		bountyFundedTokenBalance.bounty = event.params.bountyAddress.toHexString()
+		bountyFundedTokenBalance.tokenAddress = event.params.tokenAddress
+		bountyFundedTokenBalance.save()
+	}
+
+	bountyFundedTokenBalance.volume = bountyFundedTokenBalance.volume.minus(event.params.volume)
+
 	// UPSERT ORGANIZATION PAYOUT TOKEN BALANCE
 	const organizationPayoutTokenBalanceId = `${event.params.organization}-${event.params.tokenAddress.toHexString()}`
 	let organizationPayoutTokenBalance = OrganizationPayoutTokenBalance.load(organizationPayoutTokenBalanceId)
@@ -90,8 +104,13 @@ export default function handleTokenBalanceClaimed(event: TokenBalanceClaimed): v
 	payoutTokenBalance.save()
 	organizationFundedTokenBalance.save()
 	organizationPayoutTokenBalance.save()
+	bountyFundedTokenBalance.save()
 
 	if (organizationFundedTokenBalance.volume.equals(new BigInt(0))) {
 		store.remove('OrganizationFundedTokenBalance', organizationFundedTokenBalanceId)
+	}
+
+	if (bountyFundedTokenBalance.volume.equals(new BigInt(0))) {
+		store.remove('BountyFundedTokenBalance', bountyFundedTokenBalanceId)
 	}
 }

@@ -32,6 +32,19 @@ export function seedOrganizationFundedTokenBalance(): void {
 	store.set('OrganizationFundedTokenBalance', organizationId, entity)
 }
 
+export function seedBountyFundedTokenBalance(): void {
+	let entity = new Entity()
+
+	const bountyFundedTokenBalanceId = `${Constants.bountyAddress}-${Constants.tokenAddress}`
+
+	entity.setString('id', bountyFundedTokenBalanceId)
+	entity.setString('bounty', Constants.bountyAddress)
+	entity.setBytes('tokenAddress', Bytes.fromHexString(Constants.tokenAddress))
+	entity.setBigInt('volume', BigInt.fromString('1000'))
+
+	store.set('BountyFundedTokenBalance', bountyFundedTokenBalanceId, entity)
+}
+
 export function seedDeposit(): void {
 	let entity = new Entity()
 

@@ -2,7 +2,7 @@ import { log, Bytes, BigInt, Address, ethereum } from '@graphprotocol/graph-ts';
 import { TokenBalanceClaimed } from "../generated/OpenQ/OpenQ";
 import { newMockEvent, test, assert, clearStore, afterEach, describe, beforeEach, logStore } from "matchstick-as/assembly/index";
 import { handleTokenBalanceClaimed } from "../src/mapping";
-import { seedBounty, seedOrganizationFundedTokenBalance } from './utils';
+import { seedBounty, seedOrganizationFundedTokenBalance, seedBountyFundedTokenBalance } from './utils';
 import Constants from './constants'
 
 describe('handleTokenBalanceClaimed', () => {
@@ -10,6 +10,7 @@ describe('handleTokenBalanceClaimed', () => {
 	beforeEach(() => {
 		seedBounty()
 		seedOrganizationFundedTokenBalance()
+		seedBountyFundedTokenBalance()
 	})
 
 	afterEach(() => {
@@ -73,6 +74,10 @@ describe('handleTokenBalanceClaimed', () => {
 		assert.fieldEquals('TokenEvents', Constants.tokenAddress, 'id', Constants.tokenAddress)
 		assert.fieldEquals('PayoutTokenBalance', Constants.tokenAddress, 'volume', Constants.volume)
 
+		const bountyFundedTokenBalanceId = `${Constants.bountyAddress}-${Constants.tokenAddress}`
+		assert.fieldEquals('BountyFundedTokenBalance', bountyFundedTokenBalanceId, 'id', bountyFundedTokenBalanceId)
+		assert.fieldEquals('BountyFundedTokenBalance', bountyFundedTokenBalanceId, 'volume', '900')
+
 		// DELETES OrganizationFundedTokenBalance IF ZERO
 		let newerTokenBalanceClaimedEvent = createNewTokenBalanceClaimedEvent(
 			Constants.bountyId,
@@ -90,6 +95,7 @@ describe('handleTokenBalanceClaimed', () => {
 		handleTokenBalanceClaimed(newerTokenBalanceClaimedEvent)
 
 		assert.notInStore('OrganizationFundedTokenBalance', organizationFundedTokenBalanceId)
+		assert.notInStore('BountyFundedTokenBalance', bountyFundedTokenBalanceId)
 	})
 })
 
