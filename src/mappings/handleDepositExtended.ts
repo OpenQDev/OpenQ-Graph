@@ -3,7 +3,7 @@ import {
 	Deposit
 } from "../../generated/schema"
 
-export default function handleBountyClosed(event: DepositExtended): void {
+export default function handleDepositExtended(event: DepositExtended): void {
 	let deposit = Deposit.load(event.params.depositId.toHexString())
 
 	if (!deposit) { throw "Error" }
