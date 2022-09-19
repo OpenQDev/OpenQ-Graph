@@ -46,7 +46,7 @@ export default function handleDepositRefunded(event: DepositRefunded): void {
 		fundedTokenBalance = new FundedTokenBalance(deposit.tokenAddress.toHexString())
 	}
 
-	fundedTokenBalance.volume = fundedTokenBalance.volume.minus(deposit.volume)
+	fundedTokenBalance.volume = fundedTokenBalance.volume.minus(refund.volume)
 	fundedTokenBalance.save()
 
 	// // UPSERT USER FUNDED TOKEN BALANCES
@@ -57,7 +57,7 @@ export default function handleDepositRefunded(event: DepositRefunded): void {
 		userFundedTokenBalance = new UserFundedTokenBalance(userFundedTokenBalanceId)
 	}
 
-	userFundedTokenBalance.volume = userFundedTokenBalance.volume.minus(deposit.volume)
+	userFundedTokenBalance.volume = userFundedTokenBalance.volume.minus(refund.volume)
 	userFundedTokenBalance.save()
 
 	// // UPSERT USER FUNDED TOKEN BALANCES
@@ -68,7 +68,7 @@ export default function handleDepositRefunded(event: DepositRefunded): void {
 		organizationFundedTokenBalance = new OrganizationFundedTokenBalance(organizationFundedTokenBalanceID)
 	}
 
-	organizationFundedTokenBalance.volume = organizationFundedTokenBalance.volume.minus(deposit.volume)
+	organizationFundedTokenBalance.volume = organizationFundedTokenBalance.volume.minus(refund.volume)
 	organizationFundedTokenBalance.save()
 
 	// // UPSERT BOUNTY TOKEN BALANCE
@@ -79,7 +79,7 @@ export default function handleDepositRefunded(event: DepositRefunded): void {
 		bountyTokenBalance = new BountyFundedTokenBalance(bountyTokenBalanceId)
 	}
 
-	bountyTokenBalance.volume = bountyTokenBalance.volume.minus(deposit.volume)
+	bountyTokenBalance.volume = bountyTokenBalance.volume.minus(refund.volume)
 	bountyTokenBalance.save()
 
 	if (bountyTokenBalance.volume.equals(new BigInt(0))) {
