@@ -25,8 +25,9 @@ export default function handleBountyCreated(event: BountyCreated): void {
 	bounty.transactionHash = event.transaction.hash
 
 	const ATOMIC = BigInt.fromString('0')
-	const TIERED = BigInt.fromString('2')
 	const ONGOING = BigInt.fromString('1')
+	const TIERED = BigInt.fromString('2')
+	const TIERED_FIXED = BigInt.fromString('3')
 
 	let decoded: ethereum.Value[] = []
 	if (bountyType == ATOMIC) {
@@ -47,6 +48,11 @@ export default function handleBountyCreated(event: BountyCreated): void {
 		bounty.hasFundingGoal = decoded[1].toBoolean();
 		bounty.fundingGoalTokenAddress = decoded[2].toAddress()
 		bounty.fundingGoalVolume = decoded[3].toBigInt()
+	} else {
+		decoded = ethereum.decode("(uint256[],address)", addTuplePrefix(event.params.data))!.toTuple();
+		bounty.payoutSchedule = decoded[0].toBigIntArray()
+		bounty.payoutTokenAddress = decoded[1].toAddress()
+		bounty.hasFundingGoal = false
 	}
 
 	let user = User.load(event.transaction.from.toHexString())
@@ -62,6 +68,7 @@ export default function handleBountyCreated(event: BountyCreated): void {
 
 	if (!organization) {
 		organization = new Organization(event.params.organization)
+		organization.bountiesCount = BigInt.fromString('0')
 		organization.save()
 	}
 
@@ -72,6 +79,7 @@ export default function handleBountyCreated(event: BountyCreated): void {
 
 	if (!bountiesCounter) {
 		bountiesCounter = new BountiesCounter('bountiesCounterId')
+		bountiesCounter.count = BigInt.fromString('0')
 		bountiesCounter.save()
 	}
 

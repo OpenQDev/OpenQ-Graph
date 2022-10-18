@@ -26,7 +26,8 @@
 		"dotenv": "^16.0.0",
 		"fs": "^0.0.1-security",
 		"mustache": "^4.2.0",
-		"path": "^0.12.7"
+		"path": "^0.12.7",
+		"@ethersproject/bignumber": "5.7.0"
 	},
 	"devDependencies": {
 		"matchstick-as": "^0.5.0"

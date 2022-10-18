@@ -56,6 +56,10 @@ export default class Constants {
 		return '2';
 	}
 
+	static get bountyType_TIERED_FIXED(): string {
+		return '3';
+	}
+
 	static get bountyMintTime(): string {
 		return '123';
 	}
@@ -137,6 +141,16 @@ export default class Constants {
 		return removeTuplePrefix(encoded)
 	}
 
+	static get initData_TIERED_FIXED(): string {
+		let tupleArray: Array<ethereum.Value> = [
+			ethereum.Value.fromArray([ethereum.Value.fromI32(80), ethereum.Value.fromI32(20)]),
+			ethereum.Value.fromAddress(Address.fromString(Constants.payoutTokenAddress)),
+		]
+		let tuple = changetype<ethereum.Tuple>(tupleArray)
+		let encoded = ethereum.encode(ethereum.Value.fromTuple(tuple))!
+		return removeTuplePrefix(encoded)
+	}
+
 	static get payoutSchedule(): Array<BigInt> {
 		return [BigInt.fromString('80'), BigInt.fromString('20')]
 	}
@@ -200,6 +214,10 @@ export default class Constants {
 
 	static get payoutAddress(): string {
 		return '0x44c3a45362992eb87d3ad46f6b210a0b587827c8';
+	}
+
+	static get payoutTokenAddress(): string {
+		return '0x814f9a1b407ba75d9e685fa007ba60783440804e';
 	}
 
 	static get version(): string {
