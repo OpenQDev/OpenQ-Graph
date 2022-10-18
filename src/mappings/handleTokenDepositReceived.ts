@@ -1,3 +1,4 @@
+import { BigInt } from "@graphprotocol/graph-ts"
 import { TokenDepositReceived } from "../../generated/OpenQ/OpenQ"
 import {
 	User,
@@ -22,6 +23,7 @@ export default function handleTokenDepositReceived(event: TokenDepositReceived):
 	deposit.transactionHash = event.transaction.hash
 	deposit.expiration = event.params.expiration
 	deposit.isNft = false
+	deposit.refunded = false
 
 	// UPSERT USER
 	let user = User.load(event.transaction.from.toHexString())
@@ -48,6 +50,8 @@ export default function handleTokenDepositReceived(event: TokenDepositReceived):
 
 	if (!fundedTokenBalance) {
 		fundedTokenBalance = new FundedTokenBalance(event.params.tokenAddress.toHexString())
+		fundedTokenBalance.volume = BigInt.fromString('0')
+		fundedTokenBalance.save()
 	}
 
 	fundedTokenBalance.volume = fundedTokenBalance.volume.plus(event.params.volume)
@@ -60,6 +64,7 @@ export default function handleTokenDepositReceived(event: TokenDepositReceived):
 		userFundedTokenBalance = new UserFundedTokenBalance(userFundedTokenBalanceId)
 		userFundedTokenBalance.user = event.params.sender.toHexString()
 		userFundedTokenBalance.tokenAddress = event.params.tokenAddress
+		userFundedTokenBalance.volume = BigInt.fromString('0')
 		userFundedTokenBalance.save()
 	}
 
@@ -73,6 +78,7 @@ export default function handleTokenDepositReceived(event: TokenDepositReceived):
 		bountyTokenBalance = new BountyFundedTokenBalance(bountyTokenBalanceId)
 		bountyTokenBalance.bounty = event.params.bountyAddress.toHexString()
 		bountyTokenBalance.tokenAddress = event.params.tokenAddress
+		bountyTokenBalance.volume = BigInt.fromString('0')
 		bountyTokenBalance.save()
 	}
 
@@ -86,6 +92,7 @@ export default function handleTokenDepositReceived(event: TokenDepositReceived):
 		organizationFundedTokenBalance = new OrganizationFundedTokenBalance(organizationFundedTokenBalanceID)
 		organizationFundedTokenBalance.organization = event.params.organization
 		organizationFundedTokenBalance.tokenAddress = event.params.tokenAddress
+		organizationFundedTokenBalance.volume = BigInt.fromString('0')
 		organizationFundedTokenBalance.save()
 	}
 

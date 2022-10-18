@@ -21,8 +21,8 @@
 		"inject-contract-address-to-local-config": "node inject-contract-address-to-local-config.js"
 	},
 	"dependencies": {
-		"@graphprotocol/graph-cli": "0.34.0",
-		"@graphprotocol/graph-ts": "0.28.0",
+		"@graphprotocol/graph-cli": "0.35.0",
+		"@graphprotocol/graph-ts": "0.28.1",
 		"dotenv": "^16.0.0",
 		"fs": "^0.0.1-security",
 		"mustache": "^4.2.0",

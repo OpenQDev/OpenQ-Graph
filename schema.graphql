@@ -10,7 +10,7 @@ type Deposit @entity {
 	tokenEvents: TokenEvents!
 	refunded: Boolean!
 	transactionHash: Bytes!
-	tokenId: BigInt!
+	tokenId: BigInt
 	expiration: BigInt!
 	refundTime: BigInt
 	isNft: Boolean!
