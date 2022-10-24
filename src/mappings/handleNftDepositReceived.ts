@@ -20,6 +20,7 @@ export default function handleNftDepositReceived(event: NFTDepositReceived): voi
 	deposit.tokenId = event.params.tokenId
 	deposit.expiration = event.params.expiration
 	deposit.isNft = true
+	deposit.refunded = false
 
 	// UPSERT USER
 	let user = User.load(event.transaction.from.toHexString())
