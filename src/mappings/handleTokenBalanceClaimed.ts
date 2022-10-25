@@ -22,7 +22,7 @@ export default function handleTokenBalanceClaimed(event: TokenBalanceClaimed): v
 	payout.organization = event.params.organization
 	payout.isNft = false
 	payout.transactionHash = event.transaction.hash;
-	payout.tokenId =BigInt.fromString('0') ;
+	payout.tokenId = BigInt.fromString('0');
 
 	// UPSERT USER
 	let user = User.load(event.params.closer.toHexString())
