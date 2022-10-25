@@ -33,7 +33,7 @@ export default function handleClaimSuccess(event: ClaimSuccess): void {
 	claim.externalUserId = externalUserId
 	claim.claimant = closer
 	claim.claimantAsset = claimantAsset
-	claim.tier = tier
+	claim.tier = tier ||   BigInt.fromString('0')
 	claim.claimTime = event.params.claimTime
 	claim.version = BigInt.fromString('0')
 
