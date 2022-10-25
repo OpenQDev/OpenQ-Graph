@@ -23,8 +23,7 @@ export default function handleClaimSuccess(event: ClaimSuccess): void {
 	let externalUserId = decoded[1].toString()
 	let closer = decoded[2].toAddress().toHexString()
 	let claimantAsset = decoded[3].toString()
-	let tier = bountyType == TIERED ? decoded[4].toBigInt() : null
-
+	let tier = bountyType == TIERED ? decoded[4].toBigInt() :  BigInt.fromString('0')
 	let claimId = generateClaimId(externalUserId, claimantAsset)
 
 	let claim = new Claim(claimId)
@@ -34,8 +33,9 @@ export default function handleClaimSuccess(event: ClaimSuccess): void {
 	claim.externalUserId = externalUserId
 	claim.claimant = closer
 	claim.claimantAsset = claimantAsset
-	claim.tier = tier
+	claim.tier = tier ||   BigInt.fromString('0')
 	claim.claimTime = event.params.claimTime
+	claim.version = BigInt.fromString('0')
 
 	claim.save()
 }
