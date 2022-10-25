@@ -36,6 +36,7 @@ export default function handleClaimSuccess(event: ClaimSuccess): void {
 	claim.claimantAsset = claimantAsset
 	claim.tier = tier
 	claim.claimTime = event.params.claimTime
+	claim.version = BigInt.fromString('0')
 
 	claim.save()
 }
