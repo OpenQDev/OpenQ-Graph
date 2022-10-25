@@ -22,7 +22,14 @@ export default function handleNftClaimed(event: NFTClaimed): void {
 	payout.organization = event.params.organization
 	payout.transactionHash = event.transaction.hash;
 	payout.volume = BigInt.fromString('0')
-	payout.tokenEvents = ""
+
+	// UPSERT TOKEN EVENTS
+	let tokenEvents = TokenEvents.load(event.params.tokenAddress.toHexString())
+
+	if (!tokenEvents) {
+		tokenEvents = new TokenEvents(event.params.tokenAddress.toHexString())
+		payout.tokenEvents = tokenEvents.id
+	}
 
 
 	// UPSERT USER
