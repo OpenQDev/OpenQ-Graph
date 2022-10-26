@@ -21,13 +21,14 @@ export default function handleClaimSuccess(event: ClaimSuccess): void {
 
 log.info(BigInt.fromString('0').toString(), [ BigInt.fromString('0').toString()])
 	let bountyAddress = decoded[0].toAddress().toHexString()
-	let externalUserId = decoded[1].toString()
 	let closer = decoded[2].toAddress().toHexString()
-	let claimantAsset = decoded[3].toString()
-	let tier = bountyType == TIERED ? decoded[4].toBigInt() :  BigInt.fromString('0')
-	let claimId = generateClaimId(externalUserId, claimantAsset)
 
+	let externalUserId = decoded[1].toString()
+	let claimantAsset = decoded[3].toString()
+	let claimId = generateClaimId(externalUserId, claimantAsset)
 	let claim = new Claim(claimId)
+	let tier = bountyType == TIERED ? decoded[4].toBigInt() :  BigInt.fromString('0')
+
 
 	claim.bountyType = bountyType
 	claim.bounty = bountyAddress

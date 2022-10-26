@@ -43,7 +43,7 @@ export default function handleTokenBalanceClaimed(event: TokenBalanceClaimed): v
 	}
 
 	payout.tokenEvents = tokenEvents.id
-	
+
 	// UPSERT USER PAYOUT TOKEN BALANCE
 	const userPayoutTokenBalanceId = `${event.params.closer.toHexString()}-${event.params.tokenAddress.toHexString()}`
 	let userPayoutTokenBalance = UserPayoutTokenBalance.load(userPayoutTokenBalanceId)
