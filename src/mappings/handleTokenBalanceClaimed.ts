@@ -22,11 +22,11 @@ export default function handleTokenBalanceClaimed(event: TokenBalanceClaimed): v
 	payout.organization = event.params.organization
 	payout.isNft = false
 	payout.transactionHash = event.transaction.hash;
-	payout.tokenId = BigInt.fromString('0') ;
+	payout.tokenId = BigInt.fromString('0')
 
 	// UPSERT USER
 	let user = User.load(event.params.closer.toHexString())
-log.info(event.params.closer.toHexString(),[])
+
 	if (!user) {
 		user = new User(event.params.closer.toHexString())
 		user.save()
@@ -39,9 +39,11 @@ log.info(event.params.closer.toHexString(),[])
 
 	if (!tokenEvents) {
 		tokenEvents = new TokenEvents(event.params.tokenAddress.toHexString())
-		payout.tokenEvents = tokenEvents.id
+		tokenEvents.save()
 	}
 
+	payout.tokenEvents = tokenEvents.id
+	
 	// UPSERT USER PAYOUT TOKEN BALANCE
 	const userPayoutTokenBalanceId = `${event.params.closer.toHexString()}-${event.params.tokenAddress.toHexString()}`
 	let userPayoutTokenBalance = UserPayoutTokenBalance.load(userPayoutTokenBalanceId)
@@ -50,7 +52,8 @@ log.info(event.params.closer.toHexString(),[])
 		userPayoutTokenBalance = new UserPayoutTokenBalance(userPayoutTokenBalanceId)
 		userPayoutTokenBalance.user = event.params.closer.toHexString()
 		userPayoutTokenBalance.tokenAddress = event.params.tokenAddress
-		userPayoutTokenBalance.volume = BigInt.fromString('0');
+		userPayoutTokenBalance.volume = BigInt.fromString('0')
+		userPayoutTokenBalance.save()
 	}
 
 	userPayoutTokenBalance.volume = userPayoutTokenBalance.volume.plus(event.params.volume)
@@ -63,7 +66,7 @@ log.info(event.params.closer.toHexString(),[])
 		bountyFundedTokenBalance = new BountyFundedTokenBalance(bountyFundedTokenBalanceId)
 		bountyFundedTokenBalance.bounty = event.params.bountyAddress.toHexString()
 		bountyFundedTokenBalance.tokenAddress = event.params.tokenAddress
-		bountyFundedTokenBalance.volume = BigInt.fromString('0');
+		bountyFundedTokenBalance.volume = BigInt.fromString('0')
 		bountyFundedTokenBalance.save()
 	}
 
@@ -77,7 +80,8 @@ log.info(event.params.closer.toHexString(),[])
 		organizationPayoutTokenBalance = new OrganizationPayoutTokenBalance(organizationPayoutTokenBalanceId)
 		organizationPayoutTokenBalance.organization = event.params.organization
 		organizationPayoutTokenBalance.tokenAddress = event.params.tokenAddress
-		organizationPayoutTokenBalance.volume = BigInt.fromString('0');
+		organizationPayoutTokenBalance.volume = BigInt.fromString('0')
+		organizationPayoutTokenBalance.save()
 	}
 
 	organizationPayoutTokenBalance.volume = organizationPayoutTokenBalance.volume.plus(event.params.volume)
@@ -97,7 +101,8 @@ log.info(event.params.closer.toHexString(),[])
 
 	if (!payoutTokenBalance) {
 		payoutTokenBalance = new PayoutTokenBalance(event.params.tokenAddress.toHexString())
-		payoutTokenBalance.volume = BigInt.fromString('0');
+		payoutTokenBalance.volume = BigInt.fromString('0')
+		payoutTokenBalance.save()
 	}
 
 	payoutTokenBalance.volume = payoutTokenBalance.volume.plus(event.params.volume)

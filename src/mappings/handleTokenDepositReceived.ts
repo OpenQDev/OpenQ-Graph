@@ -23,7 +23,8 @@ export default function handleTokenDepositReceived(event: TokenDepositReceived):
 	deposit.transactionHash = event.transaction.hash
 	deposit.expiration = event.params.expiration
 	deposit.isNft = false
-	deposit.refunded = false
+	deposit.refunded = false	
+	deposit.tokenId = BigInt.fromString('0') ;
 
 	// UPSERT USER
 	let user = User.load(event.transaction.from.toHexString())
