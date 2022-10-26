@@ -22,11 +22,11 @@ export default function handleTokenBalanceClaimed(event: TokenBalanceClaimed): v
 	payout.organization = event.params.organization
 	payout.isNft = false
 	payout.transactionHash = event.transaction.hash;
-	payout.tokenId =BigInt.fromString('0') ;
+	payout.tokenId = BigInt.fromString('0') ;
 
 	// UPSERT USER
 	let user = User.load(event.params.closer.toHexString())
-
+log.info(event.params.closer.toHexString(),[])
 	if (!user) {
 		user = new User(event.params.closer.toHexString())
 		user.save()
@@ -50,6 +50,7 @@ export default function handleTokenBalanceClaimed(event: TokenBalanceClaimed): v
 		userPayoutTokenBalance = new UserPayoutTokenBalance(userPayoutTokenBalanceId)
 		userPayoutTokenBalance.user = event.params.closer.toHexString()
 		userPayoutTokenBalance.tokenAddress = event.params.tokenAddress
+		userPayoutTokenBalance.volume = BigInt.fromString('0');
 	}
 
 	userPayoutTokenBalance.volume = userPayoutTokenBalance.volume.plus(event.params.volume)
@@ -62,6 +63,7 @@ export default function handleTokenBalanceClaimed(event: TokenBalanceClaimed): v
 		bountyFundedTokenBalance = new BountyFundedTokenBalance(bountyFundedTokenBalanceId)
 		bountyFundedTokenBalance.bounty = event.params.bountyAddress.toHexString()
 		bountyFundedTokenBalance.tokenAddress = event.params.tokenAddress
+		bountyFundedTokenBalance.volume = BigInt.fromString('0');
 		bountyFundedTokenBalance.save()
 	}
 
@@ -75,6 +77,7 @@ export default function handleTokenBalanceClaimed(event: TokenBalanceClaimed): v
 		organizationPayoutTokenBalance = new OrganizationPayoutTokenBalance(organizationPayoutTokenBalanceId)
 		organizationPayoutTokenBalance.organization = event.params.organization
 		organizationPayoutTokenBalance.tokenAddress = event.params.tokenAddress
+		organizationPayoutTokenBalance.volume = BigInt.fromString('0');
 	}
 
 	organizationPayoutTokenBalance.volume = organizationPayoutTokenBalance.volume.plus(event.params.volume)
@@ -94,6 +97,7 @@ export default function handleTokenBalanceClaimed(event: TokenBalanceClaimed): v
 
 	if (!payoutTokenBalance) {
 		payoutTokenBalance = new PayoutTokenBalance(event.params.tokenAddress.toHexString())
+		payoutTokenBalance.volume = BigInt.fromString('0');
 	}
 
 	payoutTokenBalance.volume = payoutTokenBalance.volume.plus(event.params.volume)
