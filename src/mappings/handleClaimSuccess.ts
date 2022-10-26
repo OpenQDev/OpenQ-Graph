@@ -19,6 +19,7 @@ export default function handleClaimSuccess(event: ClaimSuccess): void {
 		decoded = ethereum.decode("(address,string,address,string,uint256)", addTuplePrefix(event.params.data))!.toTuple();
 	}
 
+log.info(BigInt.fromString('0').toString(), [ BigInt.fromString('0').toString()])
 	let bountyAddress = decoded[0].toAddress().toHexString()
 	let closer = decoded[2].toAddress().toHexString()
 
@@ -26,19 +27,20 @@ export default function handleClaimSuccess(event: ClaimSuccess): void {
 	let claimantAsset = decoded[3].toString()
 	let claimId = generateClaimId(externalUserId, claimantAsset)
 	let claim = new Claim(claimId)
-	claim.tier = bountyType == TIERED ? decoded[4].toBigInt() : null
+	let tier = bountyType == TIERED ? decoded[4].toBigInt() :  BigInt.fromString('0')
+
 
 	claim.bountyType = bountyType
 	claim.bounty = bountyAddress
 	claim.externalUserId = externalUserId
 	claim.claimant = closer
 	claim.claimantAsset = claimantAsset
+	claim.tier = tier
 	claim.claimTime = event.params.claimTime
 	claim.version = BigInt.fromString('0')
 
 	claim.save()
 }
-
 function generateClaimId(externalUserId: string, claimantAsset: string): string {
 	let claimantIdArray: Array<ethereum.Value> = [
 		ethereum.Value.fromString(externalUserId),

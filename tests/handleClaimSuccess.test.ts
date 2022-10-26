@@ -30,7 +30,7 @@ describe('handleClaimSuccess', () => {
 		assert.fieldEquals('Claim', Constants.claimId, 'externalUserId', Constants.externalUserId)
 		assert.fieldEquals('Claim', Constants.claimId, 'claimant', Constants.userId)
 		assert.fieldEquals('Claim', Constants.claimId, 'claimantAsset', Constants.claimantAsset)
-		assert.fieldEquals('Claim', Constants.claimId, 'tier', 'null')
+		assert.fieldEquals('Claim', Constants.claimId, 'tier', '0')
 		assert.fieldEquals('Claim', Constants.claimId, 'claimTime', Constants.claimTime)
 	})
 
@@ -52,7 +52,7 @@ describe('handleClaimSuccess', () => {
 		assert.fieldEquals('Claim', Constants.claimId, 'externalUserId', Constants.externalUserId)
 		assert.fieldEquals('Claim', Constants.claimId, 'claimant', Constants.userId)
 		assert.fieldEquals('Claim', Constants.claimId, 'claimantAsset', Constants.claimantAsset)
-		assert.fieldEquals('Claim', Constants.claimId, 'tier', 'null')
+		assert.fieldEquals('Claim', Constants.claimId, 'tier', '0')
 		assert.fieldEquals('Claim', Constants.claimId, 'claimTime', Constants.claimTime)
 	})
 
