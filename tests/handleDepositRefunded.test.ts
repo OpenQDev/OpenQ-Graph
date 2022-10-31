@@ -49,6 +49,7 @@ describe('handleDepositRefunded', () => {
 		assert.fieldEquals('Refund', Constants.depositId, 'tokenAddress', Constants.tokenAddress)
 		assert.fieldEquals('Refund', Constants.depositId, 'transactionHash', Constants.transactionHash)
 		assert.fieldEquals('Refund', Constants.depositId, 'sender', Constants.userId)
+		assert.fieldEquals('Refund', Constants.depositId, 'tokenEvents', Constants.tokenAddress)
 
 		assert.fieldEquals('Deposit', Constants.depositId, 'refunded', 'true')
 		assert.fieldEquals('Deposit', Constants.depositId, 'refundTime', Constants.refundTime)

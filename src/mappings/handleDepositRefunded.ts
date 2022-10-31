@@ -22,7 +22,6 @@ export default function handleDepositRefunded(event: DepositRefunded): void {
 	refund.tokenAddress = event.params.tokenAddress
 	refund.transactionHash = event.transaction.hash
 	refund.sender = event.transaction.from.toHexString();
-	refund.save()
 
 	let deposit = Deposit.load(event.params.depositId.toHexString())
 	if (!deposit) { throw "Error" }
@@ -39,6 +38,7 @@ export default function handleDepositRefunded(event: DepositRefunded): void {
 
 	refund.tokenEvents = tokenEvents.id
 	tokenEvents.save()
+	refund.save()
 
 	// // UPSERT FUNDED TOKEN BALANCES
 	let fundedTokenBalance = FundedTokenBalance.load(deposit.tokenAddress.toHexString())

@@ -6,10 +6,6 @@ import { seedUser } from './utils';
 import Constants from './constants';
 
 describe('handleExternalUserIdAssociatedWithAddress', () => {
-	beforeEach(() => {
-		seedUser()
-	})
-
 	afterEach(() => {
 		clearStore()
 	})
