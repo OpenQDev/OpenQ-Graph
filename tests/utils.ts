@@ -45,6 +45,14 @@ export function seedUserFundedTokenBalance(): void {
 	store.set('UserFundedTokenBalance', userFundedTokenBalanceId, entity)
 }
 
+export function seedUser(): void {
+	let entity = new Entity()
+
+	entity.setString('id', Constants.userId)
+
+	store.set('User', Constants.userId, entity)
+}
+
 export function seedFundedTokenBalance(): void {
 	let entity = new Entity()
 

@@ -2,7 +2,6 @@ import { ExternalUserIdAssociatedWithAddress } from "../../generated/OpenQ/OpenQ
 import {
 	User
 } from "../../generated/schema"
-import { BigInt } from '@graphprotocol/graph-ts'
 
 export default function handleExternalUserIdAssociatedWithAddress(event: ExternalUserIdAssociatedWithAddress): void {
 	let user = User.load(event.params.newAddress.toHexString())
