@@ -39,6 +39,8 @@ dataSources:
           handler: handlePayoutScheduleSet
         - event: BountyClosed(string,address,string,address,uint256,uint256,bytes,uint256)
           handler: handleBountyClosed
+        - event: ExternalUserIdAssociatedWithAddress(string,address,bytes,uint256)
+          handler: handleExternalUserIdAssociatedWithAddress
       file: ./src/mapping.ts
   - kind: ethereum/contract
     name: ClaimManager

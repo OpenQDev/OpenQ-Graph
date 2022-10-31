@@ -286,6 +286,37 @@
 		"inputs": [
 			{
 				"indexed": false,
+				"internalType": "string",
+				"name": "externalUserId",
+				"type": "string"
+			},
+			{
+				"indexed": false,
+				"internalType": "address",
+				"name": "newAddress",
+				"type": "address"
+			},
+			{
+				"indexed": false,
+				"internalType": "bytes",
+				"name": "data",
+				"type": "bytes"
+			},
+			{
+				"indexed": false,
+				"internalType": "uint256",
+				"name": "version",
+				"type": "uint256"
+			}
+		],
+		"name": "ExternalUserIdAssociatedWithAddress",
+		"type": "event"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": false,
 				"internalType": "address",
 				"name": "bountyAddress",
 				"type": "address"
@@ -489,6 +520,25 @@
 			{
 				"indexed": true,
 				"internalType": "address",
+				"name": "previousOracle",
+				"type": "address"
+			},
+			{
+				"indexed": true,
+				"internalType": "address",
+				"name": "newOracle",
+				"type": "address"
+			}
+		],
+		"name": "OracleTransferred",
+		"type": "event"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": true,
+				"internalType": "address",
 				"name": "previousOwner",
 				"type": "address"
 			},
@@ -586,6 +636,37 @@
 			}
 		],
 		"name": "PayoutSet",
+		"type": "event"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": false,
+				"internalType": "address",
+				"name": "bountyAddress",
+				"type": "address"
+			},
+			{
+				"indexed": false,
+				"internalType": "address",
+				"name": "claimant",
+				"type": "address"
+			},
+			{
+				"indexed": false,
+				"internalType": "bytes",
+				"name": "data",
+				"type": "bytes"
+			},
+			{
+				"indexed": false,
+				"internalType": "uint256",
+				"name": "version",
+				"type": "uint256"
+			}
+		],
+		"name": "TierClaimed",
 		"type": "event"
 	},
 	{
@@ -761,6 +842,56 @@
 		"type": "function"
 	},
 	{
+		"inputs": [],
+		"name": "VERSION_2",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "",
+				"type": "address"
+			}
+		],
+		"name": "addressToExternalUserId",
+		"outputs": [
+			{
+				"internalType": "string",
+				"name": "",
+				"type": "string"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "string",
+				"name": "_externalUserId",
+				"type": "string"
+			},
+			{
+				"internalType": "address",
+				"name": "_associatedAddress",
+				"type": "address"
+			}
+		],
+		"name": "associateExternalIdToAddress",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
 		"inputs": [
 			{
 				"internalType": "address",
@@ -870,19 +1001,6 @@
 				"type": "string"
 			}
 		],
-		"name": "closeCompetition",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "string",
-				"name": "_bountyId",
-				"type": "string"
-			}
-		],
 		"name": "closeOngoing",
 		"outputs": [],
 		"stateMutability": "nonpayable",
@@ -891,6 +1009,25 @@
 	{
 		"inputs": [],
 		"name": "depositManager",
+		"outputs": [
+			{
+				"internalType": "address",
+				"name": "",
+				"type": "address"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "string",
+				"name": "",
+				"type": "string"
+			}
+		],
+		"name": "externalUserIdToAddress",
 		"outputs": [
 			{
 				"internalType": "address",
@@ -986,6 +1123,19 @@
 				"internalType": "bool",
 				"name": "",
 				"type": "bool"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "oracle",
+		"outputs": [
+			{
+				"internalType": "address",
+				"name": "",
+				"type": "address"
 			}
 		],
 		"stateMutability": "view",
@@ -1156,6 +1306,25 @@
 				"internalType": "string",
 				"name": "_bountyId",
 				"type": "string"
+			}
+		],
+		"name": "solvent",
+		"outputs": [
+			{
+				"internalType": "bool",
+				"name": "",
+				"type": "bool"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "string",
+				"name": "_bountyId",
+				"type": "string"
 			},
 			{
 				"internalType": "uint256",
@@ -1172,6 +1341,19 @@
 			}
 		],
 		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "_newOracle",
+				"type": "address"
+			}
+		],
+		"name": "transferOracle",
+		"outputs": [],
+		"stateMutability": "nonpayable",
 		"type": "function"
 	},
 	{

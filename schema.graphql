@@ -170,6 +170,7 @@ type User @entity {
 	payouts: [Payout!]! @derivedFrom(field: "closer")
 	payoutTokenBalances: [UserPayoutTokenBalance!]! @derivedFrom(field: "user")
 	fundedTokenBalances: [UserFundedTokenBalance!]! @derivedFrom(field: "user")
+	externalUserId: String
 }
 
 # Total token balances per User per Token
