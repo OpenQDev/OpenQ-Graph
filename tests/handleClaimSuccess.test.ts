@@ -57,17 +57,39 @@ describe('handleClaimSuccess', () => {
 	})
 
 	test('can handle new claim success - TIERED', () => {
-		let newClaimSuccessEvent = createNewClaimSuccessEvent(
+		let newClaimSuccessEventCompetition_FIRST = createNewClaimSuccessEvent(
 			Constants.claimTime,
 			Constants.bountyType_TIERED,
 			Constants.closerData_TIERED,
 			Constants.version
 		)
 
-		newClaimSuccessEvent.transaction.hash = Bytes.fromHexString(Constants.transactionHash)
-		newClaimSuccessEvent.transaction.from = Address.fromString(Constants.userId)
+		let newClaimSuccessEventCompetition_SECOND = createNewClaimSuccessEvent(
+			Constants.claimTime,
+			Constants.bountyType_TIERED,
+			Constants.closerData_TIERED_2,
+			Constants.version
+		)
 
-		handleClaimSuccess(newClaimSuccessEvent)
+		let newClaimSuccessEventCompetition_THIRD = createNewClaimSuccessEvent(
+			Constants.claimTime,
+			Constants.bountyType_TIERED,
+			Constants.closerData_TIERED_3,
+			Constants.version
+		)
+
+		newClaimSuccessEventCompetition_FIRST.transaction.hash = Bytes.fromHexString(Constants.transactionHash)
+		newClaimSuccessEventCompetition_FIRST.transaction.from = Address.fromString(Constants.userId)
+
+		newClaimSuccessEventCompetition_SECOND.transaction.hash = Bytes.fromHexString(Constants.transactionHash)
+		newClaimSuccessEventCompetition_SECOND.transaction.from = Address.fromString(Constants.userId)
+
+		newClaimSuccessEventCompetition_THIRD.transaction.hash = Bytes.fromHexString(Constants.transactionHash)
+		newClaimSuccessEventCompetition_THIRD.transaction.from = Address.fromString(Constants.userId)
+
+		handleClaimSuccess(newClaimSuccessEventCompetition_FIRST)
+		handleClaimSuccess(newClaimSuccessEventCompetition_SECOND)
+		handleClaimSuccess(newClaimSuccessEventCompetition_THIRD)
 
 		assert.fieldEquals('Claim', Constants.claimId, 'id', Constants.claimId)
 		assert.fieldEquals('Claim', Constants.claimId, 'bounty', Constants.id)
@@ -76,6 +98,22 @@ describe('handleClaimSuccess', () => {
 		assert.fieldEquals('Claim', Constants.claimId, 'claimantAsset', Constants.claimantAsset)
 		assert.fieldEquals('Claim', Constants.claimId, 'tier', Constants.FIRST_PLACE)
 		assert.fieldEquals('Claim', Constants.claimId, 'claimTime', Constants.claimTime)
+
+		assert.fieldEquals('Claim', Constants.claimId_Second, 'id', Constants.claimId_Second)
+		assert.fieldEquals('Claim', Constants.claimId_Second, 'bounty', Constants.id)
+		assert.fieldEquals('Claim', Constants.claimId_Second, 'externalUserId', Constants.externalUserId)
+		assert.fieldEquals('Claim', Constants.claimId_Second, 'claimant', Constants.userId)
+		assert.fieldEquals('Claim', Constants.claimId_Second, 'claimantAsset', Constants.claimantAsset2)
+		assert.fieldEquals('Claim', Constants.claimId_Second, 'tier', Constants.SECOND_PLACE)
+		assert.fieldEquals('Claim', Constants.claimId_Second, 'claimTime', Constants.claimTime)
+
+		assert.fieldEquals('Claim', Constants.claimId_Third, 'id', Constants.claimId_Third)
+		assert.fieldEquals('Claim', Constants.claimId_Third, 'bounty', Constants.id)
+		assert.fieldEquals('Claim', Constants.claimId_Third, 'externalUserId', Constants.externalUserId)
+		assert.fieldEquals('Claim', Constants.claimId_Third, 'claimant', Constants.userId)
+		assert.fieldEquals('Claim', Constants.claimId_Third, 'claimantAsset', Constants.claimantAsset3)
+		assert.fieldEquals('Claim', Constants.claimId_Third, 'tier', Constants.THIRD_PLACE)
+		assert.fieldEquals('Claim', Constants.claimId_Third, 'claimTime', Constants.claimTime)
 	})
 })
 

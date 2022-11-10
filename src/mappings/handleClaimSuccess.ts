@@ -9,6 +9,7 @@ export default function handleClaimSuccess(event: ClaimSuccess): void {
 	const SINGLE = BigInt.fromString('0');
 	const ONGOING = BigInt.fromString('1');
 	const TIERED = BigInt.fromString('2');
+	const TIERED_FIXED = BigInt.fromString('3');
 
 	let bountyType = event.params.bountyType;
 
@@ -19,7 +20,7 @@ export default function handleClaimSuccess(event: ClaimSuccess): void {
 		decoded = ethereum.decode("(address,string,address,string,uint256)", addTuplePrefix(event.params.data))!.toTuple();
 	}
 
-log.info(BigInt.fromString('0').toString(), [ BigInt.fromString('0').toString()])
+	log.info(BigInt.fromString('0').toString(), [BigInt.fromString('0').toString()])
 	let bountyAddress = decoded[0].toAddress().toHexString()
 	let closer = decoded[2].toAddress().toHexString()
 
@@ -27,8 +28,11 @@ log.info(BigInt.fromString('0').toString(), [ BigInt.fromString('0').toString()]
 	let claimantAsset = decoded[3].toString()
 	let claimId = generateClaimId(externalUserId, claimantAsset)
 	let claim = new Claim(claimId)
-	let tier = bountyType == TIERED ? decoded[4].toBigInt() :  BigInt.fromString('0')
+	let tier = BigInt.fromString('0')
 
+	if (bountyType == TIERED || bountyType == TIERED_FIXED) {
+		tier = decoded[4].toBigInt()
+	}
 
 	claim.bountyType = bountyType
 	claim.bounty = bountyAddress

@@ -24,6 +24,14 @@ export default class Constants {
 		return 'https://github.com/OpenQDev/OpenQ-Frontend/pull/398';
 	}
 
+	static get claimantAsset2(): string {
+		return 'https://github.com/OpenQDev/OpenQ-Frontend/pull/399';
+	}
+
+	static get claimantAsset3(): string {
+		return 'https://github.com/OpenQDev/OpenQ-Frontend/pull/400';
+	}
+
 	static get bountyId(): string {
 		return 'bountyId';
 	}
@@ -38,6 +46,14 @@ export default class Constants {
 
 	static get FIRST_PLACE(): string {
 		return '0';
+	}
+
+	static get SECOND_PLACE(): string {
+		return '1';
+	}
+
+	static get THIRD_PLACE(): string {
+		return '2';
 	}
 
 	static get refundTime(): string {
@@ -84,6 +100,36 @@ export default class Constants {
 		let tupleArray: Array<ethereum.Value> = [
 			ethereum.Value.fromString(Constants.externalUserId),
 			ethereum.Value.fromString(Constants.claimantAsset)
+		]
+
+		let tuple = changetype<ethereum.Tuple>(tupleArray)
+
+		let encoded = ethereum.encode(ethereum.Value.fromTuple(tuple))!
+
+		let claimId = crypto.keccak256(encoded).toHexString()
+
+		return claimId;
+	}
+
+	static get claimId_Second(): string {
+		let tupleArray: Array<ethereum.Value> = [
+			ethereum.Value.fromString(Constants.externalUserId),
+			ethereum.Value.fromString(Constants.claimantAsset2)
+		]
+
+		let tuple = changetype<ethereum.Tuple>(tupleArray)
+
+		let encoded = ethereum.encode(ethereum.Value.fromTuple(tuple))!
+
+		let claimId = crypto.keccak256(encoded).toHexString()
+
+		return claimId;
+	}
+
+	static get claimId_Third(): string {
+		let tupleArray: Array<ethereum.Value> = [
+			ethereum.Value.fromString(Constants.externalUserId),
+			ethereum.Value.fromString(Constants.claimantAsset3)
 		]
 
 		let tuple = changetype<ethereum.Tuple>(tupleArray)
@@ -193,6 +239,34 @@ export default class Constants {
 			ethereum.Value.fromAddress(Address.fromString(Constants.userId)),
 			ethereum.Value.fromString(Constants.claimantAsset),
 			ethereum.Value.fromSignedBigInt(BigInt.fromString(Constants.FIRST_PLACE))
+		]
+
+		let tuple = changetype<ethereum.Tuple>(tupleArray)
+		let encoded = ethereum.encode(ethereum.Value.fromTuple(tuple))!
+		return removeTuplePrefix(encoded)
+	}
+
+	static get closerData_TIERED_2(): string {
+		let tupleArray: Array<ethereum.Value> = [
+			ethereum.Value.fromAddress(Address.fromString(Constants.id)),
+			ethereum.Value.fromString(Constants.externalUserId),
+			ethereum.Value.fromAddress(Address.fromString(Constants.userId)),
+			ethereum.Value.fromString(Constants.claimantAsset2),
+			ethereum.Value.fromSignedBigInt(BigInt.fromString(Constants.SECOND_PLACE))
+		]
+
+		let tuple = changetype<ethereum.Tuple>(tupleArray)
+		let encoded = ethereum.encode(ethereum.Value.fromTuple(tuple))!
+		return removeTuplePrefix(encoded)
+	}
+
+	static get closerData_TIERED_3(): string {
+		let tupleArray: Array<ethereum.Value> = [
+			ethereum.Value.fromAddress(Address.fromString(Constants.id)),
+			ethereum.Value.fromString(Constants.externalUserId),
+			ethereum.Value.fromAddress(Address.fromString(Constants.userId)),
+			ethereum.Value.fromString(Constants.claimantAsset3),
+			ethereum.Value.fromSignedBigInt(BigInt.fromString(Constants.THIRD_PLACE))
 		]
 
 		let tuple = changetype<ethereum.Tuple>(tupleArray)
