@@ -2205,9 +2205,9 @@ mafmt@^7.0.0:
     multiaddr "^7.3.0"
 
 matchstick-as@^0.5.4:
-  version "0.4.4"
-  resolved "https://registry.yarnpkg.com/matchstick-as/-/matchstick-as-0.4.4.tgz#bf96d2388c95860a4f0f5b7c648a1b2bd8ee46b4"
-  integrity sha512-ZetjP1+DFuokSYUovPEZ8F5cyUaWVG/DZcT6OU9dm3ObHU5oL55NwguplpP+fHpIZizDTXH3lMGBS3ElBkSJ/w==
+  version "0.5.0"
+  resolved "https://registry.yarnpkg.com/matchstick-as/-/matchstick-as-0.5.0.tgz#cdafc1ef49d670b9cbe98e933bc2a5cb7c450aeb"
+  integrity sha512-4K619YDH+so129qt4RB4JCNxaFwJJYLXPc7drpG+/mIj86Cfzg6FKs/bA91cnajmS1CLHdhHl9vt6Kd6Oqvfkg==
   dependencies:
     "@graphprotocol/graph-ts" "^0.27.0"
     assemblyscript "^0.19.20"
