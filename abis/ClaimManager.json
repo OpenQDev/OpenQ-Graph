@@ -286,6 +286,37 @@
 		"inputs": [
 			{
 				"indexed": false,
+				"internalType": "string",
+				"name": "externalUserId",
+				"type": "string"
+			},
+			{
+				"indexed": false,
+				"internalType": "address",
+				"name": "newAddress",
+				"type": "address"
+			},
+			{
+				"indexed": false,
+				"internalType": "bytes",
+				"name": "data",
+				"type": "bytes"
+			},
+			{
+				"indexed": false,
+				"internalType": "uint256",
+				"name": "version",
+				"type": "uint256"
+			}
+		],
+		"name": "ExternalUserIdAssociatedWithAddress",
+		"type": "event"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": false,
 				"internalType": "address",
 				"name": "bountyAddress",
 				"type": "address"
@@ -612,6 +643,37 @@
 		"inputs": [
 			{
 				"indexed": false,
+				"internalType": "address",
+				"name": "bountyAddress",
+				"type": "address"
+			},
+			{
+				"indexed": false,
+				"internalType": "address",
+				"name": "claimant",
+				"type": "address"
+			},
+			{
+				"indexed": false,
+				"internalType": "bytes",
+				"name": "data",
+				"type": "bytes"
+			},
+			{
+				"indexed": false,
+				"internalType": "uint256",
+				"name": "version",
+				"type": "uint256"
+			}
+		],
+		"name": "TierClaimed",
+		"type": "event"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": false,
 				"internalType": "string",
 				"name": "bountyId",
 				"type": "string"
@@ -780,6 +842,19 @@
 		"type": "function"
 	},
 	{
+		"inputs": [],
+		"name": "VERSION_2",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
 		"inputs": [
 			{
 				"internalType": "address",
@@ -825,6 +900,29 @@
 		"inputs": [
 			{
 				"internalType": "address",
+				"name": "_bountyAddress",
+				"type": "address"
+			},
+			{
+				"internalType": "string",
+				"name": "_externalUserId",
+				"type": "string"
+			},
+			{
+				"internalType": "bytes",
+				"name": "_closerData",
+				"type": "bytes"
+			}
+		],
+		"name": "directClaimTieredBounty",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
 				"name": "oracle",
 				"type": "address"
 			}
@@ -832,6 +930,19 @@
 		"name": "initialize",
 		"outputs": [],
 		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "openQ",
+		"outputs": [
+			{
+				"internalType": "address",
+				"name": "",
+				"type": "address"
+			}
+		],
+		"stateMutability": "view",
 		"type": "function"
 	},
 	{
@@ -876,6 +987,19 @@
 	{
 		"inputs": [],
 		"name": "renounceOwnership",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "_openQ",
+				"type": "address"
+			}
+		],
+		"name": "setOpenQ",
 		"outputs": [],
 		"stateMutability": "nonpayable",
 		"type": "function"
