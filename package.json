@@ -1,6 +1,7 @@
 {
 	"name": "openq",
 	"license": "UNLICENSED",
+	"private": true,
 	"scripts": {
 		"codegen": "graph codegen",
 		"build": "graph build",
@@ -30,6 +31,6 @@
 		"@ethersproject/bignumber": "5.7.0"
 	},
 	"devDependencies": {
-		"matchstick-as": "^0.5.4"
+		"matchstick-as": "0.5.0"
 	}
 }
