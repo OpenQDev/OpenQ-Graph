@@ -85,8 +85,8 @@ describe('handleBountyCreated', () => {
 		assert.fieldEquals('Bounty', Constants.id, 'hasFundingGoal', 'true')
 		assert.fieldEquals('Bounty', Constants.id, 'fundingGoalTokenAddress', Constants.fundingGoalTokenAddress)
 		assert.fieldEquals('Bounty', Constants.id, 'fundingGoalVolume', Constants.fundingGoalVolume)
-		assert.fieldEquals('Bounty', Constants.id, 'invoiceable', Constants.invoiceable)
-		assert.fieldEquals('Bounty', Constants.id, 'kycRequired', Constants.kycRequired)
+		assert.fieldEquals('Bounty', Constants.id, 'invoiceable', 'true')
+		assert.fieldEquals('Bounty', Constants.id, 'kycRequired', 'true')
 
 		assert.fieldEquals('User', Constants.userId, 'id', Constants.userId)
 
