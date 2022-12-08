@@ -157,6 +157,20 @@ export default class Constants {
 		return '100';
 	}
 
+	static get funderUuid(): string {
+		return 'randomFunderUuid';
+	}
+
+	static get funderData(): string {
+		let tupleArray: Array<ethereum.Value> = [
+			ethereum.Value.fromString(Constants.funderUuid)
+		]
+
+		let tuple = changetype<ethereum.Tuple>(tupleArray)
+		let encoded = ethereum.encode(ethereum.Value.fromTuple(tuple))!
+		return encoded.toHexString()
+	}
+
 	static get initData_ATOMIC(): string {
 		let tupleArray: Array<ethereum.Value> = [
 			ethereum.Value.fromBoolean(true),
@@ -318,6 +332,10 @@ export default class Constants {
 
 	static get version(): string {
 		return '1';
+	}
+
+	static get VERSION_2(): string {
+		return '2';
 	}
 
 	static get VERSION_3(): string {

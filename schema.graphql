@@ -14,6 +14,7 @@ type Deposit @entity {
   expiration: BigInt!
   refundTime: BigInt
   isNft: Boolean!
+  funderUuid: String
 }
 
 type Refund @entity {
