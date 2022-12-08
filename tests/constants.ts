@@ -72,12 +72,12 @@ export default class Constants {
 		return '2';
 	}
 
-	static get invoiceable(): string {
-		return 'true';
+	static get invoiceable(): boolean {
+		return true;
 	}
 
-	static get kycRequired(): string {
-		return 'true';
+	static get kycRequired(): boolean {
+		return true;
 	}
 
 	static get bountyType_TIERED_FIXED(): string {
