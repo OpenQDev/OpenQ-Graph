@@ -68,7 +68,7 @@ export default function handleBountyCreated(event: BountyCreated): void {
 			bounty.invoiceable = decoded[3].toBoolean()
 			bounty.kycRequired = decoded[4].toBoolean()
 		} else if (bountyType == ONGOING) {
-			decoded = ethereum.decode("(address,uint256,bool,bool,bool)", event.params.data)!.toTuple();
+			decoded = ethereum.decode("(address,uint256,bool,address,uint256,bool,bool)", event.params.data)!.toTuple();
 			bounty.payoutTokenAddress = decoded[0].toAddress()
 			bounty.payoutTokenVolume = decoded[1].toBigInt()
 			bounty.hasFundingGoal = decoded[2].toBoolean();
