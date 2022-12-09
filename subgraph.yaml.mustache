@@ -41,6 +41,10 @@ dataSources:
           handler: handleBountyClosed
         - event: ExternalUserIdAssociatedWithAddress(string,address,bytes,uint256)
           handler: handleExternalUserIdAssociatedWithAddress
+        - event: InvoiceableSet(address,bool,bytes,uint256)
+          handler: handleInvoiceableSet
+        - event: KYCRequiredSet(address,bool,bytes,uint256)
+          handler: handleKycRequiredSet
       file: ./src/mapping.ts
   - kind: ethereum/contract
     name: ClaimManager

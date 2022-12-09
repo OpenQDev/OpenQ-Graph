@@ -11,6 +11,8 @@ import handlePayoutSet from "./mappings/handlePayoutSet"
 import handleNftClaimed from "./mappings/handleNftClaimed"
 import handlePayoutScheduleSet from "./mappings/handlePayoutScheduleSet"
 import handleExternalUserIdAssociatedWithAddress from './mappings/handleExternalUserIdAssociatedWithAddress'
+import handleInvoiceableSet from './mappings/handleInvoiceableSet'
+import handleKycRequiredSet from './mappings/handleKycRequiredSet'
 
 export {
 	handleBountyCreated,
@@ -25,5 +27,7 @@ export {
 	handlePayoutSet,
 	handleNftClaimed,
 	handlePayoutScheduleSet,
-	handleExternalUserIdAssociatedWithAddress
+	handleExternalUserIdAssociatedWithAddress,
+	handleInvoiceableSet,
+	handleKycRequiredSet
 }

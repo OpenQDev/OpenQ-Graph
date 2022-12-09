@@ -72,6 +72,14 @@ export default class Constants {
 		return '2';
 	}
 
+	static get invoiceable(): boolean {
+		return true;
+	}
+
+	static get kycRequired(): boolean {
+		return true;
+	}
+
 	static get bountyType_TIERED_FIXED(): string {
 		return '3';
 	}
@@ -149,11 +157,39 @@ export default class Constants {
 		return '100';
 	}
 
+	static get funderUuid(): string {
+		return 'randomFunderUuid';
+	}
+
+	static get funderData(): string {
+		let tupleArray: Array<ethereum.Value> = [
+			ethereum.Value.fromString(Constants.funderUuid)
+		]
+
+		let tuple = changetype<ethereum.Tuple>(tupleArray)
+		let encoded = ethereum.encode(ethereum.Value.fromTuple(tuple))!
+		return encoded.toHexString()
+	}
+
 	static get initData_ATOMIC(): string {
 		let tupleArray: Array<ethereum.Value> = [
 			ethereum.Value.fromBoolean(true),
 			ethereum.Value.fromAddress(Address.fromString(Constants.fundingGoalTokenAddress)),
 			ethereum.Value.fromSignedBigInt(BigInt.fromString(Constants.fundingGoalVolume))
+		]
+
+		let tuple = changetype<ethereum.Tuple>(tupleArray)
+		let encoded = ethereum.encode(ethereum.Value.fromTuple(tuple))!
+		return encoded.toHexString()
+	}
+
+	static get initData_ATOMIC_VERSION_3(): string {
+		let tupleArray: Array<ethereum.Value> = [
+			ethereum.Value.fromBoolean(true),
+			ethereum.Value.fromAddress(Address.fromString(Constants.fundingGoalTokenAddress)),
+			ethereum.Value.fromSignedBigInt(BigInt.fromString(Constants.fundingGoalVolume)),
+			ethereum.Value.fromBoolean(true),
+			ethereum.Value.fromBoolean(true)
 		]
 
 		let tuple = changetype<ethereum.Tuple>(tupleArray)
@@ -296,6 +332,14 @@ export default class Constants {
 
 	static get version(): string {
 		return '1';
+	}
+
+	static get VERSION_2(): string {
+		return '2';
+	}
+
+	static get VERSION_3(): string {
+		return '3';
 	}
 
 	static get data(): string {

@@ -1,4 +1,4 @@
-import { BigInt } from "@graphprotocol/graph-ts"
+import { BigInt, ethereum } from "@graphprotocol/graph-ts"
 import { TokenDepositReceived } from "../../generated/OpenQ/OpenQ"
 import {
 	User,
@@ -25,6 +25,14 @@ export default function handleTokenDepositReceived(event: TokenDepositReceived):
 	deposit.isNft = false
 	deposit.refunded = false	
 	deposit.tokenId = BigInt.fromString('0') ;
+
+	const VERSION_2 = BigInt.fromString('2')
+
+	let decoded: ethereum.Value[] = []
+	if (event.params.version == VERSION_2) {
+		decoded = ethereum.decode("(string)", event.params.data)!.toTuple();
+		deposit.funderUuid = decoded[0].toString()
+	}
 
 	// UPSERT USER
 	let user = User.load(event.transaction.from.toHexString())
