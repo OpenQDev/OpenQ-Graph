@@ -45,6 +45,12 @@ dataSources:
           handler: handleInvoiceableSet
         - event: KYCRequiredSet(address,bool,bytes,uint256)
           handler: handleKycRequiredSet
+        - event: SupportingDocumentsSet(address,bool,bytes,uint256)
+          handler: handleSupportingDocumentsSet
+        - event: InvoiceCompletedSet(address,bool,bytes,uint256)
+          handler: handleInvoiceCompletedSet
+        - event: SupportingDocumentsCompletedSet(address,bool,bytes,uint256)
+          handler: handleSupportingDocumentsCompletedSet
       file: ./src/mapping.ts
   - kind: ethereum/contract
     name: ClaimManager

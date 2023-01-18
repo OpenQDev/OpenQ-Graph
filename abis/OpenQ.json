@@ -380,7 +380,7 @@
         {
           "indexed": false,
           "internalType": "bool",
-          "name": "invoiceCompletedSet",
+          "name": "invoiceCompleted",
           "type": "bool"
         },
         {
@@ -743,7 +743,7 @@
         {
           "indexed": false,
           "internalType": "bool",
-          "name": "supportDocumentsCompleted",
+          "name": "supportingDocumentsCompleted",
           "type": "bool"
         },
         {
@@ -759,7 +759,7 @@
           "type": "uint256"
         }
       ],
-      "name": "SupportDocumentsCompletedSet",
+      "name": "SupportingDocumentsCompletedSet",
       "type": "event"
     },
     {
