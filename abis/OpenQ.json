@@ -380,6 +380,37 @@
         {
           "indexed": false,
           "internalType": "bool",
+          "name": "invoiceCompletedSet",
+          "type": "bool"
+        },
+        {
+          "indexed": false,
+          "internalType": "bytes",
+          "name": "data",
+          "type": "bytes"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "version",
+          "type": "uint256"
+        }
+      ],
+      "name": "InvoiceCompletedSet",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "internalType": "address",
+          "name": "bountyAddress",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "bool",
           "name": "invoiceable",
           "type": "bool"
         },
@@ -711,6 +742,68 @@
         },
         {
           "indexed": false,
+          "internalType": "bool",
+          "name": "supportDocumentsCompleted",
+          "type": "bool"
+        },
+        {
+          "indexed": false,
+          "internalType": "bytes",
+          "name": "data",
+          "type": "bytes"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "version",
+          "type": "uint256"
+        }
+      ],
+      "name": "SupportDocumentsCompletedSet",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "internalType": "address",
+          "name": "bountyAddress",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "bool",
+          "name": "supportingDocuments",
+          "type": "bool"
+        },
+        {
+          "indexed": false,
+          "internalType": "bytes",
+          "name": "data",
+          "type": "bytes"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "version",
+          "type": "uint256"
+        }
+      ],
+      "name": "SupportingDocumentsSet",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "internalType": "address",
+          "name": "bountyAddress",
+          "type": "address"
+        },
+        {
+          "indexed": false,
           "internalType": "address",
           "name": "claimant",
           "type": "address"
@@ -729,6 +822,43 @@
         }
       ],
       "name": "TierClaimed",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "internalType": "address",
+          "name": "bountyAddress",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "string",
+          "name": "winner",
+          "type": "string"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "tier",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "bytes",
+          "name": "data",
+          "type": "bytes"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "version",
+          "type": "uint256"
+        }
+      ],
+      "name": "TierWinnerSelected",
       "type": "event"
     },
     {
@@ -919,6 +1049,19 @@
     {
       "inputs": [],
       "name": "VERSION_3",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "VERSION_4",
       "outputs": [
         {
           "internalType": "uint256",
@@ -1183,12 +1326,12 @@
         },
         {
           "internalType": "string",
-          "name": "claimant",
+          "name": "_claimant",
           "type": "string"
         },
         {
           "internalType": "string",
-          "name": "claimantAsset",
+          "name": "_claimantAsset",
           "type": "string"
         }
       ],
@@ -1320,6 +1463,24 @@
         },
         {
           "internalType": "bool",
+          "name": "_invoiceComplete",
+          "type": "bool"
+        }
+      ],
+      "name": "setInvoiceComplete",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "string",
+          "name": "_bountyId",
+          "type": "string"
+        },
+        {
+          "internalType": "bool",
           "name": "_invoiceable",
           "type": "bool"
         }
@@ -1407,6 +1568,65 @@
         }
       ],
       "name": "setPayoutScheduleFixed",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "string",
+          "name": "_bountyId",
+          "type": "string"
+        },
+        {
+          "internalType": "bool",
+          "name": "_supportingDocuments",
+          "type": "bool"
+        }
+      ],
+      "name": "setSupportingDocuments",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "string",
+          "name": "_bountyId",
+          "type": "string"
+        },
+        {
+          "internalType": "bool",
+          "name": "_supportingDocumentsComplete",
+          "type": "bool"
+        }
+      ],
+      "name": "setSupportingDocumentsComplete",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "string",
+          "name": "_bountyId",
+          "type": "string"
+        },
+        {
+          "internalType": "string",
+          "name": "_winner",
+          "type": "string"
+        },
+        {
+          "internalType": "uint256",
+          "name": "_tier",
+          "type": "uint256"
+        }
+      ],
+      "name": "setTierWinner",
       "outputs": [],
       "stateMutability": "nonpayable",
       "type": "function"

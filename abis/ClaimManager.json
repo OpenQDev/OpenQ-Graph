@@ -380,6 +380,37 @@
         {
           "indexed": false,
           "internalType": "bool",
+          "name": "invoiceCompletedSet",
+          "type": "bool"
+        },
+        {
+          "indexed": false,
+          "internalType": "bytes",
+          "name": "data",
+          "type": "bytes"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "version",
+          "type": "uint256"
+        }
+      ],
+      "name": "InvoiceCompletedSet",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "internalType": "address",
+          "name": "bountyAddress",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "bool",
           "name": "invoiceable",
           "type": "bool"
         },
@@ -711,6 +742,68 @@
         },
         {
           "indexed": false,
+          "internalType": "bool",
+          "name": "supportDocumentsCompleted",
+          "type": "bool"
+        },
+        {
+          "indexed": false,
+          "internalType": "bytes",
+          "name": "data",
+          "type": "bytes"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "version",
+          "type": "uint256"
+        }
+      ],
+      "name": "SupportDocumentsCompletedSet",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "internalType": "address",
+          "name": "bountyAddress",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "bool",
+          "name": "supportingDocuments",
+          "type": "bool"
+        },
+        {
+          "indexed": false,
+          "internalType": "bytes",
+          "name": "data",
+          "type": "bytes"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "version",
+          "type": "uint256"
+        }
+      ],
+      "name": "SupportingDocumentsSet",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "internalType": "address",
+          "name": "bountyAddress",
+          "type": "address"
+        },
+        {
+          "indexed": false,
           "internalType": "address",
           "name": "claimant",
           "type": "address"
@@ -729,6 +822,43 @@
         }
       ],
       "name": "TierClaimed",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "internalType": "address",
+          "name": "bountyAddress",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "string",
+          "name": "winner",
+          "type": "string"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "tier",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "bytes",
+          "name": "data",
+          "type": "bytes"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "version",
+          "type": "uint256"
+        }
+      ],
+      "name": "TierWinnerSelected",
       "type": "event"
     },
     {
@@ -917,6 +1047,19 @@
       "type": "function"
     },
     {
+      "inputs": [],
+      "name": "VERSION_3",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
       "inputs": [
         {
           "internalType": "address",
@@ -996,6 +1139,19 @@
     },
     {
       "inputs": [],
+      "name": "kyc",
+      "outputs": [
+        {
+          "internalType": "contract IKycValidity",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
       "name": "openQ",
       "outputs": [
         {
@@ -1034,6 +1190,47 @@
       "type": "function"
     },
     {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "_bountyAddress",
+          "type": "address"
+        },
+        {
+          "internalType": "string",
+          "name": "_externalUserId",
+          "type": "string"
+        },
+        {
+          "internalType": "bytes",
+          "name": "_closerData",
+          "type": "bytes"
+        }
+      ],
+      "name": "permissionedClaimTier",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "_bountyAddress",
+          "type": "address"
+        },
+        {
+          "internalType": "bytes",
+          "name": "_closerData",
+          "type": "bytes"
+        }
+      ],
+      "name": "permissionedClaimTieredBounty",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
       "inputs": [],
       "name": "proxiableUUID",
       "outputs": [
@@ -1049,6 +1246,19 @@
     {
       "inputs": [],
       "name": "renounceOwnership",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "_kyc",
+          "type": "address"
+        }
+      ],
+      "name": "setKyc",
       "outputs": [],
       "stateMutability": "nonpayable",
       "type": "function"
