@@ -359,6 +359,10 @@ export default class Constants {
 		return [BigInt.fromString('80'), BigInt.fromString('20')]
 	}
 
+	static get tierWinners(): Array<string> {
+		return [Constants.externalUserId]
+	}
+
 	static encodeTuple(tupleArray: ethereum.Value[]): string {
 		let tuple = changetype<ethereum.Tuple>(tupleArray)
 		let encoded = ethereum.encode(ethereum.Value.fromTuple(tuple))!

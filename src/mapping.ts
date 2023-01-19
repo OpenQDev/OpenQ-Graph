@@ -16,6 +16,7 @@ import handleKycRequiredSet from './mappings/handleKycRequiredSet'
 import handleSupportingDocumentsSet from './mappings/handleSupportingDocumentsSet'
 import handleInvoiceCompletedSet from './mappings/handleInvoiceCompletedSet'
 import handleSupportingDocumentsCompletedSet from './mappings/handleSupportingDocumentsCompletedSet'
+import handleTierWinnerSelected from './mappings/handleTierWinnerSelected'
 
 export {
 	handleBountyCreated,
@@ -35,5 +36,6 @@ export {
 	handleKycRequiredSet,
 	handleSupportingDocumentsSet,
 	handleInvoiceCompletedSet,
-	handleSupportingDocumentsCompletedSet
+	handleSupportingDocumentsCompletedSet,
+	handleTierWinnerSelected
 }

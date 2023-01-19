@@ -51,6 +51,8 @@ dataSources:
           handler: handleInvoiceCompletedSet
         - event: SupportingDocumentsCompletedSet(address,bool,bytes,uint256)
           handler: handleSupportingDocumentsCompletedSet
+        - event: TierWinnerSelected(address,string,uint256,bytes,uint256)
+          handler: handleTierWinnerSelected
       file: ./src/mapping.ts
   - kind: ethereum/contract
     name: ClaimManager
