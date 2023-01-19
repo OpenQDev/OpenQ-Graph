@@ -8,6 +8,10 @@ export default class Constants {
 		return '0x06b306c85e5f33b1b2d971822ce0ed42fb7ab9a1';
 	}
 
+	static get emptyArray(): Array<boolean> {
+		return [];
+	}
+
 	static get depositId2(): string {
 		return '0xb0f8fb2093c515e5f40f7b43ee99bb758befa9d4';
 	}

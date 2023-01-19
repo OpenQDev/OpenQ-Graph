@@ -1,4 +1,4 @@
-import { log, Bytes, BigInt, Address, store, Entity } from '@graphprotocol/graph-ts';
+import { log, Bytes, BigInt, Address, store, ethereum, Entity } from '@graphprotocol/graph-ts';
 import Constants from './constants'
 
 export function seedBounty(): void {

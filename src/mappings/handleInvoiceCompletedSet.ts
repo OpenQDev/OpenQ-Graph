@@ -8,15 +8,7 @@ export default function handleInvoiceCompletedSet(event: InvoiceCompletedSet): v
 
 	if (!bounty) { throw "Error" }
 
-	if (!bounty.invoiceCompleted) { 
-		bounty.invoiceCompleted = new Array<boolean>()
-	}
-
-	let index = event.params.tier.toI32()
-
-	let array = bounty.invoiceCompleted
-	array[index] = event.params.invoiceCompletedSet
-	bounty.invoiceCompleted = array
+	bounty.invoiceCompleted = event.params.invoiceCompletedSet;
 
 	// SAVE ALL ENTITIES
 	bounty.save()

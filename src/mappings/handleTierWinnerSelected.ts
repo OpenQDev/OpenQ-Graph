@@ -10,7 +10,7 @@ export default function handleTierWinnerSelected(event: TierWinnerSelected): voi
 
 	// const index = Number(event.params.tier)
 
-	bounty.tierWinners[0] = event.params.winner;
+	bounty.tierWinners = event.params.tierWinners;
 
 	// SAVE ALL ENTITIES
 	bounty.save()
