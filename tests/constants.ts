@@ -16,6 +16,14 @@ export default class Constants {
 		return 'externalUserId';
 	}
 
+	static get alternativeLogo(): string {
+		return 'alternativeLogo';
+	}
+
+	static get alternativeName(): string {
+		return 'alternativeName';
+	}
+
 	static get claimTime(): string {
 		return '1234567';
 	}
@@ -197,6 +205,24 @@ export default class Constants {
 		return encoded.toHexString()
 	}
 
+	static get initData_ATOMIC_VERSION_4(): string {
+		let tupleArray: Array<ethereum.Value> = [
+			ethereum.Value.fromBoolean(true),
+			ethereum.Value.fromAddress(Address.fromString(Constants.fundingGoalTokenAddress)),
+			ethereum.Value.fromSignedBigInt(BigInt.fromString(Constants.fundingGoalVolume)),
+			ethereum.Value.fromBoolean(true),
+			ethereum.Value.fromBoolean(true),
+			ethereum.Value.fromBoolean(true),
+			ethereum.Value.fromString(Constants.externalUserId),
+			ethereum.Value.fromString(Constants.alternativeLogo),
+			ethereum.Value.fromString(Constants.alternativeName)
+		]
+
+		let tuple = changetype<ethereum.Tuple>(tupleArray)
+		let encoded = ethereum.encode(ethereum.Value.fromTuple(tuple))!
+		return encoded.toHexString()
+	}
+
 	static get initData_ONGOING(): string {
 		let tupleArray: Array<ethereum.Value> = [
 			ethereum.Value.fromAddress(Address.fromString(Constants.fundingGoalTokenAddress)),
@@ -220,6 +246,26 @@ export default class Constants {
 			ethereum.Value.fromSignedBigInt(BigInt.fromString(Constants.fundingGoalVolume)),
 			ethereum.Value.fromBoolean(true),
 			ethereum.Value.fromBoolean(true)
+		]
+
+		let tuple = changetype<ethereum.Tuple>(tupleArray)
+		let encoded = ethereum.encode(ethereum.Value.fromTuple(tuple))!
+		return encoded.toHexString()
+	}
+
+	static get initData_ONGOING_VERSION_4(): string {
+		let tupleArray: Array<ethereum.Value> = [
+			ethereum.Value.fromAddress(Address.fromString(Constants.fundingGoalTokenAddress)),
+			ethereum.Value.fromSignedBigInt(BigInt.fromString(Constants.fundingGoalVolume)),
+			ethereum.Value.fromBoolean(true),
+			ethereum.Value.fromAddress(Address.fromString(Constants.fundingGoalTokenAddress)),
+			ethereum.Value.fromSignedBigInt(BigInt.fromString(Constants.fundingGoalVolume)),
+			ethereum.Value.fromBoolean(true),
+			ethereum.Value.fromBoolean(true),
+			ethereum.Value.fromBoolean(true),
+			ethereum.Value.fromString(Constants.externalUserId),
+			ethereum.Value.fromString(Constants.alternativeLogo),
+			ethereum.Value.fromString(Constants.alternativeName)
 		]
 
 		let tuple = changetype<ethereum.Tuple>(tupleArray)
@@ -253,6 +299,24 @@ export default class Constants {
 		return removeTuplePrefix(encoded)
 	}
 
+	static get initData_TIERED_VERSION_4(): string {
+		let tupleArray: Array<ethereum.Value> = [
+			ethereum.Value.fromArray([ethereum.Value.fromI32(80), ethereum.Value.fromI32(20)]),
+			ethereum.Value.fromBoolean(true),
+			ethereum.Value.fromAddress(Address.fromString(Constants.fundingGoalTokenAddress)),
+			ethereum.Value.fromSignedBigInt(BigInt.fromString(Constants.fundingGoalVolume)),
+			ethereum.Value.fromBoolean(true),
+			ethereum.Value.fromBoolean(true),
+			ethereum.Value.fromBoolean(true),
+			ethereum.Value.fromString(Constants.externalUserId),
+			ethereum.Value.fromString(Constants.alternativeLogo),
+			ethereum.Value.fromString(Constants.alternativeName)
+		]
+		let tuple = changetype<ethereum.Tuple>(tupleArray)
+		let encoded = ethereum.encode(ethereum.Value.fromTuple(tuple))!
+		return removeTuplePrefix(encoded)
+	}
+
 	static get initData_TIERED_FIXED(): string {
 		let tupleArray: Array<ethereum.Value> = [
 			ethereum.Value.fromArray([ethereum.Value.fromI32(80), ethereum.Value.fromI32(20)]),
@@ -269,6 +333,22 @@ export default class Constants {
 			ethereum.Value.fromAddress(Address.fromString(Constants.payoutTokenAddress)),
 			ethereum.Value.fromBoolean(true),
 			ethereum.Value.fromBoolean(true)
+		]
+		let tuple = changetype<ethereum.Tuple>(tupleArray)
+		let encoded = ethereum.encode(ethereum.Value.fromTuple(tuple))!
+		return removeTuplePrefix(encoded)
+	}
+
+	static get initData_TIERED_FIXED_VERSION_4(): string {
+		let tupleArray: Array<ethereum.Value> = [
+			ethereum.Value.fromArray([ethereum.Value.fromI32(80), ethereum.Value.fromI32(20)]),
+			ethereum.Value.fromAddress(Address.fromString(Constants.payoutTokenAddress)),
+			ethereum.Value.fromBoolean(true),
+			ethereum.Value.fromBoolean(true),
+			ethereum.Value.fromBoolean(true),
+			ethereum.Value.fromString(Constants.externalUserId),
+			ethereum.Value.fromString(Constants.alternativeLogo),
+			ethereum.Value.fromString(Constants.alternativeName)
 		]
 		let tuple = changetype<ethereum.Tuple>(tupleArray)
 		let encoded = ethereum.encode(ethereum.Value.fromTuple(tuple))!
@@ -382,6 +462,10 @@ export default class Constants {
 
 	static get VERSION_3(): string {
 		return '3';
+	}
+
+	static get VERSION_4(): string {
+		return '4';
 	}
 
 	static get data(): string {

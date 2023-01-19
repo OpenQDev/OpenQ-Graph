@@ -96,6 +96,50 @@ describe('handleBountyCreated', () => {
 		assert.fieldEquals('BountiesCounter', Constants.bountiesCounterId, 'count', '1')
 	})
 
+	test('can handle new BountyCreated - ATOMIC - VERSION 4', () => {
+		// ARRANGE
+		let newBountyCreatedEvent = createNewBountyCreatedEvent(
+			Constants.bountyId,
+			Constants.organization,
+			Constants.userId,
+			Constants.bountyAddress,
+			Constants.bountyMintTime,
+			Constants.bountyType_ATOMIC,
+			Constants.initData_ATOMIC_VERSION_4,
+			Constants.VERSION_4
+		)
+
+		newBountyCreatedEvent.transaction.hash = Bytes.fromHexString(Constants.transactionHash)
+		newBountyCreatedEvent.transaction.from = Address.fromString(Constants.userId)
+
+		// ACT
+		handleBountyCreated(newBountyCreatedEvent)
+
+		// ASSERT
+		assert.fieldEquals('Bounty', Constants.id, 'bountyId', Constants.bountyId)
+		assert.fieldEquals('Bounty', Constants.id, 'organization', Constants.organization)
+		assert.fieldEquals('Bounty', Constants.id, 'issuer', Constants.userId)
+		assert.fieldEquals('Bounty', Constants.id, 'bountyAddress', Constants.id)
+		assert.fieldEquals('Bounty', Constants.id, 'bountyMintTime', Constants.bountyMintTime)
+		assert.fieldEquals('Bounty', Constants.id, 'bountyType', Constants.bountyType_ATOMIC)
+		assert.fieldEquals('Bounty', Constants.id, 'version', Constants.VERSION_4)
+		assert.fieldEquals('Bounty', Constants.id, 'transactionHash', Constants.transactionHash)
+		assert.fieldEquals('Bounty', Constants.id, 'hasFundingGoal', 'true')
+		assert.fieldEquals('Bounty', Constants.id, 'fundingGoalTokenAddress', Constants.fundingGoalTokenAddress)
+		assert.fieldEquals('Bounty', Constants.id, 'fundingGoalVolume', Constants.fundingGoalVolume)
+		assert.fieldEquals('Bounty', Constants.id, 'invoiceable', 'true')
+		assert.fieldEquals('Bounty', Constants.id, 'kycRequired', 'true')
+		assert.fieldEquals('Bounty', Constants.id, 'supportingDocuments', 'true')
+		assert.fieldEquals('Bounty', Constants.id, 'externalUserId', Constants.externalUserId)
+
+		assert.fieldEquals('User', Constants.userId, 'id', Constants.userId)
+
+		assert.fieldEquals('Organization', Constants.organization, 'id', Constants.organization)
+		assert.fieldEquals('Organization', Constants.organization, 'bountiesCount', '1')
+
+		assert.fieldEquals('BountiesCounter', Constants.bountiesCounterId, 'count', '1')
+	})
+
 	test('can handle new BountyCreated - ONGOING', () => {
 		// ARRANGE
 		let newBountyCreatedEvent = createNewBountyCreatedEvent(
