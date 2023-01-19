@@ -379,8 +379,14 @@
         },
         {
           "indexed": false,
+          "internalType": "uint256",
+          "name": "tier",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
           "internalType": "bool",
-          "name": "invoiceCompleted",
+          "name": "invoiceCompletedSet",
           "type": "bool"
         },
         {
@@ -742,8 +748,14 @@
         },
         {
           "indexed": false,
+          "internalType": "uint256",
+          "name": "tier",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
           "internalType": "bool",
-          "name": "supportingDocumentsCompleted",
+          "name": "supportDocumentsCompleted",
           "type": "bool"
         },
         {
@@ -1462,6 +1474,11 @@
           "type": "string"
         },
         {
+          "internalType": "uint256",
+          "name": "_tier",
+          "type": "uint256"
+        },
+        {
           "internalType": "bool",
           "name": "_invoiceComplete",
           "type": "bool"
@@ -1598,6 +1615,11 @@
           "type": "string"
         },
         {
+          "internalType": "uint256",
+          "name": "_tier",
+          "type": "uint256"
+        },
+        {
           "internalType": "bool",
           "name": "_supportingDocumentsComplete",
           "type": "bool"
@@ -1616,14 +1638,14 @@
           "type": "string"
         },
         {
-          "internalType": "string",
-          "name": "_winner",
-          "type": "string"
-        },
-        {
           "internalType": "uint256",
           "name": "_tier",
           "type": "uint256"
+        },
+        {
+          "internalType": "string",
+          "name": "_winner",
+          "type": "string"
         }
       ],
       "name": "setTierWinner",

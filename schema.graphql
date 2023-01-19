@@ -102,9 +102,9 @@ type Bounty @entity {
   kycRequired: Boolean
   externalUserId: String
   supportingDocuments: Boolean
-  invoiceCompleted: Boolean
-  supportingDocumentsCompleted: Boolean
-  tierWinners: [String!]!
+  invoiceCompleted: [Boolean!]
+  supportingDocumentsCompleted: [Boolean!]
+  tierWinners: [String!]
 }
 
 type Claim @entity {

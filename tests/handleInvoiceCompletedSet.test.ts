@@ -18,6 +18,7 @@ describe('handleInvoiceCompletedSet.test', () => {
 	test('can handle invoiceCompleted set event', () => {
 		let newInvoiceCompletedSetEvent = createNewInvoiceCompletedSetEvent(
 			Constants.id,
+			Constants.tier,
 			true,
 			Constants.data,
 			Constants.version
@@ -34,6 +35,7 @@ describe('handleInvoiceCompletedSet.test', () => {
 
 export function createNewInvoiceCompletedSetEvent(
 	bountyAddress: string,
+	tier: string,
 	invoiceCompleted: boolean,
 	data: string,
 	version: string
@@ -42,6 +44,7 @@ export function createNewInvoiceCompletedSetEvent(
 
 	let parameters: Array<ethereum.EventParam> = [
 		new ethereum.EventParam("bountyAddress", ethereum.Value.fromAddress(Address.fromString(bountyAddress))),
+		new ethereum.EventParam("tier", ethereum.Value.fromUnsignedBigInt(BigInt.fromString(tier))),
 		new ethereum.EventParam("invoiceCompleted", ethereum.Value.fromBoolean(invoiceCompleted)),
 		new ethereum.EventParam("data", ethereum.Value.fromBytes(Bytes.fromHexString(data))),
 		new ethereum.EventParam("version", ethereum.Value.fromUnsignedBigInt(BigInt.fromString(version)))

@@ -359,6 +359,10 @@ export default class Constants {
 		return [BigInt.fromString('80'), BigInt.fromString('20')]
 	}
 
+	static get tier(): string {
+		return "0"
+	}
+
 	static get tierWinners(): Array<string> {
 		return [Constants.externalUserId]
 	}
