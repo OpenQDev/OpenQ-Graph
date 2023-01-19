@@ -18,7 +18,7 @@ describe('handleSupportingDocumentsCompleted.test', () => {
 	test('can handle SupportingDocumentsCompletedSet event', () => {
 		let newSupportingDocumentsCompletedSetEvent = createNewSupportingDocumentsCompletedSetEvent(
 			Constants.id,
-			true,
+			Constants.supportingDocumentsCompleted,
 			Constants.data,
 			Constants.version
 		)
@@ -28,13 +28,14 @@ describe('handleSupportingDocumentsCompleted.test', () => {
 
 		handleSupportingDocumentsCompletedSet(newSupportingDocumentsCompletedSetEvent)
 
-		assert.fieldEquals('Bounty', Constants.id, 'supportingDocumentsCompleted', 'true')
+		// NOTE: This is super space, case and comma-sensitive
+		assert.fieldEquals('Bounty', Constants.id, 'supportingDocumentsCompleted', `[${Constants.supportingDocumentsCompleted[0]}, ${Constants.supportingDocumentsCompleted[1]}]`)
 	})
 })
 
 export function createNewSupportingDocumentsCompletedSetEvent(
 	bountyAddress: string,
-	supportingDocumentsCompleted: boolean,
+	supportingDocumentsCompleted: boolean[],
 	data: string,
 	version: string
 ): SupportingDocumentsCompletedSet {
@@ -42,7 +43,7 @@ export function createNewSupportingDocumentsCompletedSetEvent(
 
 	let parameters: Array<ethereum.EventParam> = [
 		new ethereum.EventParam("bountyAddress", ethereum.Value.fromAddress(Address.fromString(bountyAddress))),
-		new ethereum.EventParam("supportingDocumentsCompleted", ethereum.Value.fromBoolean(supportingDocumentsCompleted)),
+		new ethereum.EventParam("supportingDocumentsCompleted", ethereum.Value.fromBooleanArray(supportingDocumentsCompleted)),
 		new ethereum.EventParam("data", ethereum.Value.fromBytes(Bytes.fromHexString(data))),
 		new ethereum.EventParam("version", ethereum.Value.fromUnsignedBigInt(BigInt.fromString(version)))
 	]

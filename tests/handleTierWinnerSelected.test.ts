@@ -28,7 +28,8 @@ describe('handleTierWinnerSelected.test', () => {
 
 		handleTierWinnerSelected(newTierWinnerSelectedEvent)
 
-		assert.fieldEquals('Bounty', Constants.id, 'tierWinners', `[${Constants.tierWinners[0]}]`)
+		// NOTE: This is super space, case and comma-sensitive
+		assert.fieldEquals('Bounty', Constants.id, 'tierWinners', `[${Constants.tierWinners[0]}, ]`)
 	})
 })
 

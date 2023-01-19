@@ -28,6 +28,7 @@ describe('handleInvoiceCompletedSet.test', () => {
 
 		handleInvoiceCompletedSet(newInvoiceCompletedSetEvent)
 
+		// NOTE: This is super space, case and comma-sensitive
 		assert.fieldEquals('Bounty', Constants.id, 'invoiceCompleted', `[${Constants.invoiceCompleted[0]}, ${Constants.invoiceCompleted[1]}]`)
 	})
 })

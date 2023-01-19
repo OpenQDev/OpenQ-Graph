@@ -18,7 +18,7 @@ describe('handlesupportingDocuments.test', () => {
 	test('can handle SupportingDocumentsSet event', () => {
 		let newSupportingDocumentsSetEvent = createNewSupportingDocumentsSetEvent(
 			Constants.id,
-			Constants.supportingDocumentsCompleted,
+			true,
 			Constants.data,
 			Constants.version
 		)
@@ -34,7 +34,7 @@ describe('handlesupportingDocuments.test', () => {
 
 export function createNewSupportingDocumentsSetEvent(
 	bountyAddress: string,
-	supportingDocumentsCompleted: boolean[],
+	supportingDocuments: boolean,
 	data: string,
 	version: string
 ): SupportingDocumentsSet {
@@ -42,7 +42,7 @@ export function createNewSupportingDocumentsSetEvent(
 
 	let parameters: Array<ethereum.EventParam> = [
 		new ethereum.EventParam("bountyAddress", ethereum.Value.fromAddress(Address.fromString(bountyAddress))),
-		new ethereum.EventParam("supportingDocumentsCompleted", ethereum.Value.fromBooleanArray(supportingDocumentsCompleted)),
+		new ethereum.EventParam("supportingDocuments", ethereum.Value.fromBoolean(supportingDocuments)),
 		new ethereum.EventParam("data", ethereum.Value.fromBytes(Bytes.fromHexString(data))),
 		new ethereum.EventParam("version", ethereum.Value.fromUnsignedBigInt(BigInt.fromString(version)))
 	]
