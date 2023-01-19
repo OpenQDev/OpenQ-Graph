@@ -13,6 +13,9 @@ import handlePayoutScheduleSet from "./mappings/handlePayoutScheduleSet"
 import handleExternalUserIdAssociatedWithAddress from './mappings/handleExternalUserIdAssociatedWithAddress'
 import handleInvoiceableSet from './mappings/handleInvoiceableSet'
 import handleKycRequiredSet from './mappings/handleKycRequiredSet'
+import handleSupportingDocumentsSet from './mappings/handleSupportingDocumentsSet'
+import handleInvoiceCompletedSet from './mappings/handleInvoiceCompletedSet'
+import handleSupportingDocumentsCompleted from './mappings/handleSupportingDocumentsCompleted'
 
 export {
 	handleBountyCreated,
@@ -29,5 +32,8 @@ export {
 	handlePayoutScheduleSet,
 	handleExternalUserIdAssociatedWithAddress,
 	handleInvoiceableSet,
-	handleKycRequiredSet
+	handleKycRequiredSet,
+	handleSupportingDocumentsSet,
+	handleInvoiceCompletedSet,
+	handleSupportingDocumentsCompleted
 }
