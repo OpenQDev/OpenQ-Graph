@@ -18,8 +18,7 @@ describe('handleTierWinnerSelected.test', () => {
 	test('can handle new tier winner selected event', () => {
 		let newTierWinnerSelectedEvent = createNewTierWinnerSelectedEvent(
 			Constants.id,
-			Constants.externalUserId,
-			"0",
+			Constants.tierWinners,
 			Constants.data,
 			Constants.version
 		)
@@ -35,8 +34,7 @@ describe('handleTierWinnerSelected.test', () => {
 
 export function createNewTierWinnerSelectedEvent(
 	bountyAddress: string,
-	winner: string,
-	tier: string,
+	tierWinners: string[],
 	data: string,
 	version: string
 ): TierWinnerSelected {
@@ -44,8 +42,7 @@ export function createNewTierWinnerSelectedEvent(
 
 	let parameters: Array<ethereum.EventParam> = [
 		new ethereum.EventParam("bountyAddress", ethereum.Value.fromAddress(Address.fromString(bountyAddress))),
-		new ethereum.EventParam("winner", ethereum.Value.fromString(winner)),
-		new ethereum.EventParam("tier", ethereum.Value.fromUnsignedBigInt(BigInt.fromString(tier))),
+		new ethereum.EventParam("tierWinners", ethereum.Value.fromStringArray(tierWinners)),
 		new ethereum.EventParam("data", ethereum.Value.fromBytes(Bytes.fromHexString(data))),
 		new ethereum.EventParam("version", ethereum.Value.fromUnsignedBigInt(BigInt.fromString(version)))
 	]
