@@ -26,7 +26,7 @@ describe('handleNftClaimed', () => {
 			Constants.tokenId,
 			Constants.bountyType_ATOMIC,
 			Constants.data,
-			Constants.version
+			Constants.VERSION_1
 		)
 
 		newNFTClaimedEvent.transaction.hash = Bytes.fromHexString(Constants.transactionHash)

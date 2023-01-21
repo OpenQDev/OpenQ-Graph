@@ -22,7 +22,7 @@ describe('handleDepositExtended', () => {
 			Constants.expiration.concat('1'),
 			Constants.bountyType_ATOMIC,
 			Constants.data,
-			Constants.version
+			Constants.VERSION_1
 		)
 
 		newDepositExtendedEvent.transaction.hash = Bytes.fromHexString(Constants.transactionHash)

@@ -17,7 +17,7 @@ describe('handleClaimSuccess', () => {
 			Constants.claimTime,
 			Constants.bountyType_ATOMIC,
 			Constants.closerData_SINGLE,
-			Constants.version
+			Constants.VERSION_1
 		)
 
 		newClaimSuccessEvent.transaction.hash = Bytes.fromHexString(Constants.transactionHash)
@@ -39,7 +39,7 @@ describe('handleClaimSuccess', () => {
 			Constants.claimTime,
 			Constants.bountyType_ONGOING,
 			Constants.closerData_ONGOING,
-			Constants.version
+			Constants.VERSION_1
 		)
 
 		newClaimSuccessEvent.transaction.hash = Bytes.fromHexString(Constants.transactionHash)
@@ -61,21 +61,21 @@ describe('handleClaimSuccess', () => {
 			Constants.claimTime,
 			Constants.bountyType_TIERED,
 			Constants.closerData_TIERED,
-			Constants.version
+			Constants.VERSION_1
 		)
 
 		let newClaimSuccessEventCompetition_SECOND = createNewClaimSuccessEvent(
 			Constants.claimTime,
 			Constants.bountyType_TIERED,
 			Constants.closerData_TIERED_2,
-			Constants.version
+			Constants.VERSION_1
 		)
 
 		let newClaimSuccessEventCompetition_THIRD = createNewClaimSuccessEvent(
 			Constants.claimTime,
 			Constants.bountyType_TIERED,
 			Constants.closerData_TIERED_3,
-			Constants.version
+			Constants.VERSION_1
 		)
 
 		newClaimSuccessEventCompetition_FIRST.transaction.hash = Bytes.fromHexString(Constants.transactionHash)

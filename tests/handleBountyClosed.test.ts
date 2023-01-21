@@ -23,7 +23,7 @@ describe('handleBountyClosed', () => {
 			Constants.bountyClosedTime,
 			Constants.bountyType_ATOMIC,
 			Constants.data,
-			Constants.version)
+			Constants.VERSION_1)
 
 		newBountyClosedEvent.transaction.hash = Bytes.fromHexString(Constants.transactionHash)
 

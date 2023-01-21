@@ -20,7 +20,7 @@ describe('handleKycRequiredSet.test', () => {
 			Constants.id,
 			true,
 			Constants.data,
-			Constants.version
+			Constants.VERSION_1
 		)
 
 		newKycRequiredSetEvent.transaction.hash = Bytes.fromHexString(Constants.transactionHash)

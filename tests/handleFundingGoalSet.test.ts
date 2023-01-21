@@ -22,7 +22,7 @@ describe('handleFundingGoalSet.test', () => {
 			Constants.fundingGoalVolume,
 			Constants.bountyType_ATOMIC,
 			Constants.data,
-			Constants.version
+			Constants.VERSION_1
 		)
 
 		newFundingGoalSetEvent.transaction.hash = Bytes.fromHexString(Constants.transactionHash)

@@ -20,7 +20,7 @@ describe('handleTierWinnerSelected.test', () => {
 			Constants.id,
 			Constants.tierWinners,
 			Constants.data,
-			Constants.version
+			Constants.VERSION_1
 		)
 
 		newTierWinnerSelectedEvent.transaction.hash = Bytes.fromHexString(Constants.transactionHash)

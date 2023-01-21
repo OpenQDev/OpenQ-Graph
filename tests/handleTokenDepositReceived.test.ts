@@ -28,7 +28,7 @@ describe('handleTokenDepositReceived', () => {
 			Constants.volume,
 			Constants.bountyType_ATOMIC,
 			Constants.data,
-			Constants.version
+			Constants.VERSION_1
 		)
 
 		newTokenDepositReceivedEvent.transaction.hash = Bytes.fromHexString(Constants.transactionHash)
@@ -83,7 +83,7 @@ describe('handleTokenDepositReceived', () => {
 			Constants.volume,
 			Constants.bountyType_ATOMIC,
 			Constants.funderData,
-			Constants.VERSION_2
+			Constants.VERSION_1_2
 		)
 
 		newTokenDepositReceivedEvent.transaction.hash = Bytes.fromHexString(Constants.transactionHash)

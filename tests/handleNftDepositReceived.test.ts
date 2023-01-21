@@ -28,7 +28,7 @@ describe('handleNftDepositReceived', () => {
 			Constants.tokenId,
 			Constants.bountyType_ATOMIC,
 			Constants.data,
-			Constants.version
+			Constants.VERSION_1
 		)
 
 		newNftDepositReceivedEvent.transaction.hash = Bytes.fromHexString(Constants.transactionHash)

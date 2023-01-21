@@ -32,7 +32,7 @@ describe('handleDepositRefunded', () => {
 			Constants.volume,
 			Constants.bountyType_ATOMIC,
 			Constants.data,
-			Constants.version
+			Constants.VERSION_1
 		)
 
 		newDepositRefundedEvent.transaction.hash = Bytes.fromHexString(Constants.transactionHash)
@@ -81,7 +81,7 @@ describe('handleDepositRefunded', () => {
 			Constants.volume_900,
 			Constants.bountyType_ATOMIC,
 			Constants.data,
-			Constants.version
+			Constants.VERSION_1
 		)
 
 		newDepositRefundedEvent.transaction.hash = Bytes.fromHexString(Constants.transactionHash)

@@ -20,7 +20,7 @@ describe('handleInvoiceableSet.test', () => {
 			Constants.id,
 			true,
 			Constants.data,
-			Constants.version
+			Constants.VERSION_1
 		)
 
 		newInvoiceableSetEvent.transaction.hash = Bytes.fromHexString(Constants.transactionHash)

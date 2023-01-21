@@ -15,7 +15,7 @@ describe('handleExternalUserIdAssociatedWithAddress', () => {
 			Constants.externalUserId,
 			Constants.userId,
 			Constants.data,
-			Constants.version)
+			Constants.VERSION_1)
 
 		newExternalUserIdAssociatedWithAddressEvent.transaction.hash = Bytes.fromHexString(Constants.transactionHash)
 

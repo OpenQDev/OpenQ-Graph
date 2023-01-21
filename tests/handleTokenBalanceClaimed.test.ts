@@ -28,7 +28,7 @@ describe('handleTokenBalanceClaimed', () => {
 			Constants.volume,
 			Constants.bountyType_ATOMIC,
 			Constants.data,
-			Constants.version,
+			Constants.VERSION_1,
 		)
 
 		newTokenBalanceClaimedEvent.transaction.hash = Bytes.fromHexString(Constants.transactionHash)
@@ -89,7 +89,7 @@ describe('handleTokenBalanceClaimed', () => {
 			'900',
 			Constants.bountyType_ATOMIC,
 			Constants.data,
-			Constants.version,
+			Constants.VERSION_1,
 		)
 
 		handleTokenBalanceClaimed(newerTokenBalanceClaimedEvent)

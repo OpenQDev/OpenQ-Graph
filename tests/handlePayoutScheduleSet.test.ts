@@ -22,7 +22,7 @@ describe('handlePayoutScheduleSet.test', () => {
 			Constants.payoutSchedule,
 			Constants.bountyType_ONGOING,
 			Constants.data,
-			Constants.version
+			Constants.VERSION_1
 		)
 
 		newPayoutScheduleSetEvent.transaction.hash = Bytes.fromHexString(Constants.transactionHash)

@@ -20,7 +20,7 @@ describe('handlesupportingDocuments.test', () => {
 			Constants.id,
 			true,
 			Constants.data,
-			Constants.version
+			Constants.VERSION_1
 		)
 
 		newSupportingDocumentsSetEvent.transaction.hash = Bytes.fromHexString(Constants.transactionHash)

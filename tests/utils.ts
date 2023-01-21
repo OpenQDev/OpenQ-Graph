@@ -13,7 +13,7 @@ export function seedBounty(): void {
 	entity.setString('organization', Constants.organization)
 	entity.setString('bountyType', Constants.bountyType_ATOMIC)
 	entity.setBytes('transactionHash', Bytes.fromHexString(Constants.transactionHash))
-	entity.setBigInt('version', BigInt.fromString(Constants.version))
+	entity.setBigInt('version', BigInt.fromString(Constants.VERSION_1))
 	entity.setBoolean('hasFundingGoal', false)
 	entity.setBoolean('invoiceable', false)
 	entity.setBoolean('kycRequired', false)

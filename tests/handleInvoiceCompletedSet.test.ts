@@ -20,7 +20,7 @@ describe('handleInvoiceCompletedSet.test', () => {
 			Constants.id,
 			Constants.invoiceCompleted,
 			Constants.data,
-			Constants.version
+			Constants.VERSION_1
 		)
 
 		newInvoiceCompletedSetEvent.transaction.hash = Bytes.fromHexString(Constants.transactionHash)

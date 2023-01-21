@@ -468,20 +468,8 @@ export default class Constants {
 		return '0x814f9a1b407ba75d9e685fa007ba60783440804e';
 	}
 
-	static get version(): string {
+	static get VERSION_1(): string {
 		return '1';
-	}
-
-	static get VERSION_2(): string {
-		return '2';
-	}
-
-	static get VERSION_3(): string {
-		return '3';
-	}
-
-	static get VERSION_4(): string {
-		return '4';
 	}
 
 	static get data(): string {
