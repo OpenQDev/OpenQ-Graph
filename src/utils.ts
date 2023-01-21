@@ -1,4 +1,4 @@
-import { log, Bytes } from '@graphprotocol/graph-ts'
+import { Bytes, BigInt } from '@graphprotocol/graph-ts'
 
 export const addTuplePrefix = (data: Bytes): Bytes => {
 	const tuplePrefix = '0x0000000000000000000000000000000000000000000000000000000000000020';
@@ -6,4 +6,16 @@ export const addTuplePrefix = (data: Bytes): Bytes => {
 	const withTuplePrefix = tuplePrefix.concat(no0xParams);
 	const prefixedData = Bytes.fromHexString(withTuplePrefix);
 	return prefixedData
+}
+
+export default class Constants {
+	constructor () { }
+
+	static get VERSION_1(): string {
+		return '1';
+	}
+
+	static get closed(): BigInt {
+		return BigInt.fromString("1")
+	}
 }

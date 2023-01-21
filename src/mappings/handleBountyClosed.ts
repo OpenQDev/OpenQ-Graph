@@ -2,7 +2,7 @@ import { BountyClosed } from "../../generated/OpenQ/OpenQ"
 import {
 	Bounty
 } from "../../generated/schema"
-import { BigInt } from '@graphprotocol/graph-ts'
+import Constants from "../utils"
 
 export default function handleBountyClosed(event: BountyClosed): void {
 	let bounty = Bounty.load(event.params.bountyAddress.toHexString())
@@ -12,7 +12,7 @@ export default function handleBountyClosed(event: BountyClosed): void {
 	bounty.closer = event.params.closer.toHexString()
 	event.params.data
 	bounty.bountyClosedTime = event.params.bountyClosedTime
-	bounty.status = BigInt.fromString('1')
+	bounty.status = Constants.closed
 
 	bounty.claimedTransactionHash = event.transaction.hash;
 
