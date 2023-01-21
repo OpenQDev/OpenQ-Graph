@@ -2,25 +2,21 @@ import { ClaimSuccess } from "../../generated/OpenQ/OpenQ"
 import {
 	Claim
 } from "../../generated/schema"
-import { log, ethereum, crypto, BigInt } from '@graphprotocol/graph-ts'
+import { ethereum, crypto, BigInt } from '@graphprotocol/graph-ts'
+import Constants from '../utils'
 import { addTuplePrefix } from '../utils'
 
 export default function handleClaimSuccess(event: ClaimSuccess): void {
-	const SINGLE = BigInt.fromString('0');
-	const ONGOING = BigInt.fromString('1');
-	const TIERED = BigInt.fromString('2');
-	const TIERED_FIXED = BigInt.fromString('3');
 
 	let bountyType = event.params.bountyType;
 
 	let decoded: ethereum.Value[] = []
-	if (bountyType == SINGLE || bountyType == ONGOING) {
+	if (bountyType == Constants.ATOMIC || bountyType == Constants.ONGOING) {
 		decoded = ethereum.decode("(address,string,address,string)", addTuplePrefix(event.params.data))!.toTuple();
 	} else {
 		decoded = ethereum.decode("(address,string,address,string,uint256)", addTuplePrefix(event.params.data))!.toTuple();
 	}
 
-	log.info(BigInt.fromString('0').toString(), [BigInt.fromString('0').toString()])
 	let bountyAddress = decoded[0].toAddress().toHexString()
 	let closer = decoded[2].toAddress().toHexString()
 
@@ -30,7 +26,7 @@ export default function handleClaimSuccess(event: ClaimSuccess): void {
 	let claim = new Claim(claimId)
 	let tier = BigInt.fromString('0')
 
-	if (bountyType == TIERED || bountyType == TIERED_FIXED) {
+	if (bountyType == Constants.TIERED || bountyType == Constants.TIERED_FIXED) {
 		tier = decoded[4].toBigInt()
 	}
 
@@ -41,10 +37,11 @@ export default function handleClaimSuccess(event: ClaimSuccess): void {
 	claim.claimantAsset = claimantAsset
 	claim.tier = tier
 	claim.claimTime = event.params.claimTime
-	claim.version = BigInt.fromString('0')
+	claim.version = event.params.version
 
 	claim.save()
 }
+
 function generateClaimId(externalUserId: string, claimantAsset: string): string {
 	let claimantIdArray: Array<ethereum.Value> = [
 		ethereum.Value.fromString(externalUserId),

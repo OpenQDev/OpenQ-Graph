@@ -11,8 +11,8 @@ export const addTuplePrefix = (data: Bytes): Bytes => {
 export default class Constants {
 	constructor () { }
 
-	static get VERSION_1(): string {
-		return '1';
+	static get VERSION_1(): BigInt {
+		return BigInt.fromString('1');
 	}
 
 	static get OPEN(): BigInt {
