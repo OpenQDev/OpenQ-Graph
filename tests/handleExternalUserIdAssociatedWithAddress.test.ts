@@ -2,7 +2,6 @@ import { Bytes, BigInt, Address, ethereum } from '@graphprotocol/graph-ts';
 import { ExternalUserIdAssociatedWithAddress } from "../generated/OpenQ/OpenQ";
 import { newMockEvent, test, assert, clearStore, afterEach, describe, beforeEach } from "matchstick-as/assembly/index";
 import { handleExternalUserIdAssociatedWithAddress } from "../src/mapping";
-import { seedUser } from './utils';
 import Constants from './constants';
 
 describe('handleExternalUserIdAssociatedWithAddress', () => {
