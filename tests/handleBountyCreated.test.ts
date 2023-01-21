@@ -23,7 +23,7 @@ describe('handleBountyCreated', () => {
 			Constants.bountyAddress,
 			Constants.bountyMintTime,
 			Constants.bountyType_ATOMIC,
-			Constants.initData_ATOMIC_VERSION_4,
+			Constants.initData_ATOMIC_VERSION_1,
 			Constants.VERSION_1
 		)
 
@@ -35,11 +35,11 @@ describe('handleBountyCreated', () => {
 
 		// ASSERT
 		assert.fieldEquals('Bounty', Constants.id, 'bountyId', Constants.bountyId)
-		assert.fieldEquals('Bounty', Constants.id, 'organization', Constants.organization)
-		assert.fieldEquals('Bounty', Constants.id, 'issuer', Constants.userId)
 		assert.fieldEquals('Bounty', Constants.id, 'bountyAddress', Constants.id)
-		assert.fieldEquals('Bounty', Constants.id, 'bountyMintTime', Constants.bountyMintTime)
+		assert.fieldEquals('Bounty', Constants.id, 'issuer', Constants.userId)
 		assert.fieldEquals('Bounty', Constants.id, 'bountyType', Constants.bountyType_ATOMIC)
+		assert.fieldEquals('Bounty', Constants.id, 'organization', Constants.organization)
+		assert.fieldEquals('Bounty', Constants.id, 'bountyMintTime', Constants.bountyMintTime)
 		assert.fieldEquals('Bounty', Constants.id, 'version', Constants.VERSION_1)
 		assert.fieldEquals('Bounty', Constants.id, 'transactionHash', Constants.transactionHash)
 		assert.fieldEquals('Bounty', Constants.id, 'hasFundingGoal', 'true')
@@ -67,7 +67,7 @@ describe('handleBountyCreated', () => {
 			Constants.bountyAddress,
 			Constants.bountyMintTime,
 			Constants.bountyType_ONGOING,
-			Constants.initData_ONGOING_VERSION_4,
+			Constants.initData_ONGOING_VERSION_1,
 			Constants.VERSION_1
 		)
 
@@ -82,8 +82,8 @@ describe('handleBountyCreated', () => {
 		assert.fieldEquals('Bounty', Constants.id, 'organization', Constants.organization)
 		assert.fieldEquals('Bounty', Constants.id, 'issuer', Constants.userId)
 		assert.fieldEquals('Bounty', Constants.id, 'bountyAddress', Constants.id)
-		assert.fieldEquals('Bounty', Constants.id, 'bountyMintTime', Constants.bountyMintTime)
 		assert.fieldEquals('Bounty', Constants.id, 'bountyType', Constants.bountyType_ONGOING)
+		assert.fieldEquals('Bounty', Constants.id, 'bountyMintTime', Constants.bountyMintTime)
 		assert.fieldEquals('Bounty', Constants.id, 'version', Constants.VERSION_1)
 		assert.fieldEquals('Bounty', Constants.id, 'transactionHash', Constants.transactionHash)
 		assert.fieldEquals('Bounty', Constants.id, 'payoutTokenAddress', Constants.fundingGoalTokenAddress)
@@ -113,7 +113,7 @@ describe('handleBountyCreated', () => {
 			Constants.bountyAddress,
 			Constants.bountyMintTime,
 			Constants.bountyType_TIERED,
-			Constants.initData_TIERED_VERSION_4,
+			Constants.initData_TIERED_VERSION_1,
 			Constants.VERSION_1
 		)
 
@@ -160,7 +160,7 @@ describe('handleBountyCreated', () => {
 			Constants.bountyAddress,
 			Constants.bountyMintTime,
 			Constants.bountyType_TIERED_FIXED,
-			Constants.initData_TIERED_FIXED_VERSION_4,
+			Constants.initData_TIERED_FIXED_VERSION_1,
 			Constants.VERSION_1
 		)
 

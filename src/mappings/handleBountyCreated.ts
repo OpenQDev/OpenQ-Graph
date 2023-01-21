@@ -7,6 +7,7 @@ import {
 	BountiesCounter
 } from "../../generated/schema"
 import { addTuplePrefix } from '../utils'
+import Constants from '../utils'
 
 export default function handleBountyCreated(event: BountyCreated): void {
 	let bounty = Bounty.load(event.params.bountyAddress.toHexString())
@@ -21,16 +22,11 @@ export default function handleBountyCreated(event: BountyCreated): void {
 	bounty.bountyMintTime = event.params.bountyMintTime
 	bounty.bountyType = bountyType
 	bounty.version = event.params.version
-	bounty.status = BigInt.fromString('0')
+	bounty.status = Constants.OPEN
 	bounty.transactionHash = event.transaction.hash
 
-	const ATOMIC = BigInt.fromString('0')
-	const ONGOING = BigInt.fromString('1')
-	const TIERED = BigInt.fromString('2')
-	const TIERED_FIXED = BigInt.fromString('3')
-
 	let decoded: ethereum.Value[] = []
-		if (bountyType == ATOMIC) {
+		if (bountyType == Constants.ATOMIC) {
 			decoded = ethereum.decode("(bool,address,uint256,bool,bool,bool,string,string,string)", event.params.data)!.toTuple();
 			bounty.hasFundingGoal = decoded[0].toBoolean();
 			bounty.fundingGoalTokenAddress = decoded[1].toAddress()
@@ -41,7 +37,7 @@ export default function handleBountyCreated(event: BountyCreated): void {
 			bounty.externalUserId = decoded[6].toString()
 		} 
 		
-		if (bountyType == ONGOING) {
+		if (bountyType == Constants.ONGOING) {
 			decoded = ethereum.decode("(address,uint256,bool,address,uint256,bool,bool,bool,string,string,string)", event.params.data)!.toTuple();
 			bounty.payoutTokenAddress = decoded[0].toAddress()
 			bounty.payoutTokenVolume = decoded[1].toBigInt()
@@ -54,7 +50,7 @@ export default function handleBountyCreated(event: BountyCreated): void {
 			bounty.externalUserId = decoded[8].toString()
 		} 
 		
-		if (bountyType == TIERED) {
+		if (bountyType == Constants.TIERED) {
 			decoded = ethereum.decode("(uint256[],bool,address,uint256,bool,bool,bool,string,string,string)", addTuplePrefix(event.params.data))!.toTuple();
 			bounty.payoutSchedule = decoded[0].toBigIntArray()
 			bounty.hasFundingGoal = decoded[1].toBoolean();
@@ -66,7 +62,7 @@ export default function handleBountyCreated(event: BountyCreated): void {
 			bounty.externalUserId = decoded[7].toString()
 		} 
 		
-		if (bountyType == TIERED_FIXED) {
+		if (bountyType == Constants.TIERED_FIXED) {
 			decoded = ethereum.decode("(uint256[],address,bool,bool,bool,string,string,string)", addTuplePrefix(event.params.data))!.toTuple();
 			bounty.payoutSchedule = decoded[0].toBigIntArray()
 			bounty.payoutTokenAddress = decoded[1].toAddress()

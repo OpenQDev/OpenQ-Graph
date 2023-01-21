@@ -15,7 +15,27 @@ export default class Constants {
 		return '1';
 	}
 
-	static get closed(): BigInt {
+	static get OPEN(): BigInt {
+		return BigInt.fromString("0")
+	}
+	
+	static get CLOSED(): BigInt {
 		return BigInt.fromString("1")
+	}
+
+	static get ATOMIC(): BigInt {
+		return BigInt.fromString('0')
+	}
+
+	static get ONGOING(): BigInt {
+		return BigInt.fromString('1')
+	}
+
+	static get TIERED(): BigInt {
+		return BigInt.fromString('2')
+	}
+
+	static get TIERED_FIXED(): BigInt {
+		return BigInt.fromString('3')
 	}
 }
