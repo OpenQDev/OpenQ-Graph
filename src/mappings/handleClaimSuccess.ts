@@ -1,4 +1,4 @@
-import { ClaimSuccess } from "../../generated/OpenQ/OpenQ"
+import { ClaimSuccess } from "../../generated/ClaimManager/ClaimManager"
 import {
 	Claim
 } from "../../generated/schema"

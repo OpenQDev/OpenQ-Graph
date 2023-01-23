@@ -1,5 +1,5 @@
 import { BigInt } from "@graphprotocol/graph-ts"
-import { NFTDepositReceived } from "../../generated/OpenQ/OpenQ"
+import { NFTDepositReceived } from "../../generated/DepositManager/DepositManager"
 import {
 	User,
 	Deposit,

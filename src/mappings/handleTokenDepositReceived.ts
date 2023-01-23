@@ -1,5 +1,5 @@
 import { BigInt, ethereum } from "@graphprotocol/graph-ts"
-import { TokenDepositReceived } from "../../generated/OpenQ/OpenQ"
+import { TokenDepositReceived } from "../../generated/DepositManager/DepositManager"
 import {
 	User,
 	Deposit,

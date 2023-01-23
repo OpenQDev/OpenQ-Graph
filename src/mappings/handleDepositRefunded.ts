@@ -1,5 +1,5 @@
 import { BigInt, store } from "@graphprotocol/graph-ts"
-import { DepositRefunded } from "../../generated/OpenQ/OpenQ"
+import { DepositRefunded } from "../../generated/DepositManager/DepositManager"
 import {
 	Deposit,
 	Refund,

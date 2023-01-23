@@ -8,8 +8,6 @@ export default function handleInvoiceCompletedSet(event: InvoiceCompletedSet): v
 
 	if (!bounty) { throw "Error" }
 
-	bounty.invoiceCompleted = event.params.invoiceCompletedSet;
-
 	// SAVE ALL ENTITIES
 	bounty.save()
 }

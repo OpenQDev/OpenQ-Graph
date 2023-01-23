@@ -1,4 +1,4 @@
-import { DepositExtended } from "../../generated/OpenQ/OpenQ"
+import { DepositExtended } from "../../generated/DepositManager/DepositManager"
 import {
 	Deposit
 } from "../../generated/schema"

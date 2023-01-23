@@ -1,5 +1,5 @@
 import { BigInt, store } from "@graphprotocol/graph-ts"
-import { NFTClaimed } from "../../generated/OpenQ/OpenQ"
+import { NFTClaimed } from "../../generated/ClaimManager/ClaimManager"
 import {
 	TokenEvents,
 	Payout,

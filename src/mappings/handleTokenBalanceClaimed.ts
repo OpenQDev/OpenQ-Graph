@@ -1,5 +1,5 @@
 import { log, BigInt, store } from "@graphprotocol/graph-ts"
-import { TokenBalanceClaimed } from "../../generated/OpenQ/OpenQ"
+import { TokenBalanceClaimed } from "../../generated/ClaimManager/ClaimManager"
 import {
 	TokenEvents,
 	Payout,
