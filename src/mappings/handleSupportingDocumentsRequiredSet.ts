@@ -8,7 +8,7 @@ export default function handleSupportingDocumentsRequiredSet(event: SupportingDo
 
 	if (!bounty) { throw "Error" }
 
-	bounty.supportingDocuments = event.params.supportingDocuments;
+	bounty.supportingDocumentsRequired = event.params.supportingDocuments;
 
 	// SAVE ALL ENTITIES
 	bounty.save()

@@ -47,7 +47,7 @@ describe('handleBountyCreated', () => {
 		assert.fieldEquals('Bounty', Constants.id, 'fundingGoalVolume', Constants.fundingGoalVolume)
 		assert.fieldEquals('Bounty', Constants.id, 'invoiceRequired', 'true')
 		assert.fieldEquals('Bounty', Constants.id, 'kycRequired', 'true')
-		assert.fieldEquals('Bounty', Constants.id, 'supportingDocuments', 'true')
+		assert.fieldEquals('Bounty', Constants.id, 'supportingDocumentsRequired', 'true')
 		assert.fieldEquals('Bounty', Constants.id, 'externalUserId', Constants.externalUserId)
 
 		assert.fieldEquals('User', Constants.userId, 'id', Constants.userId)
@@ -93,7 +93,7 @@ describe('handleBountyCreated', () => {
 		assert.fieldEquals('Bounty', Constants.id, 'fundingGoalVolume', Constants.fundingGoalVolume)
 		assert.fieldEquals('Bounty', Constants.id, 'invoiceRequired', 'true')
 		assert.fieldEquals('Bounty', Constants.id, 'kycRequired', 'true')
-		assert.fieldEquals('Bounty', Constants.id, 'supportingDocuments', 'true')
+		assert.fieldEquals('Bounty', Constants.id, 'supportingDocumentsRequired', 'true')
 		assert.fieldEquals('Bounty', Constants.id, 'externalUserId', Constants.externalUserId)
 
 		assert.fieldEquals('User', Constants.userId, 'id', Constants.userId)
@@ -137,7 +137,7 @@ describe('handleBountyCreated', () => {
 		assert.fieldEquals('Bounty', Constants.id, 'fundingGoalVolume', Constants.fundingGoalVolume)
 		assert.fieldEquals('Bounty', Constants.id, 'invoiceRequired', 'true')
 		assert.fieldEquals('Bounty', Constants.id, 'kycRequired', 'true')
-		assert.fieldEquals('Bounty', Constants.id, 'supportingDocuments', 'true')
+		assert.fieldEquals('Bounty', Constants.id, 'supportingDocumentsRequired', 'true')
 		assert.fieldEquals('Bounty', Constants.id, 'externalUserId', Constants.externalUserId)
 
 		// This is brittle - relies on proper spacing in the stringified array
@@ -183,7 +183,7 @@ describe('handleBountyCreated', () => {
 		assert.fieldEquals('Bounty', Constants.id, 'payoutTokenAddress', Constants.payoutTokenAddress)
 		assert.fieldEquals('Bounty', Constants.id, 'invoiceRequired', 'true')
 		assert.fieldEquals('Bounty', Constants.id, 'kycRequired', 'true')
-		assert.fieldEquals('Bounty', Constants.id, 'supportingDocuments', 'true')
+		assert.fieldEquals('Bounty', Constants.id, 'supportingDocumentsRequired', 'true')
 		assert.fieldEquals('Bounty', Constants.id, 'externalUserId', Constants.externalUserId)
 
 		// This is brittle - relies on proper spacing in the stringified array

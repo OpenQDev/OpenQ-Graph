@@ -28,7 +28,7 @@ describe('handlesupportingDocuments.test', () => {
 
 		handleSupportingDocumentsRequiredSet(newSupportingDocumentsRequiredSetEvent)
 
-		assert.fieldEquals('Bounty', Constants.id, 'supportingDocuments', 'true')
+		assert.fieldEquals('Bounty', Constants.id, 'supportingDocumentsRequired', 'true')
 	})
 })
 

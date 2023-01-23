@@ -268,7 +268,7 @@ export default class Constants {
 	}
 
 	static get supportingDocumentsCompleted(): Array<boolean> {
-		return [true, false]
+		return [true, false, true]
 	}
 
 	static encodeTuple(tupleArray: ethereum.Value[]): string {
@@ -300,7 +300,27 @@ export default class Constants {
 		return encoded.toHexString()
 	}
 
+	static get supportingDocumentsCompletedData_TIERED(): string {
+		let tupleArray: Array<ethereum.Value> = [
+			ethereum.Value.fromBooleanArray(Constants.supportingDocumentsCompleted),
+		]
+
+		let tuple = changetype<ethereum.Tuple>(tupleArray)
+		let encoded = ethereum.encode(ethereum.Value.fromTuple(tuple))!
+		return encoded.toHexString()
+	}
+
 	static get invoiceCompletedData_ATOMIC(): string {
+		let tupleArray: Array<ethereum.Value> = [
+			ethereum.Value.fromBoolean(true),
+		]
+
+		let tuple = changetype<ethereum.Tuple>(tupleArray)
+		let encoded = ethereum.encode(ethereum.Value.fromTuple(tuple))!
+		return encoded.toHexString()
+	}
+
+	static get supportingDocumentsCompletedData_ATOMIC(): string {
 		let tupleArray: Array<ethereum.Value> = [
 			ethereum.Value.fromBoolean(true),
 		]

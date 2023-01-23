@@ -33,7 +33,7 @@ export default function handleBountyCreated(event: BountyCreated): void {
 			bounty.fundingGoalVolume = decoded[2].toBigInt()
 			bounty.invoiceRequired = decoded[3].toBoolean()
 			bounty.kycRequired = decoded[4].toBoolean()
-			bounty.supportingDocuments = decoded[5].toBoolean()
+			bounty.supportingDocumentsRequired = decoded[5].toBoolean()
 			bounty.externalUserId = decoded[6].toString()
 		} 
 		
@@ -46,7 +46,7 @@ export default function handleBountyCreated(event: BountyCreated): void {
 			bounty.fundingGoalVolume = decoded[4].toBigInt()
 			bounty.invoiceRequired = decoded[5].toBoolean()
 			bounty.kycRequired = decoded[6].toBoolean()
-			bounty.supportingDocuments = decoded[7].toBoolean()
+			bounty.supportingDocumentsRequired = decoded[7].toBoolean()
 			bounty.externalUserId = decoded[8].toString()
 		} 
 		
@@ -58,7 +58,7 @@ export default function handleBountyCreated(event: BountyCreated): void {
 			bounty.fundingGoalVolume = decoded[3].toBigInt()
 			bounty.invoiceRequired = decoded[4].toBoolean()
 			bounty.kycRequired = decoded[5].toBoolean()
-			bounty.supportingDocuments = decoded[6].toBoolean()
+			bounty.supportingDocumentsRequired = decoded[6].toBoolean()
 			bounty.externalUserId = decoded[7].toString()
 		} 
 		
@@ -69,7 +69,7 @@ export default function handleBountyCreated(event: BountyCreated): void {
 			bounty.hasFundingGoal = false
 			bounty.invoiceRequired = decoded[2].toBoolean()
 			bounty.kycRequired = decoded[3].toBoolean()
-			bounty.supportingDocuments = decoded[4].toBoolean()
+			bounty.supportingDocumentsRequired = decoded[4].toBoolean()
 			bounty.externalUserId = decoded[5].toString()
 		}
 
