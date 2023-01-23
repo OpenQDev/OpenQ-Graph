@@ -11,9 +11,9 @@ import handlePayoutSet from "./mappings/handlePayoutSet"
 import handleNftClaimed from "./mappings/handleNftClaimed"
 import handlePayoutScheduleSet from "./mappings/handlePayoutScheduleSet"
 import handleExternalUserIdAssociatedWithAddress from './mappings/handleExternalUserIdAssociatedWithAddress'
-import handleInvoiceableSet from './mappings/handleInvoiceableSet'
+import handleInvoiceRequiredSet from './mappings/handleInvoiceRequiredSet'
 import handleKycRequiredSet from './mappings/handleKycRequiredSet'
-import handleSupportingDocumentsSet from './mappings/handleSupportingDocumentsSet'
+import handleSupportingDocumentsRequiredSet from './mappings/handleSupportingDocumentsRequiredSet'
 import handleInvoiceCompletedSet from './mappings/handleInvoiceCompletedSet'
 import handleSupportingDocumentsCompletedSet from './mappings/handleSupportingDocumentsCompletedSet'
 import handleTierWinnerSelected from './mappings/handleTierWinnerSelected'
@@ -32,9 +32,9 @@ export {
 	handleNftClaimed,
 	handlePayoutScheduleSet,
 	handleExternalUserIdAssociatedWithAddress,
-	handleInvoiceableSet,
+	handleInvoiceRequiredSet,
 	handleKycRequiredSet,
-	handleSupportingDocumentsSet,
+	handleSupportingDocumentsRequiredSet,
 	handleInvoiceCompletedSet,
 	handleSupportingDocumentsCompletedSet,
 	handleTierWinnerSelected

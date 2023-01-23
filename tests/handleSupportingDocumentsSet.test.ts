@@ -1,7 +1,7 @@
 import { Bytes, BigInt, Address, ethereum } from '@graphprotocol/graph-ts';
-import { SupportingDocumentsSet } from "../generated/OpenQ/OpenQ";
+import { SupportingDocumentsRequiredSet } from "../generated/OpenQ/OpenQ";
 import { newMockEvent, test, assert, clearStore, afterEach, describe, beforeEach } from "matchstick-as/assembly/index";
-import { handleSupportingDocumentsSet } from "../src/mapping";
+import { handleSupportingDocumentsRequiredSet } from "../src/mapping";
 import { seedBounty } from './utils';
 import Constants from './constants'
 
@@ -15,30 +15,30 @@ describe('handlesupportingDocuments.test', () => {
 		clearStore()
 	})
 
-	test('can handle SupportingDocumentsSet event', () => {
-		let newSupportingDocumentsSetEvent = createNewSupportingDocumentsSetEvent(
+	test('can handle SupportingDocumentsRequiredSet event', () => {
+		let newSupportingDocumentsRequiredSetEvent = createNewSupportingDocumentsRequiredSetEvent(
 			Constants.id,
 			true,
 			Constants.data,
 			Constants.VERSION_1
 		)
 
-		newSupportingDocumentsSetEvent.transaction.hash = Bytes.fromHexString(Constants.transactionHash)
-		newSupportingDocumentsSetEvent.transaction.from = Address.fromString(Constants.userId)
+		newSupportingDocumentsRequiredSetEvent.transaction.hash = Bytes.fromHexString(Constants.transactionHash)
+		newSupportingDocumentsRequiredSetEvent.transaction.from = Address.fromString(Constants.userId)
 
-		handleSupportingDocumentsSet(newSupportingDocumentsSetEvent)
+		handleSupportingDocumentsRequiredSet(newSupportingDocumentsRequiredSetEvent)
 
 		assert.fieldEquals('Bounty', Constants.id, 'supportingDocuments', 'true')
 	})
 })
 
-export function createNewSupportingDocumentsSetEvent(
+export function createNewSupportingDocumentsRequiredSetEvent(
 	bountyAddress: string,
 	supportingDocuments: boolean,
 	data: string,
 	version: string
-): SupportingDocumentsSet {
-	let newSupportingDocumentsSetEvent = changetype<SupportingDocumentsSet>(newMockEvent());
+): SupportingDocumentsRequiredSet {
+	let newSupportingDocumentsRequiredSetEvent = changetype<SupportingDocumentsRequiredSet>(newMockEvent());
 
 	let parameters: Array<ethereum.EventParam> = [
 		new ethereum.EventParam("bountyAddress", ethereum.Value.fromAddress(Address.fromString(bountyAddress))),
@@ -47,7 +47,7 @@ export function createNewSupportingDocumentsSetEvent(
 		new ethereum.EventParam("version", ethereum.Value.fromUnsignedBigInt(BigInt.fromString(version)))
 	]
 
-	newSupportingDocumentsSetEvent.parameters = parameters;
+	newSupportingDocumentsRequiredSetEvent.parameters = parameters;
 
-	return newSupportingDocumentsSetEvent
+	return newSupportingDocumentsRequiredSetEvent
 }

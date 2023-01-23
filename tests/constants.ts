@@ -80,7 +80,7 @@ export default class Constants {
 		return '2';
 	}
 
-	static get invoiceable(): boolean {
+	static get invoiceRequired(): boolean {
 		return true;
 	}
 

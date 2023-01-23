@@ -15,7 +15,7 @@ export function seedBounty(): void {
 	entity.setBytes('transactionHash', Bytes.fromHexString(Constants.transactionHash))
 	entity.setBigInt('version', BigInt.fromString(Constants.VERSION_1))
 	entity.setBoolean('hasFundingGoal', false)
-	entity.setBoolean('invoiceable', false)
+	entity.setBoolean('invoiceRequired', false)
 	entity.setBoolean('kycRequired', false)
 
 	store.set('Bounty', Constants.id, entity)
