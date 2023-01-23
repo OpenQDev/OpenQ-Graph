@@ -98,10 +98,10 @@ type Bounty @entity {
   payoutTokenAddress: Bytes
   payoutTokenVolume: BigInt
   payoutSchedule: [BigInt!]
+  externalUserId: String
   invoiceRequired: Boolean
   kycRequired: Boolean
-  externalUserId: String
-  supportingDocuments: Boolean
+  supportingDocumentsRequired: Boolean
   invoiceCompleted: [Boolean!]
   supportingDocumentsCompleted: [Boolean!]
   tierWinners: [String!]

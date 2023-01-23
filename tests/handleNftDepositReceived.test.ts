@@ -1,5 +1,5 @@
 import { Bytes, BigInt, Address, ethereum } from '@graphprotocol/graph-ts';
-import { NFTDepositReceived } from "../generated/OpenQ/OpenQ";
+import { NFTDepositReceived } from "../generated/DepositManager/DepositManager";
 import { newMockEvent, test, assert, clearStore, afterEach, describe, beforeEach } from "matchstick-as/assembly/index";
 import { handleNftDepositReceived } from "../src/mapping";
 import { seedBounty } from './utils';

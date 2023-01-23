@@ -1,5 +1,5 @@
 import { log, Bytes, BigInt, Address, ethereum } from '@graphprotocol/graph-ts';
-import { TokenBalanceClaimed } from "../generated/OpenQ/OpenQ";
+import { TokenBalanceClaimed } from "../generated/ClaimManager/ClaimManager";
 import { newMockEvent, test, assert, clearStore, afterEach, describe, beforeEach, logStore } from "matchstick-as/assembly/index";
 import { handleTokenBalanceClaimed } from "../src/mapping";
 import { seedBounty, seedOrganizationFundedTokenBalance, seedBountyFundedTokenBalance } from './utils';

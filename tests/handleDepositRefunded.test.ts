@@ -1,5 +1,5 @@
 import { Bytes, BigInt, Address, ethereum } from '@graphprotocol/graph-ts';
-import { DepositRefunded } from "../generated/OpenQ/OpenQ";
+import { DepositRefunded } from "../generated/DepositManager/DepositManager";
 import { newMockEvent, test, assert, clearStore, afterEach, describe, beforeEach } from "matchstick-as/assembly/index";
 import { handleDepositRefunded } from "../src/mapping";
 import { seedBounty, seedDeposit, seedDeposit2, seedBountyFundedTokenBalance, seedOrganizationFundedTokenBalance, seedUserFundedTokenBalance, seedFundedTokenBalance } from './utils';

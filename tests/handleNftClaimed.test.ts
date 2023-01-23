@@ -1,5 +1,5 @@
 import { Bytes, BigInt, Address, ethereum } from '@graphprotocol/graph-ts';
-import { NFTClaimed } from "../generated/OpenQ/OpenQ";
+import { NFTClaimed } from "../generated/ClaimManager/ClaimManager";
 import { newMockEvent, test, assert, clearStore, afterEach, describe, beforeEach } from "matchstick-as/assembly/index";
 import { handleNftClaimed } from "../src/mapping";
 import { seedBounty } from './utils';

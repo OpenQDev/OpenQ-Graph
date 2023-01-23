@@ -1,5 +1,5 @@
 import { Bytes, BigInt, Address, ethereum } from '@graphprotocol/graph-ts';
-import { DepositExtended } from "../generated/OpenQ/OpenQ";
+import { DepositExtended } from "../generated/DepositManager/DepositManager";
 import { newMockEvent, test, assert, clearStore, afterEach, describe, beforeEach } from "matchstick-as/assembly/index";
 import { handleDepositExtended } from "../src/mapping";
 import { seedBounty, seedDeposit } from './utils';

@@ -194,6 +194,12 @@
         },
         {
           "indexed": false,
+          "internalType": "uint256",
+          "name": "bountyType",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
           "internalType": "bytes",
           "name": "data",
           "type": "bytes"
@@ -225,6 +231,12 @@
         },
         {
           "indexed": false,
+          "internalType": "uint256",
+          "name": "bountyType",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
           "internalType": "bytes",
           "name": "data",
           "type": "bytes"
@@ -253,6 +265,12 @@
           "internalType": "bool",
           "name": "kycRequired",
           "type": "bool"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "bountyType",
+          "type": "uint256"
         },
         {
           "indexed": false,
@@ -367,6 +385,12 @@
         },
         {
           "indexed": false,
+          "internalType": "uint256",
+          "name": "bountyType",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
           "internalType": "bytes",
           "name": "data",
           "type": "bytes"
@@ -395,6 +419,12 @@
           "internalType": "bool",
           "name": "supportingDocuments",
           "type": "bool"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "bountyType",
+          "type": "uint256"
         },
         {
           "indexed": false,
