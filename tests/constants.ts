@@ -264,7 +264,7 @@ export default class Constants {
 	}
 
 	static get invoiceCompleted(): Array<boolean> {
-		return [true, false]
+		return [true, false, true]
 	}
 
 	static get supportingDocumentsCompleted(): Array<boolean> {
@@ -288,6 +288,26 @@ export default class Constants {
 		let tuple = changetype<ethereum.Tuple>(tupleArray)
 		let encoded = ethereum.encode(ethereum.Value.fromTuple(tuple))!
 		return removeTuplePrefix(encoded)
+	}
+
+	static get invoiceCompletedData_TIERED(): string {
+		let tupleArray: Array<ethereum.Value> = [
+			ethereum.Value.fromBooleanArray(Constants.invoiceCompleted),
+		]
+
+		let tuple = changetype<ethereum.Tuple>(tupleArray)
+		let encoded = ethereum.encode(ethereum.Value.fromTuple(tuple))!
+		return encoded.toHexString()
+	}
+
+	static get invoiceCompletedData_ATOMIC(): string {
+		let tupleArray: Array<ethereum.Value> = [
+			ethereum.Value.fromBoolean(true),
+		]
+
+		let tuple = changetype<ethereum.Tuple>(tupleArray)
+		let encoded = ethereum.encode(ethereum.Value.fromTuple(tuple))!
+		return encoded.toHexString()
 	}
 
 	static get closerData_ONGOING(): string {
