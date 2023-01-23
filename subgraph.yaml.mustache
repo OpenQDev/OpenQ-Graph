@@ -47,9 +47,9 @@ dataSources:
           handler: handleKycRequiredSet
         - event: SupportingDocumentsSet(address,bool,bytes,uint256)
           handler: handleSupportingDocumentsSet
-        - event: InvoiceCompletedSet(address,bool[],bytes,uint256)
+        - event: InvoiceCompletedSet(address,bytes,uint256)
           handler: handleInvoiceCompletedSet
-        - event: SupportingDocumentsCompletedSet(address,bool[],bytes,uint256)
+        - event: SupportingDocumentsCompletedSet(address,bytes,uint256)
           handler: handleSupportingDocumentsCompletedSet
         - event: TierWinnerSelected(address,string[],bytes,uint256)
           handler: handleTierWinnerSelected
