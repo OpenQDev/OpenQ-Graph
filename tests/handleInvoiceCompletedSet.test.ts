@@ -23,6 +23,13 @@ describe('handleInvoiceCompletedSet.test', () => {
 			Constants.VERSION_1
 		)
 
+		let newInvoiceCompletedSetEvent_false = createNewInvoiceCompletedSetEvent(
+			Constants.id,
+			Constants.bountyType_ATOMIC,
+			Constants.invoiceCompletedData_ATOMIC_false,
+			Constants.VERSION_1
+		)
+
 		newInvoiceCompletedSetEvent.transaction.hash = Bytes.fromHexString(Constants.transactionHash)
 		newInvoiceCompletedSetEvent.transaction.from = Address.fromString(Constants.userId)
 
@@ -30,6 +37,8 @@ describe('handleInvoiceCompletedSet.test', () => {
 
 		// NOTE: This is super space, case and comma-sensitive
 		assert.fieldEquals('Bounty', Constants.id, 'invoiceCompleted', `[true]`)
+		handleInvoiceCompletedSet(newInvoiceCompletedSetEvent_false)
+		assert.fieldEquals('Bounty', Constants.id, 'invoiceCompleted', 'null')
 	})
 
 	test('can handle invoiceCompleted set event - TIERED', () => {

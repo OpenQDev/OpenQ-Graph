@@ -5,7 +5,7 @@ import { handleSupportingDocumentsRequiredSet } from "../src/mapping";
 import { seedBounty } from './utils';
 import Constants from './constants'
 
-describe('handlesupportingDocuments.test', () => {
+describe('handleSupportingDocumentsRequiredSet.test', () => {
 
 	beforeEach(() => {
 		seedBounty()

@@ -320,9 +320,29 @@ export default class Constants {
 		return encoded.toHexString()
 	}
 
+	static get invoiceCompletedData_ATOMIC_false(): string {
+		let tupleArray: Array<ethereum.Value> = [
+			ethereum.Value.fromBoolean(false),
+		]
+
+		let tuple = changetype<ethereum.Tuple>(tupleArray)
+		let encoded = ethereum.encode(ethereum.Value.fromTuple(tuple))!
+		return encoded.toHexString()
+	}
+
 	static get supportingDocumentsCompletedData_ATOMIC(): string {
 		let tupleArray: Array<ethereum.Value> = [
 			ethereum.Value.fromBoolean(true),
+		]
+
+		let tuple = changetype<ethereum.Tuple>(tupleArray)
+		let encoded = ethereum.encode(ethereum.Value.fromTuple(tuple))!
+		return encoded.toHexString()
+	}
+
+	static get supportingDocumentsCompletedData_ATOMIC_false(): string {
+		let tupleArray: Array<ethereum.Value> = [
+			ethereum.Value.fromBoolean(false),
 		]
 
 		let tuple = changetype<ethereum.Tuple>(tupleArray)

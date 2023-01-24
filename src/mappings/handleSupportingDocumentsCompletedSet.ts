@@ -17,7 +17,7 @@ export default function handleSupportingDocumentsRequiredSet(event: SupportingDo
 		decoded = ethereum.decode("(bool)", event.params.data)!.toTuple();
 		const supportingDocumentsCompleted = decoded[0].toBoolean()
 		const foo = ethereum.Value.fromBooleanArray([supportingDocumentsCompleted])
-		bounty.supportingDocumentsCompleted = foo.toBooleanArray()
+		bounty.supportingDocumentsCompleted = supportingDocumentsCompleted ? foo.toBooleanArray() : null
 	} else {
 		let decoded: ethereum.Value[] = []
 		decoded = ethereum.decode("(bool[])", event.params.data)!.toTuple();

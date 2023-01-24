@@ -23,6 +23,13 @@ describe('handleSupportingDocumentsCompleted.test', () => {
 			Constants.VERSION_1
 		)
 
+		let newSupportingDocumentsCompletedSetEvent_false = createNewSupportingDocumentsCompletedSetEvent(
+			Constants.id,
+			Constants.bountyType_ATOMIC,
+			Constants.supportingDocumentsCompletedData_ATOMIC_false,
+			Constants.VERSION_1
+		)
+
 		newSupportingDocumentsCompletedSetEvent.transaction.hash = Bytes.fromHexString(Constants.transactionHash)
 		newSupportingDocumentsCompletedSetEvent.transaction.from = Address.fromString(Constants.userId)
 
@@ -30,6 +37,10 @@ describe('handleSupportingDocumentsCompleted.test', () => {
 
 		// NOTE: This is super space, case and comma-sensitive
 		assert.fieldEquals('Bounty', Constants.id, 'supportingDocumentsCompleted', `[true]`)
+
+		handleSupportingDocumentsCompletedSet(newSupportingDocumentsCompletedSetEvent_false)
+
+		assert.fieldEquals('Bounty', Constants.id, 'supportingDocumentsCompleted', 'null')
 	})
 
 	test('can handle SupportingDocumentsCompletedSet event - TIERED', () => {

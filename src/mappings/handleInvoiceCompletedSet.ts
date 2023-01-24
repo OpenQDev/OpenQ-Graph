@@ -17,7 +17,7 @@ export default function handleInvoiceCompletedSet(event: InvoiceCompletedSet): v
 		decoded = ethereum.decode("(bool)", event.params.data)!.toTuple();
 		const invoiceCompleted = decoded[0].toBoolean()
 		const foo = ethereum.Value.fromBooleanArray([invoiceCompleted])
-		bounty.invoiceCompleted = foo.toBooleanArray()
+		bounty.invoiceCompleted = invoiceCompleted ? foo.toBooleanArray() : null
 	} else {
 		let decoded: ethereum.Value[] = []
 		decoded = ethereum.decode("(bool[])", event.params.data)!.toTuple();
