@@ -140,7 +140,6 @@ describe('handleBountyCreated', () => {
 		assert.fieldEquals('Bounty', Constants.id, 'supportingDocumentsRequired', 'true')
 		assert.fieldEquals('Bounty', Constants.id, 'externalUserId', Constants.externalUserId)
 
-		// This is brittle - relies on proper spacing in the stringified array
 		assert.fieldEquals('Bounty', Constants.id, 'payoutSchedule', Constants.payoutSchedule)
 
 		assert.fieldEquals('User', Constants.userId, 'id', Constants.userId)
@@ -186,7 +185,6 @@ describe('handleBountyCreated', () => {
 		assert.fieldEquals('Bounty', Constants.id, 'supportingDocumentsRequired', 'true')
 		assert.fieldEquals('Bounty', Constants.id, 'externalUserId', Constants.externalUserId)
 
-		// This is brittle - relies on proper spacing in the stringified array
 		assert.fieldEquals('Bounty', Constants.id, 'payoutSchedule', Constants.payoutSchedule)
 
 		assert.fieldEquals('User', Constants.userId, 'id', Constants.userId)
