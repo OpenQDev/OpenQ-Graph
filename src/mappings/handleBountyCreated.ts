@@ -36,7 +36,7 @@ export default function handleBountyCreated(event: BountyCreated): void {
 	let decoded: ethereum.Value[] = []
 	if (event.params.version == VERSION_1 || event.params.version == VERSION_2) {
 		if (bountyType == ATOMIC) {
-			decoded = ethereum.decode("(bool,address,uint256)", event.params.data)!.toTuple();
+			decoded = ethereum.decode("(bool,address,uint256,bytes)", event.params.data)!.toTuple();
 			bounty.hasFundingGoal = decoded[0].toBoolean();
 			bounty.fundingGoalTokenAddress = decoded[1].toAddress()
 			bounty.fundingGoalVolume = decoded[2].toBigInt()
