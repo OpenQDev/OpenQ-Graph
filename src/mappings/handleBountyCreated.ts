@@ -6,8 +6,8 @@ import {
 	Organization,
 	BountiesCounter
 } from "../../generated/schema"
-import { addTuplePrefix } from '../utils'
 import Constants from '../utils'
+import { addTuplePrefix } from '../utils'
 
 export default function handleBountyCreated(event: BountyCreated): void {
 	let bounty = Bounty.load(event.params.bountyAddress.toHexString())
@@ -25,53 +25,76 @@ export default function handleBountyCreated(event: BountyCreated): void {
 	bounty.status = Constants.OPEN
 	bounty.transactionHash = event.transaction.hash
 
-	let decoded: ethereum.Value[] = []
-		if (bountyType == Constants.ATOMIC) {
-			decoded = ethereum.decode("(bool,address,uint256,bool,bool,bool,string,string,string)", addTuplePrefix(event.params.data))!.toTuple();
-			bounty.hasFundingGoal = decoded[0].toBoolean();
-			bounty.fundingGoalTokenAddress = decoded[1].toAddress()
-			bounty.fundingGoalVolume = decoded[2].toBigInt()
-			bounty.invoiceRequired = decoded[3].toBoolean()
-			bounty.kycRequired = decoded[4].toBoolean()
-			bounty.supportingDocumentsRequired = decoded[5].toBoolean()
-			bounty.externalUserId = decoded[6].toString()
-		} 
+	if (bountyType == Constants.ATOMIC) {
+		let decoded = ethereum.decode("(bool,address,uint256,bool,bool,bool,string,string,string)", addTuplePrefix(event.params.data))
 		
-		if (bountyType == Constants.ONGOING) {
-			decoded = ethereum.decode("(address,uint256,bool,address,uint256,bool,bool,bool,string,string,string)", event.params.data)!.toTuple();
-			bounty.payoutTokenAddress = decoded[0].toAddress()
-			bounty.payoutTokenVolume = decoded[1].toBigInt()
-			bounty.hasFundingGoal = decoded[2].toBoolean();
-			bounty.fundingGoalTokenAddress = decoded[3].toAddress()
-			bounty.fundingGoalVolume = decoded[4].toBigInt()
-			bounty.invoiceRequired = decoded[5].toBoolean()
-			bounty.kycRequired = decoded[6].toBoolean()
-			bounty.supportingDocumentsRequired = decoded[7].toBoolean()
-			bounty.externalUserId = decoded[8].toString()
-		} 
-		
-		if (bountyType == Constants.TIERED) {
-			decoded = ethereum.decode("(uint256[],bool,address,uint256,bool,bool,bool,string,string,string)", addTuplePrefix(event.params.data))!.toTuple();
-			bounty.payoutSchedule = decoded[0].toBigIntArray()
-			bounty.hasFundingGoal = decoded[1].toBoolean();
-			bounty.fundingGoalTokenAddress = decoded[2].toAddress()
-			bounty.fundingGoalVolume = decoded[3].toBigInt()
-			bounty.invoiceRequired = decoded[4].toBoolean()
-			bounty.kycRequired = decoded[5].toBoolean()
-			bounty.supportingDocumentsRequired = decoded[6].toBoolean()
-			bounty.externalUserId = decoded[7].toString()
-		} 
-		
-		if (bountyType == Constants.TIERED_FIXED) {
-			decoded = ethereum.decode("(uint256[],address,bool,bool,bool,string,string,string)", addTuplePrefix(event.params.data))!.toTuple();
-			bounty.payoutSchedule = decoded[0].toBigIntArray()
-			bounty.payoutTokenAddress = decoded[1].toAddress()
-			bounty.hasFundingGoal = false
-			bounty.invoiceRequired = decoded[2].toBoolean()
-			bounty.kycRequired = decoded[3].toBoolean()
-			bounty.supportingDocumentsRequired = decoded[4].toBoolean()
-			bounty.externalUserId = decoded[5].toString()
+		if (decoded == null) {
+			return
 		}
+
+		let decodedTuple = decoded.toTuple();
+		bounty.hasFundingGoal = decodedTuple[0].toBoolean();
+		bounty.fundingGoalTokenAddress = decodedTuple[1].toAddress()
+		bounty.fundingGoalVolume = decodedTuple[2].toBigInt()
+		bounty.invoiceRequired = decodedTuple[3].toBoolean()
+		bounty.kycRequired = decodedTuple[4].toBoolean()
+		bounty.supportingDocumentsRequired = decodedTuple[5].toBoolean()
+		bounty.externalUserId = decodedTuple[6].toString()
+	}
+		
+	if (bountyType == Constants.ONGOING) {
+		let decoded = ethereum.decode("(address,uint256,bool,address,uint256,bool,bool,bool,string,string,string)", addTuplePrefix(event.params.data))
+		
+		if (decoded == null) {
+			return
+		}
+		
+		let decodedTuple = decoded.toTuple();
+		bounty.payoutTokenAddress = decodedTuple[0].toAddress()
+		bounty.payoutTokenVolume = decodedTuple[1].toBigInt()
+		bounty.hasFundingGoal = decodedTuple[2].toBoolean();
+		bounty.fundingGoalTokenAddress = decodedTuple[3].toAddress()
+		bounty.fundingGoalVolume = decodedTuple[4].toBigInt()
+		bounty.invoiceRequired = decodedTuple[5].toBoolean()
+		bounty.kycRequired = decodedTuple[6].toBoolean()
+		bounty.supportingDocumentsRequired = decodedTuple[7].toBoolean()
+		bounty.externalUserId = decodedTuple[8].toString()
+	}
+		
+	if (bountyType == Constants.TIERED) {
+		let decoded = ethereum.decode("(uint256[],bool,address,uint256,bool,bool,bool,string,string,string)", addTuplePrefix(event.params.data))
+
+		if (decoded == null) {
+			return
+		}
+
+		let decodedTuple = decoded.toTuple()
+		bounty.payoutSchedule = decodedTuple[0].toBigIntArray()
+		bounty.hasFundingGoal = decodedTuple[1].toBoolean();
+		bounty.fundingGoalTokenAddress = decodedTuple[2].toAddress()
+		bounty.fundingGoalVolume = decodedTuple[3].toBigInt()
+		bounty.invoiceRequired = decodedTuple[4].toBoolean()
+		bounty.kycRequired = decodedTuple[5].toBoolean()
+		bounty.supportingDocumentsRequired = decodedTuple[6].toBoolean()
+		bounty.externalUserId = decodedTuple[7].toString()
+	}
+		
+	if (bountyType == Constants.TIERED_FIXED) {
+		let decoded = ethereum.decode("(uint256[],address,bool,bool,bool,string,string,string)", addTuplePrefix(event.params.data))
+		
+		if (decoded == null) {
+			return
+		}
+		
+		let decodedTuple = decoded.toTuple()
+		bounty.payoutSchedule = decodedTuple[0].toBigIntArray()
+		bounty.payoutTokenAddress = decodedTuple[1].toAddress()
+		bounty.hasFundingGoal = false
+		bounty.invoiceRequired = decodedTuple[2].toBoolean()
+		bounty.kycRequired = decodedTuple[3].toBoolean()
+		bounty.supportingDocumentsRequired = decodedTuple[4].toBoolean()
+		bounty.externalUserId = decodedTuple[5].toString()
+	}
 
 	let user = User.load(event.transaction.from.toHexString())
 
