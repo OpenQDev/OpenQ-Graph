@@ -27,7 +27,7 @@ export default function handleBountyCreated(event: BountyCreated): void {
 
 	let decoded: ethereum.Value[] = []
 		if (bountyType == Constants.ATOMIC) {
-			decoded = ethereum.decode("(bool,address,uint256,bool,bool,bool,string,string,string)", event.params.data)!.toTuple();
+			decoded = ethereum.decode("(bool,address,uint256,bool,bool,bool,string,string,string)", addTuplePrefix(event.params.data))!.toTuple();
 			bounty.hasFundingGoal = decoded[0].toBoolean();
 			bounty.fundingGoalTokenAddress = decoded[1].toAddress()
 			bounty.fundingGoalVolume = decoded[2].toBigInt()
