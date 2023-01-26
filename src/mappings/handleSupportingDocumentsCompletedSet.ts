@@ -1,11 +1,11 @@
 import { log, ethereum } from "@graphprotocol/graph-ts"
-import { SupportingDocumentsCompletedSet } from "../../generated/OpenQ/OpenQ"
+import { SupportingDocumentsCompleteSet } from "../../generated/OpenQ/OpenQ"
 import {
 	Bounty
 } from "../../generated/schema"
 import Constants from '../utils'
 
-export default function handleSupportingDocumentsRequiredSet(event: SupportingDocumentsCompletedSet): void {
+export default function handleSupportingDocumentsRequiredSet(event: SupportingDocumentsCompleteSet): void {
 	let bounty = Bounty.load(event.params.bountyAddress.toHexString())
 
 	if (!bounty) { throw "Error" }

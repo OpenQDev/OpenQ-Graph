@@ -14,8 +14,8 @@ import handleExternalUserIdAssociatedWithAddress from './mappings/handleExternal
 import handleInvoiceRequiredSet from './mappings/handleInvoiceRequiredSet'
 import handleKycRequiredSet from './mappings/handleKycRequiredSet'
 import handleSupportingDocumentsRequiredSet from './mappings/handleSupportingDocumentsRequiredSet'
-import handleInvoiceCompletedSet from './mappings/handleInvoiceCompletedSet'
-import handleSupportingDocumentsCompletedSet from './mappings/handleSupportingDocumentsCompletedSet'
+import handleInvoiceCompleteSet from './mappings/handleInvoiceCompleteSet'
+import handleSupportingDocumentsCompleteSet from './mappings/handleSupportingDocumentsCompleteSet'
 import handleTierWinnerSelected from './mappings/handleTierWinnerSelected'
 
 export {
@@ -35,7 +35,7 @@ export {
 	handleInvoiceRequiredSet,
 	handleKycRequiredSet,
 	handleSupportingDocumentsRequiredSet,
-	handleInvoiceCompletedSet,
-	handleSupportingDocumentsCompletedSet,
+	handleInvoiceCompleteSet,
+	handleSupportingDocumentsCompleteSet,
 	handleTierWinnerSelected
 }

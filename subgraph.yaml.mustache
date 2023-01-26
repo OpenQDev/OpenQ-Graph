@@ -47,10 +47,10 @@ dataSources:
           handler: handleKycRequiredSet
         - event: SupportingDocumentsRequiredSet(address,bool,uint256,bytes,uint256)
           handler: handleSupportingDocumentsRequiredSet
-        - event: InvoiceCompletedSet(address,uint256,bytes,uint256)
-          handler: handleInvoiceCompletedSet
-        - event: SupportingDocumentsCompletedSet(address,uint256,bytes,uint256)
-          handler: handleSupportingDocumentsCompletedSet
+        - event: InvoiceCompleteSet(address,uint256,bytes,uint256)
+          handler: handleInvoiceCompleteSet
+        - event: SupportingDocumentsCompleteSet(address,uint256,bytes,uint256)
+          handler: handleSupportingDocumentsCompleteSet
         - event: TierWinnerSelected(address,string[],bytes,uint256)
           handler: handleTierWinnerSelected
       file: ./src/mapping.ts
