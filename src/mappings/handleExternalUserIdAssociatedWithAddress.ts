@@ -1,4 +1,4 @@
-import { ExternalUserIdAssociatedWithAddress } from "../../generated/OpenQ/OpenQ"
+import { ExternalUserIdAssociatedWithAddress, OpenQ } from "../../generated/OpenQ/OpenQ"
 import {
 	User
 } from "../../generated/schema"
