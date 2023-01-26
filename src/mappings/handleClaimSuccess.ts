@@ -10,24 +10,36 @@ export default function handleClaimSuccess(event: ClaimSuccess): void {
 
 	let bountyType = event.params.bountyType;
 
-	let decoded: ethereum.Value[] = []
+	let decodedTuple: ethereum.Tuple
 	if (bountyType == Constants.ATOMIC || bountyType == Constants.ONGOING) {
-		decoded = ethereum.decode("(address,string,address,string)", addTuplePrefix(event.params.data))!.toTuple();
+		let decoded = ethereum.decode("(address,string,address,string)", addTuplePrefix(event.params.data))
+
+		if (decoded == null) {
+			return
+		}
+
+		decodedTuple = decoded.toTuple();
 	} else {
-		decoded = ethereum.decode("(address,string,address,string,uint256)", addTuplePrefix(event.params.data))!.toTuple();
+		let decoded = ethereum.decode("(address,string,address,string,uint256)", addTuplePrefix(event.params.data))
+
+		if (decoded == null) {
+			return
+		}
+		
+		decodedTuple = decoded.toTuple();
 	}
 
-	let bountyAddress = decoded[0].toAddress().toHexString()
-	let closer = decoded[2].toAddress().toHexString()
+	let bountyAddress = decodedTuple[0].toAddress().toHexString()
+	let closer = decodedTuple[2].toAddress().toHexString()
 
-	let externalUserId = decoded[1].toString()
-	let claimantAsset = decoded[3].toString()
+	let externalUserId = decodedTuple[1].toString()
+	let claimantAsset = decodedTuple[3].toString()
 	let claimId = generateClaimId(externalUserId, claimantAsset)
 	let claim = new Claim(claimId)
 	let tier = BigInt.fromString('0')
 
 	if (bountyType == Constants.TIERED || bountyType == Constants.TIERED_FIXED) {
-		tier = decoded[4].toBigInt()
+		tier = decodedTuple[4].toBigInt()
 	}
 
 	claim.bountyType = bountyType

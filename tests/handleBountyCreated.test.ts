@@ -140,7 +140,7 @@ describe('handleBountyCreated', () => {
 		assert.fieldEquals('Bounty', Constants.id, 'supportingDocumentsRequired', 'true')
 		assert.fieldEquals('Bounty', Constants.id, 'externalUserId', Constants.externalUserId)
 
-		assert.fieldEquals('Bounty', Constants.id, 'payoutSchedule', Constants.payoutSchedule)
+		assert.fieldEquals('Bounty', Constants.id, 'payoutSchedule', Constants.payoutSchedule_string)
 
 		assert.fieldEquals('User', Constants.userId, 'id', Constants.userId)
 
@@ -185,7 +185,7 @@ describe('handleBountyCreated', () => {
 		assert.fieldEquals('Bounty', Constants.id, 'supportingDocumentsRequired', 'true')
 		assert.fieldEquals('Bounty', Constants.id, 'externalUserId', Constants.externalUserId)
 
-		assert.fieldEquals('Bounty', Constants.id, 'payoutSchedule', Constants.payoutSchedule)
+		assert.fieldEquals('Bounty', Constants.id, 'payoutSchedule', Constants.payoutSchedule_string)
 
 		assert.fieldEquals('User', Constants.userId, 'id', Constants.userId)
 

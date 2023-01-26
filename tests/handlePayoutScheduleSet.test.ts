@@ -33,7 +33,7 @@ describe('handlePayoutScheduleSet.test', () => {
 		assert.fieldEquals('Bounty', Constants.id, 'payoutTokenAddress', Constants.fundingGoalTokenAddress)
 
 		// NOTE: This is super space, case and comma-sensitive
-		assert.fieldEquals('Bounty', Constants.id, 'payoutSchedule', `[${Constants.payoutSchedule[0]}, ${Constants.payoutSchedule[1]}]`)
+		assert.fieldEquals('Bounty', Constants.id, 'payoutSchedule', Constants.payoutSchedule_string)
 	})
 })
 

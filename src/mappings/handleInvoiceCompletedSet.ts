@@ -13,15 +13,26 @@ export default function handleInvoiceCompletedSet(event: InvoiceCompletedSet): v
 	let bountyType = event.params.bountyType
 
 	if (bountyType == Constants.ATOMIC) {
-		let decoded: ethereum.Value[] = []
-		decoded = ethereum.decode("(bool)", event.params.data)!.toTuple();
-		const invoiceCompleted = decoded[0].toBoolean()
+		let decoded = ethereum.decode("(bool)", event.params.data)
+		
+		if (decoded == null) {
+			return
+		}
+
+		let decodedTuple = decoded.toTuple();
+		
+		const invoiceCompleted = decodedTuple[0].toBoolean()
 		const foo = ethereum.Value.fromBooleanArray([invoiceCompleted])
 		bounty.invoiceCompleted = invoiceCompleted ? foo.toBooleanArray() : null
 	} else {
-		let decoded: ethereum.Value[] = []
-		decoded = ethereum.decode("(bool[])", event.params.data)!.toTuple();
-		bounty.invoiceCompleted = decoded[0].toBooleanArray()
+		let decoded = ethereum.decode("(bool[])", event.params.data)
+		
+		if (decoded == null) {
+			return
+		}
+
+		let decodedTuple = decoded.toTuple();
+		bounty.invoiceCompleted = decodedTuple[0].toBooleanArray()
 	}
 
 	// SAVE ALL ENTITIES

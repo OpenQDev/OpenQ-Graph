@@ -9,6 +9,7 @@ import {
 	TokenEvents,
 	FundedTokenBalance,
 } from "../../generated/schema"
+import { addTuplePrefix } from "../utils"
 
 export default function handleTokenDepositReceived(event: TokenDepositReceived): void {
 	// CREATE NEW DEPOSIT ENTITY
@@ -26,9 +27,14 @@ export default function handleTokenDepositReceived(event: TokenDepositReceived):
 	deposit.refunded = false	
 	deposit.tokenId = BigInt.fromString('0')
 
-	let decoded: ethereum.Value[] = []
-	decoded = ethereum.decode("(string)", event.params.data)!.toTuple();
-	deposit.funderUuid = decoded[0].toString()
+	let decoded = ethereum.decode("(string)", event.params.data)
+
+	if (decoded == null) {
+		return
+	}
+
+	let decodedTuple = decoded.toTuple();
+	deposit.funderUuid = decodedTuple[0].toString()
 
 	// UPSERT USER
 	let user = User.load(event.transaction.from.toHexString())

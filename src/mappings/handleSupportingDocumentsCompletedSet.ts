@@ -13,15 +13,26 @@ export default function handleSupportingDocumentsRequiredSet(event: SupportingDo
 	let bountyType = event.params.bountyType
 
 	if (bountyType == Constants.ATOMIC) {
-		let decoded: ethereum.Value[] = []
-		decoded = ethereum.decode("(bool)", event.params.data)!.toTuple();
-		const supportingDocumentsCompleted = decoded[0].toBoolean()
-		const foo = ethereum.Value.fromBooleanArray([supportingDocumentsCompleted])
-		bounty.supportingDocumentsCompleted = supportingDocumentsCompleted ? foo.toBooleanArray() : null
+		let decoded = ethereum.decode("(bool)", event.params.data)
+		
+		if (decoded == null) {
+			return
+		}
+
+		let decodedTuple = decoded.toTuple();
+		
+		const invoiceCompleted = decodedTuple[0].toBoolean()
+		const foo = ethereum.Value.fromBooleanArray([invoiceCompleted])
+		bounty.supportingDocumentsCompleted = invoiceCompleted ? foo.toBooleanArray() : null
 	} else {
-		let decoded: ethereum.Value[] = []
-		decoded = ethereum.decode("(bool[])", event.params.data)!.toTuple();
-		bounty.supportingDocumentsCompleted = decoded[0].toBooleanArray()
+		let decoded = ethereum.decode("(bool[])", event.params.data)
+		
+		if (decoded == null) {
+			return
+		}
+
+		let decodedTuple = decoded.toTuple();
+		bounty.supportingDocumentsCompleted = decodedTuple[0].toBooleanArray()
 	}
 
 	// SAVE ALL ENTITIES
