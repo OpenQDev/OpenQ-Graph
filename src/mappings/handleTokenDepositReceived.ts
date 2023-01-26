@@ -27,7 +27,7 @@ export default function handleTokenDepositReceived(event: TokenDepositReceived):
 	deposit.refunded = false	
 	deposit.tokenId = BigInt.fromString('0')
 
-	let decoded = ethereum.decode("(string)", event.params.data)
+	let decoded = ethereum.decode("(string)", addTuplePrefix(event.params.data))
 
 	if (decoded == null) {
 		return
