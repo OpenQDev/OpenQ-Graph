@@ -108,7 +108,7 @@ type Bounty @entity {
 }
 
 type Claim @entity {
-  id: ID! # claimantId
+  id: ID! # claimId
   bounty: Bounty!
   claimTime: BigInt!
   bountyType: BigInt!

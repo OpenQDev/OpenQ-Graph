@@ -4,6 +4,7 @@ import {
 	Bounty
 } from "../../generated/schema"
 import Constants from '../utils'
+import { addTuplePrefix } from '../utils'
 
 export default function handleSupportingDocumentsRequiredSet(event: SupportingDocumentsCompleteSet): void {
 	let bounty = Bounty.load(event.params.bountyAddress.toHexString())
@@ -13,7 +14,7 @@ export default function handleSupportingDocumentsRequiredSet(event: SupportingDo
 	let bountyType = event.params.bountyType
 
 	if (bountyType == Constants.ATOMIC) {
-		let decoded = ethereum.decode("(bool)", event.params.data)
+		let decoded = ethereum.decode("(bool)", addTuplePrefix(event.params.data))
 		
 		if (decoded == null) {
 			return
@@ -21,11 +22,10 @@ export default function handleSupportingDocumentsRequiredSet(event: SupportingDo
 
 		let decodedTuple = decoded.toTuple();
 		
-		const invoiceCompleted = decodedTuple[0].toBoolean()
-		const foo = ethereum.Value.fromBooleanArray([invoiceCompleted])
-		bounty.supportingDocumentsCompleted = invoiceCompleted ? foo.toBooleanArray() : null
+		const supportingDocumentsComplete = decodedTuple[0].toBoolean()
+		bounty.supportingDocumentsCompleted = supportingDocumentsComplete ? [supportingDocumentsComplete] : null
 	} else {
-		let decoded = ethereum.decode("(bool[])", event.params.data)
+		let decoded = ethereum.decode("(bool[])", addTuplePrefix(event.params.data))
 		
 		if (decoded == null) {
 			return

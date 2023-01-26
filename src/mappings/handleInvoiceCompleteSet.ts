@@ -2,6 +2,7 @@ import { log, ethereum } from "@graphprotocol/graph-ts";
 import { InvoiceCompleteSet } from "../../generated/OpenQ/OpenQ";
 import { Bounty } from "../../generated/schema";
 import Constants from "../utils";
+import { addTuplePrefix } from '../utils';
 
 export default function handleInvoiceCompleteSet(
   event: InvoiceCompleteSet
@@ -14,6 +15,8 @@ export default function handleInvoiceCompleteSet(
 
   let bountyType = event.params.bountyType;
 
+	log.info('{}', [event.params.data.toHexString()])
+
   if (bountyType == Constants.ATOMIC) {
     let decoded = ethereum.decode("(bool)", event.params.data);
 
@@ -24,10 +27,9 @@ export default function handleInvoiceCompleteSet(
     let decodedTuple = decoded.toTuple();
 
     const invoiceCompleted = decodedTuple[0].toBoolean();
-    const foo = ethereum.Value.fromBooleanArray([invoiceCompleted]);
-    bounty.invoiceCompleted = invoiceCompleted ? foo.toBooleanArray() : null;
+    bounty.invoiceCompleted = invoiceCompleted ? [invoiceCompleted] : null;
   } else {
-    let decoded = ethereum.decode("(bool[])", event.params.data);
+    let decoded = ethereum.decode("(bool[])", addTuplePrefix(event.params.data));
 
     if (decoded == null) {
       return;

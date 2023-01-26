@@ -298,8 +298,16 @@ export default class Constants {
 		return [true, false, true]
 	}
 
+	static get invoiceCompleted_string(): string {
+		return `[${Constants.invoiceCompleted.join(', ')}]`
+	}
+
 	static get supportingDocumentsCompleted(): Array<boolean> {
 		return [true, false, true]
+	}
+
+	static get supportingDocumentsCompleted_string(): string {
+		return `[${Constants.supportingDocumentsCompleted.join(', ')}]`
 	}
 
 	static encodeTuple(tupleArray: ethereum.Value[]): string {
@@ -328,7 +336,7 @@ export default class Constants {
 
 		let tuple = changetype<ethereum.Tuple>(tupleArray)
 		let encoded = ethereum.encode(ethereum.Value.fromTuple(tuple))!
-		return encoded.toHexString()
+		return removeTuplePrefix(encoded)
 	}
 
 	static get supportingDocumentsCompletedData_TIERED(): string {
@@ -348,7 +356,7 @@ export default class Constants {
 
 		let tuple = changetype<ethereum.Tuple>(tupleArray)
 		let encoded = ethereum.encode(ethereum.Value.fromTuple(tuple))!
-		return encoded.toHexString()
+		return removeTuplePrefix(encoded)
 	}
 
 	static get invoiceCompletedData_ATOMIC_false(): string {
