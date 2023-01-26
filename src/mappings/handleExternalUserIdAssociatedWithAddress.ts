@@ -11,7 +11,7 @@ export default function handleExternalUserIdAssociatedWithAddress(event: Externa
 		user.save()
 	}
 
-	user.externalUserId = event.params.externalUserId
+	user.externalUserId = event.params.newExternalUserId
 
 	// SAVE ALL ENTITIES
 	user.save()
