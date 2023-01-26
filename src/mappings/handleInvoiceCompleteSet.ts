@@ -15,8 +15,6 @@ export default function handleInvoiceCompleteSet(
 
   let bountyType = event.params.bountyType;
 
-	log.info('{}', [event.params.data.toHexString()])
-
   if (bountyType == Constants.ATOMIC) {
     let decoded = ethereum.decode("(bool)", event.params.data);
 
@@ -27,6 +25,7 @@ export default function handleInvoiceCompleteSet(
     let decodedTuple = decoded.toTuple();
 
     const invoiceCompleted = decodedTuple[0].toBoolean();
+
     bounty.invoiceCompleted = invoiceCompleted ? [invoiceCompleted] : null;
   } else {
     let decoded = ethereum.decode("(bool[])", addTuplePrefix(event.params.data));

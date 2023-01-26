@@ -336,6 +336,7 @@ export default class Constants {
 
 		let tuple = changetype<ethereum.Tuple>(tupleArray)
 		let encoded = ethereum.encode(ethereum.Value.fromTuple(tuple))!
+		log.info('{}', [removeTuplePrefix(encoded)])
 		return removeTuplePrefix(encoded)
 	}
 
@@ -346,46 +347,26 @@ export default class Constants {
 
 		let tuple = changetype<ethereum.Tuple>(tupleArray)
 		let encoded = ethereum.encode(ethereum.Value.fromTuple(tuple))!
-		return encoded.toHexString()
-	}
-
-	static get invoiceCompletedData_ATOMIC(): string {
-		let tupleArray: Array<ethereum.Value> = [
-			ethereum.Value.fromBoolean(true),
-		]
-
-		let tuple = changetype<ethereum.Tuple>(tupleArray)
-		let encoded = ethereum.encode(ethereum.Value.fromTuple(tuple))!
 		return removeTuplePrefix(encoded)
 	}
 
-	static get invoiceCompletedData_ATOMIC_false(): string {
-		let tupleArray: Array<ethereum.Value> = [
-			ethereum.Value.fromBoolean(false),
-		]
+	static get invoiceCompletedData_ATOMIC(): string {
+		let encoded = ethereum.encode(ethereum.Value.fromBoolean(true))!
+		return encoded.toHexString()
+	}
 
-		let tuple = changetype<ethereum.Tuple>(tupleArray)
-		let encoded = ethereum.encode(ethereum.Value.fromTuple(tuple))!
+	static get invoiceCompletedData_ATOMIC_false(): string {
+		let encoded = ethereum.encode(ethereum.Value.fromBoolean(false))!
 		return encoded.toHexString()
 	}
 
 	static get supportingDocumentsCompletedData_ATOMIC(): string {
-		let tupleArray: Array<ethereum.Value> = [
-			ethereum.Value.fromBoolean(true),
-		]
-
-		let tuple = changetype<ethereum.Tuple>(tupleArray)
-		let encoded = ethereum.encode(ethereum.Value.fromTuple(tuple))!
+		let encoded = ethereum.encode(ethereum.Value.fromBoolean(true))!
 		return encoded.toHexString()
 	}
 
 	static get supportingDocumentsCompletedData_ATOMIC_false(): string {
-		let tupleArray: Array<ethereum.Value> = [
-			ethereum.Value.fromBoolean(false),
-		]
-
-		let tuple = changetype<ethereum.Tuple>(tupleArray)
-		let encoded = ethereum.encode(ethereum.Value.fromTuple(tuple))!
+		let encoded = ethereum.encode(ethereum.Value.fromBoolean(false))!
 		return encoded.toHexString()
 	}
 

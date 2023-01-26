@@ -14,7 +14,7 @@ export default function handleSupportingDocumentsRequiredSet(event: SupportingDo
 	let bountyType = event.params.bountyType
 
 	if (bountyType == Constants.ATOMIC) {
-		let decoded = ethereum.decode("(bool)", addTuplePrefix(event.params.data))
+		let decoded = ethereum.decode("(bool)", event.params.data)
 		
 		if (decoded == null) {
 			return

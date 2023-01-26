@@ -57,7 +57,7 @@ describe('handleSupportingDocumentsCompleted.test', () => {
 		handleSupportingDocumentsCompleteSet(newSupportingDocumentsCompleteSetEvent)
 
 		// NOTE: This is super space, case and comma-sensitive
-		assert.fieldEquals('Bounty', Constants.id, 'supportingDocumentsCompleted', `[${Constants.supportingDocumentsCompleted[0]}, ${Constants.supportingDocumentsCompleted[1]}, ${Constants.supportingDocumentsCompleted[2]}]`)
+		assert.fieldEquals('Bounty', Constants.id, 'supportingDocumentsCompleted', Constants.supportingDocumentsCompleted_string)
 	})
 })
 
