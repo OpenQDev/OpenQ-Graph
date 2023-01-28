@@ -38,7 +38,7 @@ export default function handleClaimSuccess(event: ClaimSuccess): void {
 	let claim = new Claim(claimId)
 	let tier = BigInt.fromString('0')
 
-	if (bountyType == Constants.TIERED || bountyType == Constants.TIERED_FIXED) {
+	if (bountyType == Constants.TIERED_PERCENTAGE || bountyType == Constants.TIERED_FIXED) {
 		tier = decodedTuple[4].toBigInt()
 	}
 

@@ -55,7 +55,7 @@ describe("handleInvoiceCompleteSet.test", () => {
   test("can handle invoiceCompleted set event - TIERED", () => {
     let newInvoiceCompleteSetEvent = createNewInvoiceCompleteSetEvent(
       Constants.id,
-      Constants.bountyType_TIERED,
+      Constants.bountyType_TIERED_PERCENTAGE,
       Constants.invoiceCompletedData_TIERED,
       Constants.VERSION_1
     );

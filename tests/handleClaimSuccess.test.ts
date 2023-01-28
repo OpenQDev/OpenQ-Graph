@@ -59,21 +59,21 @@ describe('handleClaimSuccess', () => {
 	test('can handle new claim success - TIERED', () => {
 		let newClaimSuccessEventCompetition_FIRST = createNewClaimSuccessEvent(
 			Constants.claimTime,
-			Constants.bountyType_TIERED,
+			Constants.bountyType_TIERED_PERCENTAGE,
 			Constants.closerData_TIERED,
 			Constants.VERSION_1
 		)
 
 		let newClaimSuccessEventCompetition_SECOND = createNewClaimSuccessEvent(
 			Constants.claimTime,
-			Constants.bountyType_TIERED,
+			Constants.bountyType_TIERED_PERCENTAGE,
 			Constants.closerData_TIERED_2,
 			Constants.VERSION_1
 		)
 
 		let newClaimSuccessEventCompetition_THIRD = createNewClaimSuccessEvent(
 			Constants.claimTime,
-			Constants.bountyType_TIERED,
+			Constants.bountyType_TIERED_PERCENTAGE,
 			Constants.closerData_TIERED_3,
 			Constants.VERSION_1
 		)

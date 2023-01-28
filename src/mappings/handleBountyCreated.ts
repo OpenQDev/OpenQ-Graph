@@ -61,7 +61,7 @@ export default function handleBountyCreated(event: BountyCreated): void {
 		bounty.externalUserId = decodedTuple[8].toString()
 	}
 		
-	if (bountyType == Constants.TIERED) {
+	if (bountyType == Constants.TIERED_PERCENTAGE) {
 		let decoded = ethereum.decode("(uint256[],bool,address,uint256,bool,bool,bool,string,string,string)", addTuplePrefix(event.params.data))
 
 		if (decoded == null) {

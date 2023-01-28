@@ -31,7 +31,7 @@ export default class Constants {
 		return BigInt.fromString('1')
 	}
 
-	static get TIERED(): BigInt {
+	static get TIERED_PERCENTAGE(): BigInt {
 		return BigInt.fromString('2')
 	}
 

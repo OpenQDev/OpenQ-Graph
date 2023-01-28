@@ -46,7 +46,7 @@ describe('handleSupportingDocumentsCompleted.test', () => {
 	test('can handle SupportingDocumentsCompleteSet event - TIERED', () => {
 		let newSupportingDocumentsCompleteSetEvent = createNewSupportingDocumentsCompleteSetEvent(
 			Constants.id,
-			Constants.bountyType_TIERED,
+			Constants.bountyType_TIERED_PERCENTAGE,
 			Constants.supportingDocumentsCompletedData_TIERED,
 			Constants.VERSION_1
 		)

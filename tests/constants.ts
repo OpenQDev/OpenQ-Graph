@@ -76,7 +76,7 @@ export default class Constants {
 		return '1';
 	}
 
-	static get bountyType_TIERED(): string {
+	static get bountyType_TIERED_PERCENTAGE(): string {
 		return '2';
 	}
 
