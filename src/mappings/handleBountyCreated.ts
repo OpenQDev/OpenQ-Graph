@@ -40,6 +40,8 @@ export default function handleBountyCreated(event: BountyCreated): void {
 		bounty.kycRequired = decodedTuple[4].toBoolean()
 		bounty.supportingDocumentsRequired = decodedTuple[5].toBoolean()
 		bounty.externalUserId = decodedTuple[6].toString()
+		bounty.alternativeName = decodedTuple[7].toString()
+		bounty.alternativeLogo = decodedTuple[8].toString()
 	}
 		
 	if (bountyType == Constants.ONGOING) {
@@ -59,6 +61,8 @@ export default function handleBountyCreated(event: BountyCreated): void {
 		bounty.kycRequired = decodedTuple[6].toBoolean()
 		bounty.supportingDocumentsRequired = decodedTuple[7].toBoolean()
 		bounty.externalUserId = decodedTuple[8].toString()
+		bounty.alternativeName = decodedTuple[9].toString()
+		bounty.alternativeLogo = decodedTuple[10].toString()
 	}
 		
 	if (bountyType == Constants.TIERED_PERCENTAGE) {
@@ -77,6 +81,8 @@ export default function handleBountyCreated(event: BountyCreated): void {
 		bounty.kycRequired = decodedTuple[5].toBoolean()
 		bounty.supportingDocumentsRequired = decodedTuple[6].toBoolean()
 		bounty.externalUserId = decodedTuple[7].toString()
+		bounty.alternativeName = decodedTuple[8].toString()
+		bounty.alternativeLogo = decodedTuple[9].toString()
 	}
 		
 	if (bountyType == Constants.TIERED_FIXED) {
@@ -94,6 +100,8 @@ export default function handleBountyCreated(event: BountyCreated): void {
 		bounty.kycRequired = decodedTuple[3].toBoolean()
 		bounty.supportingDocumentsRequired = decodedTuple[4].toBoolean()
 		bounty.externalUserId = decodedTuple[5].toString()
+		bounty.alternativeName = decodedTuple[6].toString()
+		bounty.alternativeLogo = decodedTuple[7].toString()
 	}
 
 	let user = User.load(event.transaction.from.toHexString())

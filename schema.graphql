@@ -105,6 +105,8 @@ type Bounty @entity {
   invoiceCompleted: [Boolean!]
   supportingDocumentsCompleted: [Boolean!]
   tierWinners: [String!]
+  alternativeName: String
+  alternativeLogo: String
 }
 
 type Claim @entity {

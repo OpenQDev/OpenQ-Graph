@@ -49,6 +49,8 @@ describe('handleBountyCreated', () => {
 		assert.fieldEquals('Bounty', Constants.id, 'kycRequired', 'true')
 		assert.fieldEquals('Bounty', Constants.id, 'supportingDocumentsRequired', 'true')
 		assert.fieldEquals('Bounty', Constants.id, 'externalUserId', Constants.externalUserId)
+		assert.fieldEquals('Bounty', Constants.id, 'alternativeName', Constants.alternativeName)
+		assert.fieldEquals('Bounty', Constants.id, 'alternativeLogo', Constants.alternativeLogo)
 
 		assert.fieldEquals('User', Constants.userId, 'id', Constants.userId)
 
@@ -95,6 +97,8 @@ describe('handleBountyCreated', () => {
 		assert.fieldEquals('Bounty', Constants.id, 'kycRequired', 'true')
 		assert.fieldEquals('Bounty', Constants.id, 'supportingDocumentsRequired', 'true')
 		assert.fieldEquals('Bounty', Constants.id, 'externalUserId', Constants.externalUserId)
+		assert.fieldEquals('Bounty', Constants.id, 'alternativeName', Constants.alternativeName)
+		assert.fieldEquals('Bounty', Constants.id, 'alternativeLogo', Constants.alternativeLogo)
 
 		assert.fieldEquals('User', Constants.userId, 'id', Constants.userId)
 
@@ -139,6 +143,8 @@ describe('handleBountyCreated', () => {
 		assert.fieldEquals('Bounty', Constants.id, 'kycRequired', 'true')
 		assert.fieldEquals('Bounty', Constants.id, 'supportingDocumentsRequired', 'true')
 		assert.fieldEquals('Bounty', Constants.id, 'externalUserId', Constants.externalUserId)
+		assert.fieldEquals('Bounty', Constants.id, 'alternativeName', Constants.alternativeName)
+		assert.fieldEquals('Bounty', Constants.id, 'alternativeLogo', Constants.alternativeLogo)
 
 		assert.fieldEquals('Bounty', Constants.id, 'payoutSchedule', Constants.payoutSchedule_string)
 
@@ -184,6 +190,8 @@ describe('handleBountyCreated', () => {
 		assert.fieldEquals('Bounty', Constants.id, 'kycRequired', 'true')
 		assert.fieldEquals('Bounty', Constants.id, 'supportingDocumentsRequired', 'true')
 		assert.fieldEquals('Bounty', Constants.id, 'externalUserId', Constants.externalUserId)
+		assert.fieldEquals('Bounty', Constants.id, 'alternativeName', Constants.alternativeName)
+		assert.fieldEquals('Bounty', Constants.id, 'alternativeLogo', Constants.alternativeLogo)
 
 		assert.fieldEquals('Bounty', Constants.id, 'payoutSchedule', Constants.payoutSchedule_string)
 

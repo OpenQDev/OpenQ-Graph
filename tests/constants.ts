@@ -17,11 +17,11 @@ export default class Constants {
 	}
 
 	static get alternativeLogo(): string {
-		return 'po';
+		return 'alternativeLogo';
 	}
 
 	static get alternativeName(): string {
-		return 'po';
+		return 'alternativeName';
 	}
 
 	static get claimTime(): string {
@@ -188,8 +188,8 @@ export default class Constants {
 			ethereum.Value.fromBoolean(true),
 			ethereum.Value.fromBoolean(true),
 			ethereum.Value.fromString(Constants.externalUserId),
-			ethereum.Value.fromString(Constants.alternativeLogo),
-			ethereum.Value.fromString(Constants.alternativeName)
+			ethereum.Value.fromString(Constants.alternativeName),
+			ethereum.Value.fromString(Constants.alternativeLogo)
 		]
 
 		let tuple = changetype<ethereum.Tuple>(tupleArray)
@@ -214,8 +214,8 @@ export default class Constants {
 			ethereum.Value.fromBoolean(true),
 			ethereum.Value.fromBoolean(true),
 			ethereum.Value.fromString(Constants.externalUserId),
-			ethereum.Value.fromString(Constants.alternativeLogo),
-			ethereum.Value.fromString(Constants.alternativeName)
+			ethereum.Value.fromString(Constants.alternativeName),
+			ethereum.Value.fromString(Constants.alternativeLogo)
 		]
 
 		let tuple = changetype<ethereum.Tuple>(tupleArray)
@@ -239,8 +239,8 @@ export default class Constants {
 			ethereum.Value.fromBoolean(true),
 			ethereum.Value.fromBoolean(true),
 			ethereum.Value.fromString(Constants.externalUserId),
-			ethereum.Value.fromString(Constants.alternativeLogo),
-			ethereum.Value.fromString(Constants.alternativeName)
+			ethereum.Value.fromString(Constants.alternativeName),
+			ethereum.Value.fromString(Constants.alternativeLogo)
 		]
 
 		let tuple = changetype<ethereum.Tuple>(tupleArray)
@@ -262,8 +262,8 @@ export default class Constants {
 			ethereum.Value.fromBoolean(true),
 			ethereum.Value.fromBoolean(true),
 			ethereum.Value.fromString(Constants.externalUserId),
-			ethereum.Value.fromString(Constants.alternativeLogo),
-			ethereum.Value.fromString(Constants.alternativeName)
+			ethereum.Value.fromString(Constants.alternativeName),
+			ethereum.Value.fromString(Constants.alternativeLogo)
 		]
 		let tuple = changetype<ethereum.Tuple>(tupleArray)
 		let encoded = ethereum.encode(ethereum.Value.fromTuple(tuple))!
