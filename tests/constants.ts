@@ -16,6 +16,10 @@ export default class Constants {
 		return 'po';
 	}
 
+	static get externalUserId2(): string {
+		return 'externalUserId2';
+	}
+
 	static get alternativeLogo(): string {
 		return 'alternativeLogo';
 	}
@@ -50,6 +54,10 @@ export default class Constants {
 
 	static get userId(): string {
 		return '0x46e09468616365256f11f4544e65ce0c70ee624b';
+	}
+
+	static get userId2(): string {
+		return '0x947f3fc93ab8b74c44f837d3031347ddbb32cf08';
 	}
 
 	static get FIRST_PLACE(): string {
