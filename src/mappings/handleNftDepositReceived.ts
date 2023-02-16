@@ -23,10 +23,10 @@ export default function handleNftDepositReceived(event: NFTDepositReceived): voi
 	deposit.refunded = false
 
 	// UPSERT USER
-	let user = User.load(event.transaction.from.toHexString())
+	let user = User.load(event.params.sender.toHexString())
 
 	if (!user) {
-		user = new User(event.transaction.from.toHexString())
+		user = new User(event.params.sender.toHexString())
 		user.save()
 	}
 

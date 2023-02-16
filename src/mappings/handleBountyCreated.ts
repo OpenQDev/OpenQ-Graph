@@ -104,10 +104,10 @@ export default function handleBountyCreated(event: BountyCreated): void {
 		bounty.alternativeLogo = decodedTuple[7].toString()
 	}
 
-	let user = User.load(event.transaction.from.toHexString())
+	let user = User.load(event.params.issuerAddress.toHexString())
 
 	if (!user) {
-		user = new User(event.transaction.from.toHexString())
+		user = new User(event.params.issuerAddress.toHexString())
 		user.save()
 	}
 

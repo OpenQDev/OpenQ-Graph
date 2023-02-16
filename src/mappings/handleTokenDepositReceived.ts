@@ -37,10 +37,10 @@ export default function handleTokenDepositReceived(event: TokenDepositReceived):
 	deposit.funderUuid = decodedTuple[0].toString()
 
 	// UPSERT USER
-	let user = User.load(event.transaction.from.toHexString())
+	let user = User.load(event.params.sender.toHexString())
 
 	if (!user) {
-		user = new User(event.transaction.from.toHexString())
+		user = new User(event.params.sender.toHexString())
 		user.save()
 	}
 
