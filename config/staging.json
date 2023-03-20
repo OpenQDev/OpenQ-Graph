@@ -1,9 +1,9 @@
 {
   "network": "matic",
-  "openQAddress": "0xBa1027c275f28bEE2B9aD2c6820A82E5e7f5171a",
-  "openQStartBlock": 39929443,
+  "openQAddress": "0xD2558e6614Ad69abeade566625e0218B46E134EE",
+  "openQStartBlock": 40577058,
   "claimManagerAddress": "0xbC79945dBd4dCaB554a8d8945dB9CC96C0F92796",
-  "claimManagerStartBlock": 39929443,
+  "claimManagerStartBlock": 40577058,
   "depositManagerAddress": "0x57322A376aF677486312Ff555219f1C12Df857C7",
-  "depositManagerStartBlock": 39929443
+  "depositManagerStartBlock": 40577058
 }
