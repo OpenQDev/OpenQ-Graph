@@ -3,7 +3,6 @@ WORKDIR /app
 RUN apk update && apk upgrade && \
 	apk add --no-cache bash git curl
 COPY package.json .
-RUN yarn --production=true
 COPY . .
 ENTRYPOINT sleep 5 \
 	&& curl --connect-timeout 5 \
