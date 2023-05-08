@@ -1,9 +1,9 @@
 {
   "network": "matic",
-  "openQAddress": "0xB931B6E5EeC976c46a7D6C207EFC2172D722459c",
+  "openQAddress": "0xEc34b7C19E3c1f7F53908819f56f96E10feb5696",
   "openQStartBlock": 39591100,
-  "claimManagerAddress": "0xEA49c6590096fD7623A100067c8307A10819Fb3e",
+  "claimManagerAddress": "0x38C520e6036A486a22c899B778d101f1e0F96D12",
   "claimManagerStartBlock": 39591100,
-  "depositManagerAddress": "0x0a70AB9AC80c25a106E1482D2c890D2231C2aA10",
+  "depositManagerAddress": "0x964aEcdFE3d35B6c57Fb4ea02A7A149c5688516C",
   "depositManagerStartBlock": 39591100
 }
