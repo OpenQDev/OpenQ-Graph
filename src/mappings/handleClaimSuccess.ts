@@ -34,13 +34,16 @@ export default function handleClaimSuccess(event: ClaimSuccess): void {
 
 	let externalUserId = decodedTuple[1].toString()
 	let claimantAsset = decodedTuple[3].toString()
-	let claimId = generateClaimId(externalUserId, claimantAsset)
-	let claim = new Claim(claimId)
+
 	let tier = BigInt.fromString('0')
 
 	if (bountyType == Constants.TIERED_PERCENTAGE || bountyType == Constants.TIERED_FIXED) {
 		tier = decodedTuple[4].toBigInt()
 	}
+
+	
+	let claimId = generateClaimId(bountyAddress, tier)
+	let claim = new Claim(claimId)
 
 	claim.bountyType = bountyType
 	claim.bounty = bountyAddress
@@ -54,10 +57,10 @@ export default function handleClaimSuccess(event: ClaimSuccess): void {
 	claim.save()
 }
 
-function generateClaimId(externalUserId: string, claimantAsset: string): string {
+function generateClaimId(bountyAddress: string, tier: BigInt): string {
 	let claimantIdArray: Array<ethereum.Value> = [
-		ethereum.Value.fromString(externalUserId),
-		ethereum.Value.fromString(claimantAsset)
+		ethereum.Value.fromString(bountyAddress.toString()),
+		ethereum.Value.fromString(tier.toString())
 	]
 
 	let tuple = changetype<ethereum.Tuple>(claimantIdArray)
