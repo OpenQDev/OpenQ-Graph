@@ -72,21 +72,6 @@ export default function handleDepositRefunded(event: DepositRefunded): void {
 	organizationFundedTokenBalance.volume = organizationFundedTokenBalance.volume.minus(refund.volume)
 	organizationFundedTokenBalance.save()
 
-	// // UPSERT BOUNTY TOKEN BALANCE
-	const bountyTokenBalanceId = `${event.params.bountyAddress.toHexString()}-${deposit.tokenAddress.toHexString()}`
-	let bountyTokenBalance = BountyFundedTokenBalance.load(bountyTokenBalanceId)
-
-	if (!bountyTokenBalance) {
-		bountyTokenBalance = new BountyFundedTokenBalance(bountyTokenBalanceId)
-	}
-
-	bountyTokenBalance.volume = bountyTokenBalance.volume.minus(refund.volume)
-	bountyTokenBalance.save()
-
-	if (bountyTokenBalance.volume.equals(new BigInt(0))) {
-		store.remove('BountyFundedTokenBalance', bountyTokenBalanceId)
-	}
-
 	if (organizationFundedTokenBalance.volume.equals(new BigInt(0))) {
 		store.remove('OrganizationFundedTokenBalance', organizationFundedTokenBalance.id)
 	}
