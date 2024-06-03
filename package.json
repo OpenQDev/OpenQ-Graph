@@ -23,7 +23,7 @@
   },
   "dependencies": {
     "@graphprotocol/graph-cli": "0.46.1",
-    "@graphprotocol/graph-ts": "0.28.1",
+    "@graphprotocol/graph-ts": "0.35.1",
     "dotenv": "16.0.0",
     "fs": "0.0.1-security",
     "mustache": "4.2.0",
