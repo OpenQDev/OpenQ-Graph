@@ -28,6 +28,6 @@
     "fs": "0.0.1-security",
     "mustache": "4.2.0",
     "path": "0.12.7",
-    "@ethersproject/bignumber": "5.7.0"
+    "@ethersproject/bignumber": "5.8.0"
   }
 }
